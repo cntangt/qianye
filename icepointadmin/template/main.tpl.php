@@ -47,7 +47,7 @@ $(function(){
 	</thead>
 	<tbody >
 		<tr >
-		<td align="left">程序版本：<a href="http://www.xiaocms.com" target="_blank"><?php echo XIAOCMS_VERSION;?></a></td>
+		<td align="left">程序版本：</td>
 		</tr>
 		<tr >
 		<td align="left">发布日期：<a href="http://www.xiaocms.com" target="_blank"><?php echo XIAOCMS_RELEASE;?></a></td>

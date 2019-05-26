@@ -4,12 +4,13 @@ class api extends Base {
 
 	public function __construct() {
         parent::__construct();
+        header('Content-Type: application/json; charset=utf-8');
 	}
 
 	public function ajaxkwAction() {
 	    $subject = $this->post('data');
 	    if (empty($subject)) exit('');
-	    $data = @implode('', file('http://keyword.discuz.com/related_kw.html?ics=utf-8&ocs=utf-8&title=' . rawurlencode($subject) . '&content=' . rawurlencode($subject))); 
+	    $data = @implode('', file('http://keyword.discuz.com/related_kw.html?ics=utf-8&ocs=utf-8&title=' . rawurlencode($subject) . '&content=' . rawurlencode($subject)));
 	    if($data) {
 	    	$parser = xml_parser_create();
 	    	xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
@@ -22,10 +23,10 @@ class api extends Base {
 		    		$kws[] = trim($valuearray['value']);
 	    		}
 	    	}
-	     echo implode(',', $kws);
+            echo implode(',', $kws);
 	    }
 	}
-	
+
 	public function userAction() {
         if (!defined('XIAOCMS_MEMBER')) exit();
 	    ob_start();
@@ -35,7 +36,7 @@ class api extends Base {
 	    $html = addslashes(str_replace(array("\r", "\n", "\t"), array('', '', ''), $html));
 	    echo 'document.write("' . $html . '");';
 	}
-	
+
 	public function hitsAction() {
 	    $id   = (int)$this->get('id');
 		if (empty($id))	exit;
@@ -44,20 +45,27 @@ class api extends Base {
 		$this->db->setTableName('content')->update(array('hits'=>$hits), 'id=?' , $id);
 		echo "document.write('$hits');";
 	}
-	
+
 	public function pinyinAction() {
 		echo word2pinyin($this->post('name'));
 	}
-	
+
 	public function indexAction() {
-	    echo '本程序由：XiaoCms提供<br/>程序版本：' . XIAOCMS_RELEASE . '<br/>官方网站：<a href="http://www.xiaocms.com" >http://www.xiaocms.com</a>';
+        $cards=$this->db->setTableName('card')->findAll();
+	    self::json($cards);
 	}
-	
+
 	public function checkcodeAction() {
 	    $api    = xiaocms::load_class('image');
 	    $width  = $this->get('width');
 	    $height = $this->get('height');
 	    $api->checkcode($width,$height);
 	}
-	
+
+    private function json($val,$succ=true,$msg=null,$code=0)
+    {
+        echo json_encode([succ=>$succ,msg=>$msg,code=>$code,val=>$val]);
+        exit();
+    }
+
 }

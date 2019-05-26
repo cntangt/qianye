@@ -1,0 +1,183 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Name>icepoint</Name>
+    <ProjectGuid>{3b285c78-3c64-4128-aeb7-fad6e6a23de0}</ProjectGuid>
+    <RootNamespace>
+    </RootNamespace>
+    <OutputType>Library</OutputType>
+    <ProjectTypeGuids>{A0786B88-2ADB-4C21-ABE8-AA2D79766269}</ProjectTypeGuids>
+    <Runtime>PHP</Runtime>
+    <RuntimeVersion>5.6</RuntimeVersion>
+    <SaveServerSettingsInUserFile>false</SaveServerSettingsInUserFile>
+    <EnvName>PHPDev</EnvName>
+    <PHPDevHostName>localhost</PHPDevHostName>
+    <PHPDevAutoPort>true</PHPDevAutoPort>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <IncludeDebugInformation>true</IncludeDebugInformation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <IncludeDebugInformation>false</IncludeDebugInformation>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include=".vs\ProjectSettings.json" />
+    <Compile Include=".vs\slnx.sqlite" />
+    <Compile Include=".vs\VSWorkspaceState.json" />
+    <Compile Include="core\controller\api.php" />
+    <Compile Include="core\controller\Base.class.php" />
+    <Compile Include="core\img\calendar\skins\default\default_s.gif" />
+    <Compile Include="core\img\calendar\skins\lhgcalendar.css" />
+    <Compile Include="core\img\calendar\lhgcalendar.min.js" />
+    <Compile Include="core\img\js\jquery.cookie.js" />
+    <Compile Include="core\img\js\jquery.sobox.min.js" />
+    <Compile Include="core\img\js\jquery.treeview.js" />
+    <Compile Include="core\img\js\xiaocms.js" />
+    <Compile Include="core\img\message\bg_right.gif" />
+    <Compile Include="core\img\message\bg_wrong.gif" />
+    <Compile Include="core\img\message\xiaocms.css" />
+    <Compile Include="core\img\message\xiaocms_msg.tpl.php" />
+    <Compile Include="core\library\cookie.class.php" />
+    <Compile Include="core\library\dbpdo.class.php" />
+    <Compile Include="core\library\field.class.php" />
+    <Compile Include="core\library\global.function.php" />
+    <Compile Include="core\library\image.class.php" />
+    <Compile Include="core\library\Model.class.php" />
+    <Compile Include="core\library\pager.class.php" />
+    <Compile Include="core\library\pinyin.class.php" />
+    <Compile Include="core\library\session.class.php" />
+    <Compile Include="core\library\tree.class.php" />
+    <Compile Include="core\library\view.class.php" />
+    <Compile Include="core\index.html" />
+    <Compile Include="core\version.php" />
+    <Compile Include="core\xiaocms.php" />
+    <Compile Include="data\cache\block.cache.php" />
+    <Compile Include="data\cache\category.cache.php" />
+    <Compile Include="data\cache\category_dir.cache.php" />
+    <Compile Include="data\cache\content_model.cache.php" />
+    <Compile Include="data\cache\diy_model.cache.php" />
+    <Compile Include="data\cache\form_model.cache.php" />
+    <Compile Include="data\cache\member_model.cache.php" />
+    <Compile Include="data\config\config.ini.php" />
+    <Compile Include="data\config\database.ini.php" />
+    <Compile Include="data\models\xiao_admin.tableinfo.cache.php" />
+    <Compile Include="data\models\xiao_block.tableinfo.cache.php" />
+    <Compile Include="data\models\xiao_category.tableinfo.cache.php" />
+    <Compile Include="data\models\xiao_content.tableinfo.cache.php" />
+    <Compile Include="data\models\xiao_model.tableinfo.cache.php" />
+    <Compile Include="data\install.lock" />
+    <Compile Include="icepointadmin\controller\Admin.class.php" />
+    <Compile Include="icepointadmin\controller\administrator.php" />
+    <Compile Include="icepointadmin\controller\block.php" />
+    <Compile Include="icepointadmin\controller\category.php" />
+    <Compile Include="icepointadmin\controller\content.php" />
+    <Compile Include="icepointadmin\controller\createhtml.php" />
+    <Compile Include="icepointadmin\controller\database.php" />
+    <Compile Include="icepointadmin\controller\diytable.php" />
+    <Compile Include="icepointadmin\controller\form.php" />
+    <Compile Include="icepointadmin\controller\index.php" />
+    <Compile Include="icepointadmin\controller\login.php" />
+    <Compile Include="icepointadmin\controller\member.php" />
+    <Compile Include="icepointadmin\controller\models.php" />
+    <Compile Include="icepointadmin\controller\product.php" />
+    <Compile Include="icepointadmin\controller\template.php" />
+    <Compile Include="icepointadmin\controller\uploadfile.php" />
+    <Compile Include="icepointadmin\img\add.gif" />
+    <Compile Include="icepointadmin\img\bg-left1.gif" />
+    <Compile Include="icepointadmin\img\bg-left2.gif" />
+    <Compile Include="icepointadmin\img\bg-left3.gif" />
+    <Compile Include="icepointadmin\img\bg.gif" />
+    <Compile Include="icepointadmin\img\bg_logo.png" />
+    <Compile Include="icepointadmin\img\bg_menu.gif" />
+    <Compile Include="icepointadmin\img\bg_x.gif" />
+    <Compile Include="icepointadmin\img\bg_y.gif" />
+    <Compile Include="icepointadmin\img\bntbg.png" />
+    <Compile Include="icepointadmin\img\button-active.png" />
+    <Compile Include="icepointadmin\img\button-hover.png" />
+    <Compile Include="icepointadmin\img\button.png" />
+    <Compile Include="icepointadmin\img\file.gif" />
+    <Compile Include="icepointadmin\img\folder-closed.gif" />
+    <Compile Include="icepointadmin\img\folder.gif" />
+    <Compile Include="icepointadmin\img\gear_disable.png" />
+    <Compile Include="icepointadmin\img\home.gif" />
+    <Compile Include="icepointadmin\img\icon-sobox.png" />
+    <Compile Include="icepointadmin\img\input.png" />
+    <Compile Include="icepointadmin\img\input_date.png" />
+    <Compile Include="icepointadmin\img\link.gif" />
+    <Compile Include="icepointadmin\img\loading.gif" />
+    <Compile Include="icepointadmin\img\login_bg.jpg" />
+    <Compile Include="icepointadmin\img\minus.gif" />
+    <Compile Include="icepointadmin\img\pic.gif" />
+    <Compile Include="icepointadmin\img\qq.gif" />
+    <Compile Include="icepointadmin\img\question.gif" />
+    <Compile Include="icepointadmin\img\ref.gif" />
+    <Compile Include="icepointadmin\img\toggle-collapse-dark.png" />
+    <Compile Include="icepointadmin\img\toggle-expand-dark.png" />
+    <Compile Include="icepointadmin\img\treeview-default-line.gif" />
+    <Compile Include="icepointadmin\img\treeview-default.gif" />
+    <Compile Include="icepointadmin\img\xiaocms.css" />
+    <Compile Include="icepointadmin\template\admin_add.tpl.php" />
+    <Compile Include="icepointadmin\template\admin_list.tpl.php" />
+    <Compile Include="icepointadmin\template\block_add.tpl.php" />
+    <Compile Include="icepointadmin\template\block_list.tpl.php" />
+    <Compile Include="icepointadmin\template\cache.tpl.php" />
+    <Compile Include="icepointadmin\template\category_add.tpl.php" />
+    <Compile Include="icepointadmin\template\category_list.tpl.php" />
+    <Compile Include="icepointadmin\template\category_tree.tpl.php" />
+    <Compile Include="icepointadmin\template\config.tpl.php" />
+    <Compile Include="icepointadmin\template\content_add.tpl.php" />
+    <Compile Include="icepointadmin\template\content_list.tpl.php" />
+    <Compile Include="icepointadmin\template\database_import.tpl.php" />
+    <Compile Include="icepointadmin\template\database_list.tpl.php" />
+    <Compile Include="icepointadmin\template\diytable_add.tpl.php" />
+    <Compile Include="icepointadmin\template\diytable_list.tpl.php" />
+    <Compile Include="icepointadmin\template\form_edit.tpl.php" />
+    <Compile Include="icepointadmin\template\form_list.tpl.php" />
+    <Compile Include="icepointadmin\template\header.tpl.php" />
+    <Compile Include="icepointadmin\template\index.tpl.php" />
+    <Compile Include="icepointadmin\template\login.tpl.php" />
+    <Compile Include="icepointadmin\template\main.tpl.php" />
+    <Compile Include="icepointadmin\template\member_edit.tpl.php" />
+    <Compile Include="icepointadmin\template\member_list.tpl.php" />
+    <Compile Include="icepointadmin\template\models_add.tpl.php" />
+    <Compile Include="icepointadmin\template\models_field_add.tpl.php" />
+    <Compile Include="icepointadmin\template\models_field_list.tpl.php" />
+    <Compile Include="icepointadmin\template\models_list.tpl.php" />
+    <Compile Include="icepointadmin\template\my.tpl.php" />
+    <Compile Include="icepointadmin\template\product_list.tpl.php" />
+    <Compile Include="icepointadmin\template\related_list.tpl.php" />
+    <Compile Include="icepointadmin\template\template_add.tpl.php" />
+    <Compile Include="icepointadmin\template\template_list.tpl.php" />
+    <Compile Include="icepointadmin\template\upload_manager.tpl.php" />
+    <Compile Include="icepointadmin\index.php" />
+    <Compile Include="__sql\xiaocms.sql" />
+    <Compile Include="__sql\xiaocms_data.sql" />
+    <Compile Include=".gitattributes" />
+    <Compile Include=".gitignore" />
+    <Compile Include="icepoint.sln" />
+    <Compile Include="index.php" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".vs\icepoint\v15" />
+    <Folder Include=".vs\icepoint" />
+    <Folder Include=".vs" />
+    <Folder Include="core\controller" />
+    <Folder Include="core\img\calendar\skins\default" />
+    <Folder Include="core\img\calendar\skins" />
+    <Folder Include="core\img\calendar" />
+    <Folder Include="core\img\js" />
+    <Folder Include="core\img\message" />
+    <Folder Include="core\img" />
+    <Folder Include="core\library" />
+    <Folder Include="core" />
+    <Folder Include="data\cache" />
+    <Folder Include="data\config" />
+    <Folder Include="data\models" />
+    <Folder Include="data" />
+    <Folder Include="icepointadmin\controller" />
+    <Folder Include="icepointadmin\img" />
+    <Folder Include="icepointadmin\template" />
+    <Folder Include="icepointadmin" />
+    <Folder Include="__sql" />
+  </ItemGroup>
+</Project>

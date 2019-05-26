@@ -21,7 +21,7 @@ define('COOKIE_PRE',			'xiaocms_');//Cookie 前缀，同一域名下安装多套
 date_default_timezone_set('Asia/Shanghai');
 xiaocms::load_file(CORE_PATH . 'library' . DIRECTORY_SEPARATOR . 'global.function.php');
 xiaocms::load_file(CORE_PATH . 'version.php');
-xiaocms::load_file(CORE_PATH . 'controller/Base.class.php'); 
+xiaocms::load_file(CORE_PATH . 'controller/Base.class.php');
 
 /**
  * 系统核心全局控制类
@@ -30,22 +30,22 @@ abstract class xiaocms {
 	public static $controller;
 	public static $action;
 	/**
-	 * 分析URL信息
-	 */
+     * 分析URL信息
+     */
 	private static function parse_request() {
 		$path_url_string = isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] ? $_SERVER['QUERY_STRING'] : $_SERVER['REQUEST_URI'];
-		parse_str($path_url_string, $url_info_array);		
+		parse_str($path_url_string, $url_info_array);
 		$controller_name  = trim((isset($url_info_array['c']) && $url_info_array['c']) ? $url_info_array['c'] : 'index');
-		$action_name      = trim((isset($url_info_array['a']) && $url_info_array['a']) ? $url_info_array['a'] : 'index'); 
+		$action_name      = trim((isset($url_info_array['a']) && $url_info_array['a']) ? $url_info_array['a'] : 'index');
 		self::$controller = self::_safe(strtolower($controller_name));
 		self::$action 	  = self::_safe(strtolower($action_name));
 		$_GET             = array_merge($_GET, $url_info_array);
 		return true;
 	}
-	
+
 	/**
-	 * 项目运行函数
-	 */
+     * 项目运行函数
+     */
 	public static function run() {
 		global $config ;
 		if (!empty($config['site_mobile']) && is_mobile()) { //如果你要指定手机版绑定域名就修改这里吧
@@ -58,10 +58,10 @@ abstract class xiaocms {
 		if (!isset($_app[$app_id])) {
 			$controller = self::$controller;
 			$action     = self::$action . 'Action';
-			if (is_file(CONTROLLER_DIR . $controller . '.php')) {	
-				self::load_file(CONTROLLER_DIR . $controller . '.php');				
+			if (is_file(CONTROLLER_DIR . $controller . '.php')) {
+				self::load_file(CONTROLLER_DIR . $controller . '.php');
 			} else {
-			   exit('XiaoCms：Controller does not exist.');
+                exit('XiaoCms：Controller does not exist.');
 			}
 			$app_object = new $controller();
 			if (method_exists($controller, $action)) {
@@ -72,15 +72,15 @@ abstract class xiaocms {
 		}
 		return $_app[$app_id];
 	}
-	
+
 	/**
-	 * 静态加载文件(相当于PHP函数require_once)
-	 */
+     * 静态加载文件(相当于PHP函数require_once)
+     */
 	public static function load_file($file_name) {
 		static $_inc_files = array();
 		//参数分析
 		if (!$file_name) return false;
-		 if (!isset($_inc_files[$file_name])) {
+        if (!isset($_inc_files[$file_name])) {
 			if (!is_file($file_name)) {
 				exit('The file:' . $file_name . ' not found!');
 			}
@@ -89,10 +89,10 @@ abstract class xiaocms {
 		}
 		return $_inc_files[$file_name];
 	}
-	
+
 	/**
-	 * 加载配置文件
-	 */
+     * 加载配置文件
+     */
 	public static function load_config($file) {
 		static $configs = array();
 		$path = XIAOCMS_PATH . 'data' . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . $file . '.ini.php';
@@ -101,13 +101,13 @@ abstract class xiaocms {
 			return $configs[$file];
 		}
 	}
-	
+
 	/**
-	 * 加载类
-	 */
+     * 加载类
+     */
 	public static function load_class($classname, $initialize = 1) {
 		static $classes = array();
-		
+
 		$key = md5($classname);
 		if (isset($classes[$key])) {
 			if (!empty($classes[$key])) {
@@ -129,24 +129,24 @@ abstract class xiaocms {
 			return false;
 		}
 	}
-	
+
     /**
-	 * 安全处理函数controller
-	 */
+     * 安全处理函数controller
+     */
 	private static function _safe($str) {
 		return str_replace(array('/', '.'), '', $str);
 	}
-	
+
 	/**
-	 * 获取当前运行的controller名称
-	 */
+     * 获取当前运行的controller名称
+     */
 	public static function get_controller_id() {
 		return self::$controller;
 	}
-	
+
 	/**
-	 * 获取当前运行的action名称
-	 */
+     * 获取当前运行的action名称
+     */
 	public static function get_action_id() {
 		return self::$action;
 	}
