@@ -70,6 +70,7 @@
     <Compile Include="icepointadmin\controller\Admin.class.php" />
     <Compile Include="icepointadmin\controller\administrator.php" />
     <Compile Include="icepointadmin\controller\block.php" />
+    <Compile Include="icepointadmin\controller\cardtype.php" />
     <Compile Include="icepointadmin\controller\category.php" />
     <Compile Include="icepointadmin\controller\content.php" />
     <Compile Include="icepointadmin\controller\createhtml.php" />
@@ -80,6 +81,7 @@
     <Compile Include="icepointadmin\controller\login.php" />
     <Compile Include="icepointadmin\controller\member.php" />
     <Compile Include="icepointadmin\controller\models.php" />
+    <Compile Include="icepointadmin\controller\card.php" />
     <Compile Include="icepointadmin\controller\product.php" />
     <Compile Include="icepointadmin\controller\template.php" />
     <Compile Include="icepointadmin\controller\uploadfile.php" />
@@ -88,7 +90,6 @@
     <Compile Include="icepointadmin\img\bg-left2.gif" />
     <Compile Include="icepointadmin\img\bg-left3.gif" />
     <Compile Include="icepointadmin\img\bg.gif" />
-    <Compile Include="icepointadmin\img\bg_logo.png" />
     <Compile Include="icepointadmin\img\bg_menu.gif" />
     <Compile Include="icepointadmin\img\bg_x.gif" />
     <Compile Include="icepointadmin\img\bg_y.gif" />
@@ -116,16 +117,18 @@
     <Compile Include="icepointadmin\img\toggle-expand-dark.png" />
     <Compile Include="icepointadmin\img\treeview-default-line.gif" />
     <Compile Include="icepointadmin\img\treeview-default.gif" />
-    <Compile Include="icepointadmin\img\xiaocms.css" />
+    <Compile Include="icepointadmin\img\page.css" />
     <Compile Include="icepointadmin\template\admin_add.tpl.php" />
     <Compile Include="icepointadmin\template\admin_list.tpl.php" />
     <Compile Include="icepointadmin\template\block_add.tpl.php" />
     <Compile Include="icepointadmin\template\block_list.tpl.php" />
     <Compile Include="icepointadmin\template\cache.tpl.php" />
+    <Compile Include="icepointadmin\template\cardtype_list.tpl.php" />
     <Compile Include="icepointadmin\template\category_add.tpl.php" />
     <Compile Include="icepointadmin\template\category_list.tpl.php" />
     <Compile Include="icepointadmin\template\category_tree.tpl.php" />
     <Compile Include="icepointadmin\template\config.tpl.php" />
+    <Compile Include="icepointadmin\template\cardtype_add.tpl.php" />
     <Compile Include="icepointadmin\template\content_add.tpl.php" />
     <Compile Include="icepointadmin\template\content_list.tpl.php" />
     <Compile Include="icepointadmin\template\database_import.tpl.php" />
@@ -145,6 +148,7 @@
     <Compile Include="icepointadmin\template\models_field_list.tpl.php" />
     <Compile Include="icepointadmin\template\models_list.tpl.php" />
     <Compile Include="icepointadmin\template\my.tpl.php" />
+    <Compile Include="icepointadmin\template\card_list.tpl.php" />
     <Compile Include="icepointadmin\template\product_list.tpl.php" />
     <Compile Include="icepointadmin\template\related_list.tpl.php" />
     <Compile Include="icepointadmin\template\template_add.tpl.php" />
@@ -180,5 +184,8 @@
     <Folder Include="icepointadmin\template" />
     <Folder Include="icepointadmin" />
     <Folder Include="__sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icepointadmin\img\index.css" />
   </ItemGroup>
 </Project>
