@@ -37,6 +37,7 @@
     <Compile Include="core\img\message\bg_wrong.gif" />
     <Compile Include="core\img\message\xiaocms.css" />
     <Compile Include="core\img\message\xiaocms_msg.tpl.php" />
+    <Compile Include="core\library\rediscache.class.php" />
     <Compile Include="core\library\cookie.class.php" />
     <Compile Include="core\library\dbpdo.class.php" />
     <Compile Include="core\library\field.class.php" />

@@ -12,6 +12,7 @@ abstract class Base
     protected $category_cache;
     protected $content_model;
     protected $member_info;
+    protected $cache;
 
     public function __construct()
     {
@@ -46,6 +47,7 @@ abstract class Base
             'page' => (int)self::get('page') ? (int)self::get('page') : 1,
             'site_template' => SITE_PATH . basename(TEMPLATE_DIR) . '/' . basename(SYS_THEME_DIR) . '/',
         ));
+        $this->cache=xiaocms::load_class('rediscache');
     }
 
     public function show_message($msg, $status = 2, $url = HTTP_REFERER, $time = 1800)
