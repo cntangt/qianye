@@ -187,5 +187,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icepointadmin\img\index.css" />
+    <Content Include="__sql\icepoint.ndm" />
   </ItemGroup>
 </Project>
