@@ -1,12 +1,21 @@
 <?php
-require_once SDK_DIR.'\yz\autoload.php';
-class cardtype extends Admin {
+require_once SDK_DIR . '\yz\vendor\autoload.php';
 
-    public function __construct() {
+class cardtype extends Admin
+{
+
+	public function __construct()
+	{
 		parent::__construct();
 	}
 
-	public function indexAction() {
+	public function indexAction()
+	{
+		$type = 'silent';
+		$keys['kdt_id'] = '42559182';
+
+		$accessToken = (new \Youzan\Open\Token($this->site_config['yz_client_id'], $this->site_config['yz_client_secret']))->getToken($type, $keys);
+		$tem=$accessToken;
 	/*
 	    if ($this->post('listorder')) {
      		foreach ($this->post('listorder') as $catid => $value) {
@@ -42,12 +51,12 @@ class cardtype extends Admin {
 					</tr>";
 		$this->tree->init($categorys);
 		$categorys = $this->tree->get_tree(0, $str);
-		*/
+		 */
 		include $this->admin_tpl('cardtype_list');
 	}
 
-    public function addAction()
-    {
+	public function addAction()
+	{
 		include $this->admin_tpl('cardtype_add');
-    }
+	}
 }

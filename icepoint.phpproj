@@ -155,6 +155,7 @@
     <Compile Include="icepointadmin\template\template_list.tpl.php" />
     <Compile Include="icepointadmin\template\upload_manager.tpl.php" />
     <Compile Include="icepointadmin\index.php" />
+    <Compile Include="info.php" />
     <Compile Include="sdk\yz\autoload.php" />
     <Compile Include="sdk\yz\composer\autoload_classmap.php" />
     <Compile Include="sdk\yz\composer\autoload_files.php" />

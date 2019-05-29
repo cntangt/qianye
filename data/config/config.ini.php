@@ -25,4 +25,6 @@ return array (
   'show_url' => '{catdir}/{id}.html',
   'show_page_url' => '{catdir}/{id}_{page}.html',
   'rand_code' => '045aa962ab5e8a165f18767fa534d926',
+  'yz_client_id' => '11a6cd4180fe96ffac',
+  'yz_client_secret' => 'a8e6767b5dd75737a32c6d1c4d622e23'
 );
