@@ -7,6 +7,7 @@ class product extends Admin {
 	}
 
 	public function indexAction() {
+		$cards=$this->db->setTableName('card')->findAll(null,null);
 	/*
 	    if ($this->post('listorder')) {
      		foreach ($this->post('listorder') as $catid => $value) {
