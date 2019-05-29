@@ -10,7 +10,6 @@ class session
     {
         $this->_setTimeout();
         $this->start();
-        return true;
     }
 
     public static function start()
@@ -22,7 +21,6 @@ class session
         }
         session_start();
 		header("Cache-control:private");
-        header('X-Powered-By: XiaoCms ' . XIAOCMS_RELEASE);
         self::$_start = true;
         return true;
     }
@@ -84,5 +82,5 @@ class session
         $this->close();
         return true;
     }
-	
+
 }

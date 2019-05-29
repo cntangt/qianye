@@ -44,6 +44,9 @@ class product extends Admin {
 		$this->tree->init($categorys);
 		$categorys = $this->tree->get_tree(0, $str);	
 		*/
+        $val=$this->cache->get('c:name');
+        $this->cache->set('c:name',[name=>'tang']);
+        $this->cache->del('name');
 		include $this->admin_tpl('product_list');
 	}
 }

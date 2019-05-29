@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>XiaoCms</title>
-<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="../core/img/js/jquery.sobox.min.js"></script>
-<script type="text/javascript" src="../core/img/uploadify/jquery.uploadify.min.js?ver=<?php echo microtime(TRUE);?>"></script>
-<script type="text/javascript" src="../core/img/js/xiaocms.js"></script>
-<link rel="stylesheet" type="text/css" href="./img/xiaocms.css" />
+    <meta charset="utf-8">
+    <script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-datepicker/1.8.0/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+    <script type="text/javascript" src="../core/img/js/jquery.sobox.min.js"></script>
+    <!--<script type="text/javascript" src="../core/img/uploadify/jquery.uploadify.min.js?ver=<?php echo microtime(TRUE);?>"></script>-->
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../core/img/js/xiaocms.js"></script>
+    <link rel="stylesheet" type="text/css" href="./img/page.css" />
 </head>
 <body>

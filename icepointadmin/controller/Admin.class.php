@@ -14,10 +14,10 @@ class Admin extends Base {
 		$userid = $this->session->get('user_id');
 		$admin_cache = get_cache('admin');
 		if ($admin_cache) {
-	    $this->admin = $admin_cache[$userid];
+            $this->admin = $admin_cache[$userid];
 		}
 		else {
-	    $this->admin = $this->db->setTableName('admin')->find($userid);
+            $this->admin = $this->db->setTableName('admin')->find($userid);
 		}
 	    $go = xiaocms::get_controller_id() . '-' .xiaocms::get_action_id();
 	    $this->auth = string2array($this->admin['auth']);
@@ -43,31 +43,31 @@ class Admin extends Base {
 		);
 		$auth = array_merge ($skip,$this->auth);
 		if(empty($auth[$go]) && empty($this->admin['roleid'])) {
-		$this->show_message('您没有权限', 2);
+            $this->show_message('您没有权限', 2);
 		}
 	}
-	
+
     protected function menu($string) {
 	    $auth = string2array($this->admin['auth']);
 		if ($this->admin['roleid']) return true;
 		if ($auth[$string]){
-		return true;
+            return true;
 		}
 		else {
-		return false;
+            return false;
 		}
     }
-	
+
     protected function isAdminLogin() {
         if (xiaocms::get_controller_id() == 'login') return false;
         if ($user_id = $this->session->get('user_id')) {
 		    if ($user_id) return false;
         }
-        $this->redirect(url('login'));
+        $this->redirect(url('login')); return true;
     }
 
     protected function admin_tpl($file) {
         return  XIAOCMS_ADMIN . 'template' . DIRECTORY_SEPARATOR . $file.'.tpl.php';
     }
-	
+
 }
