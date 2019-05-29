@@ -1,5 +1,5 @@
 <?php
-
+require_once SDK_DIR.'\yz\autoload.php';
 class cardtype extends Admin {
 
     public function __construct() {

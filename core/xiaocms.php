@@ -15,6 +15,7 @@ define('SYS_START_TIME',     microtime(true));
 define('HTTP_REFERER', isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '');
 define('CORE_PATH',           dirname(__FILE__) . DIRECTORY_SEPARATOR);
 define('DATA_DIR',         XIAOCMS_PATH . 'data' . DIRECTORY_SEPARATOR);
+define('SDK_DIR',         XIAOCMS_PATH . 'sdk' . DIRECTORY_SEPARATOR);
 define('TEMPLATE_DIR',           XIAOCMS_PATH . 'template' . DIRECTORY_SEPARATOR);
 if (!defined('CONTROLLER_DIR')) define('CONTROLLER_DIR',     CORE_PATH . 'controller' . DIRECTORY_SEPARATOR);
 define('COOKIE_PRE',			'xiaocms_');//Cookie 前缀，同一域名下安装多套系统时，请修改Cookie前缀

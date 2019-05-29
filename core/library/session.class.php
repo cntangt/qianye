@@ -82,5 +82,5 @@ class session
         $this->close();
         return true;
     }
-	
+
 }
