@@ -6,10 +6,11 @@ top.document.getElementById('position').innerHTML = '卡券管理';
 <div class="subnav">
 	<div class="content-menu">
 		<div class="left">
-		<?php if ($this->menu('cardtype-add')) {; ?>
+		<?php if ($this->menu('cardtype-add')) {
+                  ; ?>
             <button type="button" class="btn btn-primary dialog" data-url="<?php echo url('cardtype/add') ?>">添加卡券类型</button>
     	<?php 
-				} ?>
+              } ?>
 		</div>
 		<div class="right">
 		    <form method="get" autocomplete="off" class="form-inline">
@@ -44,9 +45,9 @@ top.document.getElementById('position').innerHTML = '卡券管理';
 			<?php if ($t['status'] == $key && $key != 1) { ?>
 			<a href="<?php echo url('content/index', array('catid' => $catid, 'status' => $key)); ?>"><font color="#f00">[<?php echo $r; ?>]</font></a>
 			<?php 
-		} ?>
+                  } ?>
 			<?php 
-		} ?>
+                      } ?>
 			<a href="<?php echo url('content/edit', array('id' => $t['id'])); ?>"><?php echo $t['title']; ?></a>
 			</td>
 			<td align="left"><a href="<?php echo url('content/index', array('catid' => $t['catid'])); ?>"><?php echo $this->category_cache[$t['catid']]['catname']; ?></a></td>
@@ -54,15 +55,15 @@ top.document.getElementById('position').innerHTML = '卡券管理';
 			<td align="left"><a href="<?php echo url('content/index', array('username' => $t['username'], 'catid' => $t['catid'])); ?>"><?php echo $t['username']; ?></a></td>
 			
 			<td align="left"><span style="<?php if (date('Y-m-d', $t['time']) == date('Y-m-d')) { ?>color:#F00<?php 
-																																																																																																				} ?>" title="<?php echo date('H:i', $t['time']); ?>"><?php echo date('Y-m-d', $t['time']); ?></span></td>
+                                                } ?>" title="<?php echo date('H:i', $t['time']); ?>"><?php echo date('Y-m-d', $t['time']); ?></span></td>
 			
 			<td align="left">
 			<?php if (get_cache('form_model')) foreach (get_cache('form_model') as $j) {
-				if ($j['joinid'] == $modelid && !empty($catid) && empty($child)) { ?>
+                          if ($j['joinid'] == $modelid && !empty($catid) && empty($child)) { ?>
 			<a href="<?php echo url('form/index', array('cid' => $t['id'], 'modelid' => $j['modelid'])); ?>"><?php echo $j['modelname']; ?></a> |
 			<?php 
-		}
-	} ?>
+                          }
+                      } ?>
 
 			
 			<a href="<?php echo $this->view->get_show_url($t); ?>" target="_blank">查看</a> | 
@@ -72,7 +73,7 @@ top.document.getElementById('position').innerHTML = '卡券管理';
 			<td align="left"><input type="text" name="listorder[<?php echo $t['id']; ?>]" class="input-text-c"  size='1'  value="<?php echo $t['listorder']; ?>"></td>
 		</tr>
 		<?php 
-	} ?>
+                  } ?>
 		<tr >
 			<td colspan="8"  align="left" style="border-bottom:0px;">
 			<div  class="pageleft">
@@ -84,7 +85,7 @@ top.document.getElementById('position').innerHTML = '卡券管理';
 		<?php if (is_array($this->status_arr)) foreach ($this->status_arr as $key => $t) { ?>
     		<input type="submit"  class="button" value="设为<?php echo $t; ?>" onClick="$('#list_form').val('<?php echo $key; ?>')">&nbsp;
 		<?php 
-	} ?>
+                  } ?>
 		<?php if (empty($child) && !empty($catid)) { ?>
 			批量移动至
 			<select class="select"  name="movecatid">
@@ -92,7 +93,7 @@ top.document.getElementById('position').innerHTML = '卡券管理';
 			</select>
 			<input type="submit" class="button" value="确定移动" name="move" onClick="$('#list_form').val('move')">
 		<?php 
-	} ?>
+              } ?>
 			</div>
 			<div class="pageright"><?php echo $pagelist; ?></div>
 			</td>
@@ -108,6 +109,20 @@ top.document.getElementById('position').innerHTML = '卡券管理';
             var html = '<div class="progress"><span>加载中...</span><div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div></div>';
             $('#modal').modal('show');
             $('#modal .modal-content').html(html).load($(this).data('url'));
+        });
+
+        $('#modal').on('submit','form',function () {
+            var form = $('#typeaddform');
+            $.post(form.attr('action'), form.serialize(), function (res) {
+                if (res.succ) {
+                    $('#modal').modal('hide');
+                    window.location.reload();
+                }
+                else {
+                    alert(res.msg);
+                }
+            });
+            return false;
         });
     });
 </script>

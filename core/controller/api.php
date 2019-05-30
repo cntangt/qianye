@@ -4,7 +4,6 @@ class api extends Base {
 
 	public function __construct() {
         parent::__construct();
-        header('Content-Type: application/json; charset=utf-8');
 	}
 
 	public function ajaxkwAction() {
@@ -52,7 +51,7 @@ class api extends Base {
 
 	public function indexAction() {
         $cards=$this->db->setTableName('card')->findAll();
-	    self::json($cards);
+	    $this -> json($cards);
 	}
 
 	public function checkcodeAction() {
@@ -61,11 +60,5 @@ class api extends Base {
 	    $height = $this->get('height');
 	    $api->checkcode($width,$height);
 	}
-
-    private function json($val,$succ=true,$msg=null,$code=0)
-    {
-        echo json_encode([succ=>$succ,msg=>$msg,code=>$code,val=>$val]);
-        exit();
-    }
 
 }

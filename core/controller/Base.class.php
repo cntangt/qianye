@@ -13,6 +13,7 @@ abstract class Base
     protected $content_model;
     protected $member_info;
     protected $cache;
+    protected $ispost;
 
     public function __construct()
     {
@@ -48,6 +49,7 @@ abstract class Base
             'site_template' => SITE_PATH . basename(TEMPLATE_DIR) . '/' . basename(SYS_THEME_DIR) . '/',
         ));
         $this->cache=xiaocms::load_class('rediscache');
+        $this->ispost=$_SERVER['REQUEST_METHOD'] == 'POST';
     }
 
     public function show_message($msg, $status = 2, $url = HTTP_REFERER, $time = 1800)
@@ -247,6 +249,13 @@ abstract class Base
             if ($t) $title .= $this->category_cache[$t]['catname'] . ' - ';
         }
         return $title;
+    }
+
+    protected function json($val,$succ=true,$msg=null,$code=0)
+    {
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode([succ=>$succ,msg=>$msg,code=>$code,val=>$val]);
+        exit();
     }
 
 }

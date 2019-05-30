@@ -1003,7 +1003,7 @@ a.a-sopop-cancel span.s-sopop-btn {
     height: 9px;
     background-position: 0 -101px
 }
-
+/*------------------------------------*/
 .progress {
     margin: 40px 30px 30px;
 }
@@ -1019,4 +1019,8 @@ a.a-sopop-cancel span.s-sopop-btn {
     text-align: center;
     top: 15px;
     left: 50%;
+}
+
+.error {
+    color: red;
 }
