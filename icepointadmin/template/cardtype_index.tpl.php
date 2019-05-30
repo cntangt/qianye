@@ -22,14 +22,15 @@
     <div class="bk10"></div>
     <div id="listcontainer"></div>
 </div>
-<div id="modal" class="modal" tabindex="-1" role="dialog" data-backdrop="static">
+<div id="modal" class="modal" role="dialog" data-backdrop="static">
     <div class="modal-dialog" role="document" style="max-width:800px;">
         <div class="modal-content"></div>
     </div>
 </div>
+<script>var list=<?php echo $json?></script>
 <script>
     $(function() {
-        $('.dialog').click(function() {
+        $('#listcontainer,.subnav').on('click','.dialog',function() {
             var html = '<div class="progress"><span>加载中...</span><div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div></div>';
             $('#modal').modal('show');
             $('#modal .modal-content').html(html).load($(this).data('url'));
@@ -46,6 +47,9 @@
                 }
             });
             return false;
+        }).on('click', '#addnew', function () {
+            $($('#row0')[0].innerHTML).appendTo('#rows');
+            $('#rows .row').last().find('.pditem').select2({ data: list, placeholder: '选择商品' });
         });
 
         $('#listcontainer').on('click', '.xiaocms-page a', function() {

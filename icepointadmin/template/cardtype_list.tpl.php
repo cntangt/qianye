@@ -33,7 +33,7 @@
                 <?php echo $t['vailddays'] ?>天
             </td>
             <td>
-                <button class="btn btn-sm btn-success">商品管理</button>
+                <button class="btn btn-sm btn-success dialog" data-url="<?php echo url('cardtype/pdlist')?>">商品管理</button>
                 <button class="btn btn-sm btn-danger">作废</button>
             </td>
         </tr>

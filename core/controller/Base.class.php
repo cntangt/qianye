@@ -1,6 +1,8 @@
 <?php
 if (!defined('IN_XIAOCMS')) exit();
 
+require_once SDK_DIR . '\yz\vendor\autoload.php';
+
 abstract class Base
 {
 
@@ -31,7 +33,7 @@ abstract class Base
         }
         if (!is_file(XIAOCMS_PATH . 'data/install.lock')) self::redirect(url('install/index'));
         if (is_file(XIAOCMS_PATH . 'member' . DIRECTORY_SEPARATOR . 'index.php'))
-		define('XIAOCMS_MEMBER', XIAOCMS_PATH . 'member' . DIRECTORY_SEPARATOR);
+            define('XIAOCMS_MEMBER', XIAOCMS_PATH . 'member' . DIRECTORY_SEPARATOR);
         $this->db = xiaocms::load_class('Model');
         $this->view = xiaocms::load_class('view');
         $this->cookie = xiaocms::load_class('cookie');
@@ -163,7 +165,7 @@ abstract class Base
                     if ($member_info) {
                         $member = array_merge($member, $member_info);
                     }
-                   return $member;
+                    return $member;
                 }
             }
         }
@@ -198,11 +200,11 @@ abstract class Base
                     if (!preg_match($t['pattern'], $data[$t['field']])) $this->show_message(empty($t['errortips']) ? $t['name'] . '格式不正确' : $t['errortips'],2,1);
                 }
             }
-//			if (in_array($t['formtype'], array('checkbox', 'files', 'diy'))) $data[$t['field']] = array2string($data[$t['field']]);
+            //			if (in_array($t['formtype'], array('checkbox', 'files', 'diy'))) $data[$t['field']] = array2string($data[$t['field']]);
 			if ($t['formtype']=='related'){
 				$data[$t['field']]= explode(',', $data[$t['field']]);
 				foreach( $data[$t['field']] as $k=>$v){
-				   if(!$v) unset( $data[$t['field']][$k] );
+                    if(!$v) unset( $data[$t['field']][$k] );
 				}
 				$data[$t['field']] = implode(',', $data[$t['field']]);
 			}
@@ -258,4 +260,21 @@ abstract class Base
         exit();
     }
 
+    protected function yz_acc_token()
+    {
+        $type = 'silent';
+        $keys['kdt_id'] = $this->site_config['yz_store_id'];
+
+        $token=$this->cache->get('yz:acc_token');
+        if ($token)
+        {
+        	return $token;
+        }
+
+        $accessToken = (new \Youzan\Open\Token($this->site_config['yz_client_id'], $this->site_config['yz_client_secret']))->getToken($type, $keys);
+
+        $this->cache->set('yz:acc_token', $accessToken['access_token'], 3600);
+
+        return $accessToken['access_token'];
+    }
 }

@@ -1,5 +1,4 @@
 <?php
-//require_once SDK_DIR . '\yz\vendor\autoload.php';
 
 class cardtype extends Admin
 {
@@ -11,11 +10,22 @@ class cardtype extends Admin
 
     public function indexAction()
     {
-        //$type = 'silent';
-        //$keys['kdt_id'] = '42559182';
+        $key=$this->get('key');
+        $token=$this->yz_acc_token();
+        $client = new \Youzan\Open\Client($token);
 
-        //$accessToken = (new \Youzan\Open\Token($this->site_config['yz_client_id'], $this->site_config['yz_client_secret']))->getToken($type, $keys);
-        //$tem = $accessToken;
+        $method = 'youzan.items.onsale.get';
+        $apiVersion = '3.0.0';
+
+        $res = $client->get($method, $apiVersion, [q=>$key]);
+        $data=$res['data']['items'];
+        $list=array();
+        for ($i = 0; $i < count($data); $i++)
+        {
+            $list[$i]['id']=$data[$i]['item_id'];
+            $list[$i]['text']=$data[$i]['title'];
+        }
+        $json=json_encode($list);
         include $this->admin_tpl('cardtype_index');
     }
 
@@ -64,4 +74,10 @@ class cardtype extends Admin
 
         include $this->admin_tpl('cardtype_add');
     }
+
+    public function pdlistAction()
+    {
+        include $this->admin_tpl('cardtype_pdlist');
+    }
+
 }

@@ -1025,3 +1025,16 @@ a.a-sopop-cancel span.s-sopop-btn {
 .error {
     color: red;
 }
+
+.autocomplete-suggestion {
+    padding: 3px;
+    cursor: pointer;
+}
+
+.autocomplete-suggestion:hover {
+    background-color: #eee;
+}
+
+#modal .row {
+    padding-left: 50px;
+}

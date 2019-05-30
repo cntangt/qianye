@@ -125,6 +125,7 @@
     <Compile Include="icepointadmin\template\block_list.tpl.php" />
     <Compile Include="icepointadmin\template\cache.tpl.php" />
     <Compile Include="icepointadmin\template\cardtype_index.tpl.php" />
+    <Compile Include="icepointadmin\template\cardtype_pdlist.tpl.php" />
     <Compile Include="icepointadmin\template\cardtype_list.tpl.php" />
     <Compile Include="icepointadmin\template\category_add.tpl.php" />
     <Compile Include="icepointadmin\template\category_list.tpl.php" />
