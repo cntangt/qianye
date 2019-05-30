@@ -9,7 +9,7 @@
     <div class="modal-body">
         <div class="form-group">
             <label>卡券类型名称</label>
-            <input type="text" class="form-control" name="data[name]" value="<?php echo $data['name']?>" placeholder="输入类型名称，最多20个字符" required maxlength="40" />
+            <input type="text" class="form-control" name="data[name]" value="<?php echo $data['name'] ?>" placeholder="输入类型名称，最多20个字符" required maxlength="40" />
         </div>
         <div class="form-group">
             <label>激活有效期</label>
@@ -17,16 +17,16 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">从</span>
                 </div>
-                <input type="text" class="form-control" name="data[begintime]" value="<?php echo $data['begintime']?>" placeholder="选择开始时间" required />
+                <input type="text" class="form-control" name="data[begintime]" value="<?php echo $data['begintime'] ?>" placeholder="选择开始时间" required />
                 <div class="input-group-prepend">
                     <span class="input-group-text">到</span>
                 </div>
-                <input type="text" class="form-control" name="data[endtime]" value="<?php echo $data['endtime']?>" placeholder="选择结束时间" required/ />
+                <input type="text" class="form-control" name="data[endtime]" value="<?php echo $data['endtime'] ?>" placeholder="选择结束时间" required/ />
             </div>
         </div>
         <div class="form-group">
             <label>提货有效期（天）</label>
-            <input type="number" class="form-control" name="data[vailddays]" value="<?php echo $data['vailddays']?>" placeholder="输入有效天数" required />
+            <input type="number" class="form-control" name="data[vailddays]" value="<?php echo $data['vailddays'] ?>" placeholder="输入有效天数" required />
         </div>
         <div id="items"></div>
     </div>
@@ -40,5 +40,16 @@
         language: "zh-CN",
         format: 'yyyy-mm-dd'
     });
-    $('#typeaddform').validate({});
+    $('#typeaddform').validate({submitHandler:function(){
+        var form = $('#typeaddform');
+        $.post(form.attr('action'), form.serialize(), function(res) {
+            if (res.succ) {
+                $('#modal').modal('hide');
+                loadlist();
+            } else {
+                alert(res.msg);
+            }
+        });
+        return false;
+    }});
 </script>

@@ -17,7 +17,7 @@ class cardtype extends Admin
         $method = 'youzan.items.onsale.get';
         $apiVersion = '3.0.0';
 
-        $res = $client->get($method, $apiVersion, [q=>$key]);
+        $res = $client->get($method, $apiVersion, ['q'=>$key]);
         $data=$res['data']['items'];
         $list=array();
         for ($i = 0; $i < count($data); $i++)
@@ -38,7 +38,7 @@ class cardtype extends Admin
         $this->list_where();
         $list = $this->db->pageLimit($page, $size)->getAll(null, null, null, 'id DESC');
         $pagelist = xiaocms::load_class('pager');
-        $pagelist = $pagelist->total($total)->url(url('cardtype/list', [name => $this->get('name')]) . '&page=[page]')->ext(true)->num($size)->page($page)->output();
+        $pagelist = $pagelist->total($total)->url(url('cardtype/list', ['name' => $this->get('name')]) . '&page=[page]')->ext(true)->num($size)->page($page)->output();
 
         include $this->admin_tpl('cardtype_list');
     }
@@ -77,6 +77,7 @@ class cardtype extends Admin
 
     public function pdlistAction()
     {
+        $list=$this->db->setTableName('card_type_item')->where('cardtypeid=?',$this->get('id'))->getAll();
         include $this->admin_tpl('cardtype_pdlist');
     }
 
