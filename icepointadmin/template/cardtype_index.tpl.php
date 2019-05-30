@@ -14,7 +14,7 @@
         </div>
         <div class="right">
             <form autocomplete="off" class="form-inline" data-url="<?php echo url('cardtype/list') ?>" id="searchform">
-                <input type="text" class="form-control form-control-sm mx-sm-3" name="data[name]" />
+                <input type="text" class="form-control form-control-sm mx-sm-3" name="name" />
                 <button type="submit" class="btn btn-sm btn-success">查询</button>
             </form>
         </div>
@@ -48,9 +48,14 @@
             return false;
         });
 
+        $('#listcontainer').on('click', '.xiaocms-page a', function() {
+            $('#listcontainer').load($(this).attr('href'));
+            return false;
+        });
+
         var form = $('#searchform').submit(loadlist);
         function loadlist() {
-            $('#listcontainer').load(form.data('url'), form.serializeArray());
+            $('#listcontainer').load(form.data('url'), form.serialize());
             return false;
         }
         loadlist();

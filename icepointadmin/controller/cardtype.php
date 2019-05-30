@@ -21,22 +21,24 @@ class cardtype extends Admin
 
     public function listAction()
     {
-        $data = $this->post('data');
-        $this->list_where($data);
+        $page = $this->get('page');
+        $size = 15;
+        $this->list_where();
         $total = $this->db->count();
-        $this->list_where($data);
-        $list = $this->db->pageLimit($data['page'], 15)->getAll(null, null, null, 'id DESC');
+        $this->list_where();
+        $list = $this->db->pageLimit($page, $size)->getAll(null, null, null, 'id DESC');
         $pagelist = xiaocms::load_class('pager');
-	    $pagelist = $pagelist->total($total)->url(url('content/index', null) . '&page=[page]')->ext(true)->num(15)->page($data['page'])->output();
+        $pagelist = $pagelist->total($total)->url(url('cardtype/list', [name => $this->get('name')]) . '&page=[page]')->ext(true)->num($size)->page($page)->output();
 
         include $this->admin_tpl('cardtype_list');
     }
 
-    private function list_where($data)
+    private function list_where()
     {
         $this->db->setTableName('vi_card_type');
 
-        if (!empty($data['name'])) $this->db->where('name like ?','%'.$data['name'].'%');
+        $name = $this->get('name');
+        if (!empty($name)) $this->db->where('name like ?', '%' . $name . '%');
     }
 
     public function addAction()
