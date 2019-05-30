@@ -5,7 +5,7 @@ body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, fo
 }
 
 body, html, input {
-    font-size: 13px;
+    font-size: 12px;
     font-family: 'Microsoft YaHei';
     color: #444
 }
@@ -615,9 +615,10 @@ textarea, textarea.input-text, textarea {
 }
 
 .xiaocms-page {
-    font-family: \5b8b\4f53;
     text-align: right;
-    margin-right: 10px
+    margin-right: 10px;
+    height: 30px;
+    line-height: 30px;
 }
 
 .xiaocms-page a {

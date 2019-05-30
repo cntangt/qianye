@@ -12,7 +12,8 @@
     <SaveServerSettingsInUserFile>false</SaveServerSettingsInUserFile>
     <EnvName>PHPDev</EnvName>
     <PHPDevHostName>localhost</PHPDevHostName>
-    <PHPDevAutoPort>true</PHPDevAutoPort>
+    <PHPDevAutoPort>false</PHPDevAutoPort>
+    <PHPDevPort>9000</PHPDevPort>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <IncludeDebugInformation>true</IncludeDebugInformation>
@@ -123,6 +124,7 @@
     <Compile Include="icepointadmin\template\block_add.tpl.php" />
     <Compile Include="icepointadmin\template\block_list.tpl.php" />
     <Compile Include="icepointadmin\template\cache.tpl.php" />
+    <Compile Include="icepointadmin\template\cardtype_index.tpl.php" />
     <Compile Include="icepointadmin\template\cardtype_list.tpl.php" />
     <Compile Include="icepointadmin\template\category_add.tpl.php" />
     <Compile Include="icepointadmin\template\category_list.tpl.php" />

@@ -20,7 +20,7 @@ class pager
     public $prePage = '上一页';
     public $nextPage = '下一页';
     public $lastPage = '最末页';
-    public $note = '<a  href="#">共{$totalNum}条</a>';
+    public $note = '<span>共{$totalNum}条</span>';
 
     protected function _getTotalPage()
     {
