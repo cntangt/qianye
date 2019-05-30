@@ -3,7 +3,7 @@
     <thead class="m-table-thead s-table-thead">
         <tr>
             <th width="40" align="left">ID </th>
-            <th align="left">名称</th>
+            <th align="left" width="20%">名称</th>
             <th align="left">商品内容</th>
             <th width="100">开始时间</th>
             <th width="100">结束时间</th>
@@ -21,7 +21,7 @@
                 <?php echo $t['name'] ?>
             </td>
             <td>
-                
+                <?php echo $t['description'] ?>
             </td>
             <td>
                 <?php echo date('Y-m-d',$t['begintime']) ?>

@@ -7,7 +7,7 @@ class Model
     protected $_dbName = null;
     protected $_tableName = null;
     protected $_tableField = array();
-    protected $_primaryKey = null;
+    protected $_primaryKey = 'id';
     protected $_prefix = null;
     protected $_errorInfo = null;
     protected $_parts = array();
@@ -359,7 +359,7 @@ class Model
 
     public function count($where = null, $value = null)
     {
-        return $this->_getValueByFunction('count', null, $where, $value);
+        return $this->_getValueByFunction('count', '0', $where, $value);
     }
 
     protected function _getValueByFunction($funName, $fieldName = null, $where = null, $value = null)
@@ -373,6 +373,10 @@ class Model
         }
         if ($fields == '*') {
             $fields = $this->_getPrimaryKey();
+            if ($fields == null)
+            {
+                $fields = '*';
+            }
         }
         $condition = $this->_parseCondition($where, $value);
         $tableName = $this->getTableName();

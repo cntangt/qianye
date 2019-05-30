@@ -34,7 +34,7 @@ class cardtype extends Admin
 
     private function list_where($data)
     {
-        $this->db->setTableName('card_type');
+        $this->db->setTableName('vi_card_type');
 
         if (!empty($data['name'])) $this->db->where('name like ?','%'.$data['name'].'%');
     }
