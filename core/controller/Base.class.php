@@ -1,7 +1,7 @@
 <?php
 if (!defined('IN_XIAOCMS')) exit();
 
-require_once SDK_DIR . '\yz\vendor\autoload.php';
+require_once SDK_DIR . 'yz/vendor/autoload.php';
 
 abstract class Base
 {
