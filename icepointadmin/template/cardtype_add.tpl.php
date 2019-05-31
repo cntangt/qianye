@@ -44,8 +44,7 @@
         var form = $('#typeaddform');
         $.post(form.attr('action'), form.serialize(), function(res) {
             if (res.succ) {
-                $('#modal').modal('hide');
-                loadlist();
+                reload();
             } else {
                 alert(res.msg);
             }

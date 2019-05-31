@@ -299,10 +299,7 @@ body fieldset legend {
     vertical-align: middle
 }
 
-.content-menu span {
-    color: #ddd;
-    padding: 0 8px
-}
+
 
 .pageleft {
     float: left
@@ -1038,3 +1035,8 @@ a.a-sopop-cancel span.s-sopop-btn {
 #modal .row {
     padding-left: 50px;
 }
+.content-menu span {
+    /* color: #ddd;*/
+    padding: 0 5px 
+}
+

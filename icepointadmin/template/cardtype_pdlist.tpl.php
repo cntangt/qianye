@@ -1,4 +1,3 @@
-
 <form id="pdeditform" action="<?php echo url('cardtype/editpd') ?>">
     <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">绑定卡券商品</h5>
@@ -35,29 +34,50 @@
         </div>
     </div>
 </div>
-<script>var data=<?php echo json_encode($list) ?></script>
 <script>
-    $(data).each(function(i,obj){
-        var row=$($('#row0')[0].innerHTML);
-        row.appendTo('#rows').find('.pdid').select2({ data: list }).val(obj.sku).trigger("change");
+    var data = <?php echo json_encode($list) ?>;
+    $(data).each(function(i, obj) {
+        var row = $($('#row0')[0].innerHTML);
+        row.appendTo('#rows').find('.pdid').select2({
+            data: list
+        }).val(obj.sku).trigger("change");
         row.find('.quantity').val(obj.quantity);
     });
     $('#pdeditform').validate({
-        submitHandler:function() {
-            var data=[];
-            $('#rows .row').each(function(i,row){
-                var quantity=$(row).find('.quantity').val();
-                var pdid=$(row).find('.pdid').val();
-                var name=$(row).find('.pdid option:selected').text();
-                if(quantity==''){
+        submitHandler: function() {
+            var data = [];
+            $('#rows .row').each(function(i, row) {
+                var quantity = $(row).find('.quantity').val();
+                var pdid = $(row).find('.pdid').val();
+                var name = $(row).find('.pdid option:selected').text();
+                if (quantity == '') {
                     alert('请填写数量');
                     $(row).find('.quantity').focus();
+                    return false;
                 }
-                data.push({sku:pdid,productname:name,quantity:quantity});
+                if (pdid == null || pdid == undefined) {
+                    return false;
+                }
+                data.push({
+                    sku: pdid,
+                    productname: name,
+                    quantity: quantity
+                });
             });
-            if(data.length<1){
+            if (data.length < 1) {
                 alert('请绑定产品')
+                return false;
             }
+            $.post($('#pdeditform').attr('action'), {
+                data: data,
+                id: <?php echo $this->get('id') ?>
+            }, function(res) {
+                if (res.succ) {
+                    reload();
+                } else {
+                    alert(res.msg);
+                }
+            });
             return false;
         }
     });

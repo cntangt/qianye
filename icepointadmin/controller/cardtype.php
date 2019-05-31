@@ -10,22 +10,21 @@ class cardtype extends Admin
 
     public function indexAction()
     {
-        $key=$this->get('key');
-        $token=$this->yz_acc_token();
+        $key = $this->get('key');
+        $token = $this->yz_acc_token();
         $client = new \Youzan\Open\Client($token);
 
         $method = 'youzan.items.onsale.get';
         $apiVersion = '3.0.0';
 
-        $res = $client->get($method, $apiVersion, ['q'=>$key]);
-        $data=$res['data']['items'];
-        $list=array();
-        for ($i = 0; $i < count($data); $i++)
-        {
-            $list[$i]['id']=$data[$i]['item_id'];
-            $list[$i]['text']=$data[$i]['title'];
+        $res = $client->get($method, $apiVersion, ['q' => $key]);
+        $data = $res['data']['items'];
+        $list = array();
+        for ($i = 0; $i < count($data); $i++) {
+            $list[$i]['id'] = $data[$i]['item_id'];
+            $list[$i]['text'] = $data[$i]['title'];
         }
-        $json=json_encode($list);
+        $json = json_encode($list);
         include $this->admin_tpl('cardtype_index');
     }
 
@@ -48,7 +47,9 @@ class cardtype extends Admin
         $this->db->setTableName('vi_card_type');
 
         $name = $this->get('name');
+        $canedit = $this->get('canedit');
         if (!empty($name)) $this->db->where('name like ?', '%' . $name . '%');
+        if ($canedit != '') $this->db->where('canedit = ?', $canedit == 'true');
     }
 
     public function addAction()
@@ -77,8 +78,28 @@ class cardtype extends Admin
 
     public function pdlistAction()
     {
-        $list=$this->db->setTableName('card_type_item')->where('cardtypeid=?',$this->get('id'))->getAll();
+        $list = $this->db->setTableName('card_type_item')->where('cardtypeid=?', $this->get('id'))->getAll();
+        if (count($list) == 0) {
+            $list[0]['sku'] = '';
+            $list[0]['quantity'] = 1;
+        }
         include $this->admin_tpl('cardtype_pdlist');
     }
 
+    public function editpdAction()
+    {
+        $id = $this->post('id');
+        $data = $this->post('data');
+        $count = $this->db->setTableName('card')->count('cardtypeid = ?', $id);
+        if ($count > 0) {
+            $this->json(null, false, '已生成卡券，不能修改');
+        }
+        $this->db->setTableName('card_type_item')->delete('cardtypeid = ?', $id);
+        foreach ($data as $t) {
+            $t['cardtypeid'] = $id;
+            $this->db->setTableName('card_type_item')->insert($t);
+        }
+
+        $this->json(null, true);
+    }
 }

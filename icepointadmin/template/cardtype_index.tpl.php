@@ -9,11 +9,20 @@
             <?php if ($this->menu('cardtype-add')) {; ?>
                 <button type="button" class="btn btn-sm btn-primary dialog" data-url="<?php echo url('cardtype/add') ?>">添加卡券类型</button>
             <?php
-
         } ?>
         </div>
         <div class="right">
             <form autocomplete="off" class="form-inline" data-url="<?php echo url('cardtype/list') ?>" id="searchform">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">状态</span>
+                    </div>
+                    <select name="canedit" class="form-control form-control-sm">
+                    <option value="">全部</option>
+                    <option value="false">已生成</option>
+                    <option value="true">未生成</option>
+                </select>
+                </div>
                 <input type="text" class="form-control form-control-sm mx-sm-3" name="name" />
                 <button type="submit" class="btn btn-sm btn-success">查询</button>
             </form>
@@ -27,10 +36,12 @@
         <div class="modal-content"></div>
     </div>
 </div>
-<script>var list=<?php echo $json ?></script>
+<script>
+    var list = <?php echo $json ?>
+</script>
 <script>
     $(function() {
-        $('#listcontainer,.content-menu').on('click','.dialog',function() {
+        $('#listcontainer,.content-menu').on('click', '.dialog', function() {
             var html = '<div class="progress"><span>加载中...</span><div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div></div>';
             $('#modal').modal('show');
             $('#modal .modal-content').html(html).load($(this).data('url'));
@@ -39,19 +50,30 @@
             return false;
         });
 
-        $('#modal').on('click', '#addnew', function () {
-            $($('#row0')[0].innerHTML).appendTo('#rows').find('.pdid').select2({ data: list });
-        }).on('click', '.del', function(){
+        $('#modal').on('click', '#addnew', function() {
+            $($('#row0')[0].innerHTML).appendTo('#rows').find('.pdid').select2({
+                data: list
+            });
+        }).on('click', '.del', function() {
             $(this).parent('div').parent('div.row').remove();
         });
 
-        var form = $('#searchform').submit(loadlist);
-        function loadlist() {
-            $('#listcontainer').load(form.data('url'), form.serialize());
-            return false;
-        }
+        $('#searchform').submit(loadlist);
+        $('#searchform select').change(loadlist);
+
         loadlist();
     });
+
+    function loadlist() {
+        var form = $('#searchform');
+        $('#listcontainer').load(form.data('url'), form.serialize());
+        return false;
+    }
+
+    function reload() {
+        $('#modal').modal('hide');
+        $('#listcontainer').load($('#currentpage').val());
+    }
 </script>
 </body>
 

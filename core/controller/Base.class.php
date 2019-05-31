@@ -256,7 +256,7 @@ abstract class Base
     protected function json($val,$succ=true,$msg=null,$code=0)
     {
         header('Content-Type: application/json; charset=utf-8');
-        echo json_encode([succ=>$succ,msg=>$msg,code=>$code,val=>$val]);
+        echo json_encode(['succ'=>$succ,'msg'=>$msg,'code'=>$code,'val'=>$val]);
         exit();
     }
 
