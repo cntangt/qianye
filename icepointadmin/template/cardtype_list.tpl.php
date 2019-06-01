@@ -37,7 +37,7 @@
                 <td>
                     <?php if ($t['canedit']) { ?>
                         <button class="btn btn-sm btn-success dialog" data-url="<?php echo url('cardtype/pdlist', ['id' => $t['id']]) ?>">商品管理</button>
-                        <button class="btn btn-sm btn-primary">修改</button>
+                        <button class="btn btn-sm btn-primary dialog" data-url="<?php echo url('cardtype/edit', ['id' => $t['id']]) ?>">修改</button>
                     <?php } else { ?>
                         <button class="btn btn-sm btn-success" disabled title="已生成卡券，不能修改">商品管理</button>
                         <button class="btn btn-sm btn-primary" disabled title="已生成卡券，不能修改">作废</button>

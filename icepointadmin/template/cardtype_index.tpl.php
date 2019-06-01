@@ -2,14 +2,15 @@
 <script type="text/javascript">
     top.document.getElementById('position').innerHTML = '卡券管理';
 </script>
-
+<iframe name="export" style="display:none"></iframe>
 <div class="subnav">
     <div class="content-menu">
         <div class="left">
-            <?php if ($this->menu('cardtype-add')) {; ?>
+            <?php if ($this->menu('cardtype-add')) { ?>
                 <button type="button" class="btn btn-sm btn-primary dialog" data-url="<?php echo url('cardtype/add') ?>">添加卡券类型</button>
-            <?php
-        } ?>
+            <?php } if ($this->menu('cardtype-export')) {?>
+                <a class="btn btn-sm btn-primary" style="color:#fff" href="<?php echo url('cardtype/export') ?>" target="export">导出</a>
+            <?php } ?>
         </div>
         <div class="right">
             <form autocomplete="off" class="form-inline" data-url="<?php echo url('cardtype/list') ?>" id="searchform">

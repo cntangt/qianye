@@ -1,7 +1,8 @@
 
-<form id="typeaddform" action="<?php echo url('cardtype/add') ?>">
+<form id="typeaddform" action="<?php echo $url ?>">
+    <input type="hidden" name="id" value="<?php echo $data['id'] ?>">
     <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">添加卡券</h5>
+        <h5 class="modal-title" id="exampleModalLabel"><?php echo $title ?></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -17,11 +18,11 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">从</span>
                 </div>
-                <input type="text" class="form-control" name="data[begintime]" value="<?php echo $data['begintime'] ?>" placeholder="选择开始时间" required />
+                <input type="text" class="form-control" name="data[begintime]" value="<?php echo date('Y-m-d', $data['begintime']) ?>" placeholder="选择开始时间" required />
                 <div class="input-group-prepend">
                     <span class="input-group-text">到</span>
                 </div>
-                <input type="text" class="form-control" name="data[endtime]" value="<?php echo $data['endtime'] ?>" placeholder="选择结束时间" required/ />
+                <input type="text" class="form-control" name="data[endtime]" value="<?php echo date('Y-m-d', $data['endtime']) ?>" placeholder="选择结束时间" required/ />
             </div>
         </div>
         <div class="form-group">

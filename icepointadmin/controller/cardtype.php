@@ -1,5 +1,4 @@
 <?php
-
 class cardtype extends Admin
 {
 
@@ -69,10 +68,36 @@ class cardtype extends Admin
         }
 
         // 初始化值
-        $data['begintime'] = date('Y-m-d', strtotime('today'));
-        $data['endtime'] = date('Y-m-d', strtotime('+1month'));
+        $data['begintime'] = strtotime('today');
+        $data['endtime'] = strtotime('+1month');
         $data['vailddays'] = 30;
+        $data['id'] = 0;
+        $url = url('cardtype/add');
+        $title = '添加卡券';
 
+        include $this->admin_tpl('cardtype_add');
+    }
+
+    public function editAction()
+    {
+        if ($this->ispost) {
+
+            $data = $this->post('data');
+
+            $data['updatetime'] = time();
+            $data['updateby'] = $this->admin['username'];
+            $data['begintime'] = strtotime($data['begintime']);
+            $data['endtime'] = strtotime($data['endtime']);
+            $this->db->setTableName('card_type')->update($data, 'id = ?', $this->post('id'));
+
+            // json方法会自动退出当前请求
+            $this->json(null, true);
+        }
+
+        $id = $this->get('id');
+        $data = $this->db->setTableName('card_type')->getOne('id = ?', $id);
+        $url = url('cardtype/edit');
+        $title = '修改卡券 - ' . $data['name'];
         include $this->admin_tpl('cardtype_add');
     }
 
@@ -101,5 +126,11 @@ class cardtype extends Admin
         }
 
         $this->json(null, true);
+    }
+
+    public function exportAction()
+    {
+        $list = $this->db->setTableName('vi_card_type')->getAll(null, null, 'id,name,description,begintime,endtime,vailddays');
+        exportToExcel(date(YmdHis) . '卡券类型.csv', ['编号', '名称', '商品', '开始时间', '结束时间', '有期天'], $list, ['begintime', 'endtime']);
     }
 }
