@@ -1,19 +1,19 @@
 <?php include $this->admin_tpl('header'); ?>
 <script type="text/javascript">
-    top.document.getElementById('position').innerHTML = '卡券类型管理';
+    top.document.getElementById('position').innerHTML = '卡券管理';
 </script>
 <iframe name="export" style="display:none"></iframe>
 <div class="subnav">
     <div class="content-menu">
         <div class="left">
-            <?php if ($this->menu('cardtype-add')) { ?>
-                <button type="button" class="btn btn-sm btn-primary dialog" data-url="<?php echo url('cardtype/add') ?>">添加卡券类型</button>
-            <?php } if ($this->menu('cardtype-export')) {?>
-                <a class="btn btn-sm btn-primary" style="color:#fff" href="<?php echo url('cardtype/export') ?>" target="export">导出</a>
+            <?php if ($this->menu('card-add')) { ?>
+                <button type="button" class="btn btn-sm btn-primary dialog" data-url="<?php echo url('card/build') ?>">生成卡券</button>
+            <?php } if ($this->menu('card-export')) {?>
+                <a class="btn btn-sm btn-primary" style="color:#fff" href="<?php echo url('card/export') ?>" target="export">导出</a>
             <?php } ?>
         </div>
         <div class="right">
-            <form autocomplete="off" class="form-inline" data-url="<?php echo url('cardtype/index') ?>" id="searchform">
+            <form autocomplete="off" class="form-inline" data-url="<?php echo url('card/index') ?>" id="searchform">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">状态</span>

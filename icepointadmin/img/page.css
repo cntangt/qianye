@@ -393,216 +393,6 @@ textarea, textarea.input-text, textarea {
     padding-left: 22px
 }
 
-.treeview {
-    margin-left: 6px;
-    margin-top: 6px
-}
-
-.treeview ul {
-    margin-top: 4px;
-    padding: 0;
-    margin: 0;
-    list-style: none
-}
-
-.treeview .hitarea {
-    background: url(treeview-default.gif) -64px -25px no-repeat;
-    height: 16px;
-    width: 16px;
-    margin-left: -16px;
-    float: left;
-    cursor: pointer
-}
-
-.treeview .placeholder {
-    background: url(loading.gif) no-repeat scroll 0 0 transparent;
-    display: block;
-    height: 42px;
-    width: 42px
-}
-
-* html .hitarea {
-    display: inline;
-    float: none
-}
-
-.treeview li {
-    margin: 0;
-    padding: 3px 0 3px 16px
-}
-
-.treeview a.selected {
-    background-color: #eee
-}
-
-#treecontrol {
-    padding-left: 4px
-}
-
-.treeview .hover, .treeview a:hover {
-    color: red;
-    cursor: pointer
-}
-
-.treeview li {
-    background: url(treeview-default-line.gif) 0 0 no-repeat
-}
-
-.treeview li.collapsable, .treeview li.expandable {
-    background-position: 0 -176px
-}
-
-.treeview .expandable-hitarea {
-    background-position: -80px -3px
-}
-
-.treeview li.last {
-    background-position: 0 -1766px
-}
-
-.treeview li.lastCollapsable, .treeview li.lastExpandable {
-    background-image: url(treeview-default.gif)
-}
-
-.treeview li.lastCollapsable {
-    background-position: 0 -111px
-}
-
-.treeview li.lastExpandable {
-    background-position: -32px -67px
-}
-
-.treeview div.lastCollapsable-hitarea, .treeview div.lastExpandable-hitarea {
-    background-position: 0 0
-}
-
-.filetree li {
-    padding: 3px 0 2px 16px
-}
-
-.filetree span.folder, .filetree span.file {
-    padding: 1px 0 1px 16px;
-    display: block
-}
-
-.filetree span.folder {
-    background: url(toggle-collapse-dark.png) 0 0 no-repeat
-}
-
-.filetree li.expandable span.folder {
-    background: url(toggle-expand-dark.png) 0 0 no-repeat
-}
-
-.filetree span.file {
-    background: url(file.gif) 0 0 no-repeat
-}
-
-.filetree * {
-    white-space: nowrap
-}
-
-.filetree span.folder, .filetree span.file {
-    padding: 1px 0 1px 16px
-}
-
-#treecontrol a, #treeform a, #form_tree a, #category_tree a {
-    text-decoration: none
-}
-
-#treeform {
-    margin-top: 6px;
-    padding-left: 4px
-}
-
-.m-table {
-    width: 100%;
-    background-color: #fff;
-    border: 1px solid #d5dfe8
-}
-
-.s-table-title {
-    border-bottom: 1px solid #ddd;
-    color: #555;
-    font-size: 14px;
-    font-weight: bold;
-    background-color: #f5f5f5
-}
-
-.s-table-thead {
-    background: #f5f5f5 url(bg_x.gif) repeat-x 0 -110px
-}
-
-.m-table {
-    table-layout: fixed;
-    width: 100%;
-    line-height: 1.0
-}
-
-.m-table th {
-    height: 14px;
-    padding: 5px 0 6px 12px;
-    font-weight: 400;
-    border-bottom: 1px solid #d5dfe8
-}
-
-.m-table td {
-    padding: 6px;
-    padding-left: 12px;
-    padding-right: 0;
-    border-bottom: 1px solid #eee
-}
-
-.m-table2 td {
-    padding-top: 10px;
-    padding-bottom: 10px
-}
-
-.m-table tbody tr:hover {
-    background: #f1f8ff
-}
-
-.m-table .cola {
-    width: 80px
-}
-
-.m-table .colb {
-    width: 100px
-}
-
-.m-table .colc {
-    width: 150px
-}
-
-.m-table .cold {
-    width: 200px
-}
-
-.m-table-title th {
-    border-bottom: 1px solid #ddd;
-    font-size: 14px
-}
-
-.m-table-row th, .m-table-row td {
-    border-width: 0 0 1px;
-    word-break: break-all
-}
-
-.m-table-tool {
-    margin: 10px 0 0;
-    padding-left: 10px
-}
-
-.m-table-tool .operating {
-    float: left;
-    padding-bottom: 10px
-}
-
-.m-table .u-edit {
-    display: block;
-    width: 100%;
-    cursor: text
-}
-
 .content-menu .right {
     float: right
 }
@@ -1035,8 +825,101 @@ a.a-sopop-cancel span.s-sopop-btn {
 #modal .row {
     padding-left: 50px;
 }
+
 .content-menu span {
     /* color: #ddd;*/
-    padding: 0 5px 
+    padding: 0 5px
 }
 
+
+.m-table th {
+    height: 14px;
+    padding: 10px;
+    border-bottom: 1px solid #d5dfe8;
+    text-align: center;
+}
+
+.s-table-thead {
+    background-color: #eee;
+}
+
+.m-table {
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #d5dfe8
+}
+
+.s-table-title {
+    border-bottom: 1px solid #ddd;
+    color: #555;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #f5f5f5
+}
+
+.m-table {
+    table-layout: fixed;
+    width: 100%;
+    line-height: 1.0
+}
+
+.m-table td.l, .m-table th.l {
+    text-align: left;
+}
+
+.m-table td {
+    padding: 6px;
+    border-bottom: 1px solid #eee
+}
+
+.m-table2 td {
+    padding-top: 10px;
+    padding-bottom: 10px
+}
+
+.m-table tbody tr:hover {
+    background: #f1f8ff
+}
+
+.m-table .cola {
+    width: 80px
+}
+
+.m-table .colb {
+    width: 100px
+}
+
+.m-table .colc {
+    width: 150px
+}
+
+.m-table .cold {
+    width: 200px
+}
+
+.m-table-title th {
+    border-bottom: 1px solid #ddd;
+    font-size: 14px
+}
+
+.m-table-row th, .m-table-row td {
+    border-width: 0 0 1px;
+    word-break: break-all;
+    text-align: center;
+}
+
+.m-table-tool {
+    margin: 10px 0 0;
+    padding-left: 10px
+}
+
+.m-table-tool .operating {
+    float: left;
+    padding-bottom: 10px
+}
+
+.m-table .u-edit {
+    display: block;
+    width: 100%;
+    cursor: text
+}

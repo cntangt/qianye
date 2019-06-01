@@ -48,8 +48,12 @@ class cardtype extends Admin
 
         $name = $this->get('name');
         $canedit = $this->get('canedit');
-        if (!empty($name)) $this->db->where('name like ?', '%' . $name . '%');
-        if ($canedit != '') $this->db->where('canedit = ?', $canedit == 'true');
+        if (!empty($name)) {
+            $this->db->where('name like ?', '%' . $name . '%');
+        }
+        if ($canedit != '') {
+            $this->db->where('canedit = ?', $canedit == 'true');
+        }
     }
 
     // 添加卡券类型
@@ -84,7 +88,6 @@ class cardtype extends Admin
     public function editAction()
     {
         if ($this->ispost) {
-
             $data = $this->post('data');
 
             $data['updatetime'] = time();
@@ -104,6 +107,14 @@ class cardtype extends Admin
         include $this->admin_tpl('cardtype_add');
     }
 
+    public function disableAction()
+    {
+        $id = $this->get('id');
+        $this->db->setTableName('card_type')->update(['isvalid'=>0], 'id = ?', $id);
+        
+        $this->json(null, true);
+    }
+
     // 商品绑定管理
     public function pdlistAction()
     {
@@ -119,6 +130,8 @@ class cardtype extends Admin
                 $t['cardtypeid'] = $id;
                 $this->db->setTableName('card_type_item')->insert($t);
             }
+
+            $this->db->setTableName('card_type')->update(['canbuild'=>1], 'id = ?', $id);
 
             $this->json(null, true);
         }

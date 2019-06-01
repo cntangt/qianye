@@ -3,8 +3,8 @@
     <thead class="m-table-thead s-table-thead">
         <tr>
             <th width="60">ID </th>
-            <th align="left" width="15%">名称</th>
-            <th align="left">商品内容</th>
+            <th class="l" width="15%">名称</th>
+            <th class="l">商品内容</th>
             <th width="100">开始时间</th>
             <th width="100">结束时间</th>
             <th width="80">有效期</th>
@@ -18,10 +18,10 @@
                 <td>
                     <?php echo $t['id'] ?>
                 </td>
-                <td>
+                <td class="l">
                     <?php echo $t['name'] ?>
                 </td>
-                <td>
+                <td class="l">
                     <?php echo $t['description'] ?>
                 </td>
                 <td>

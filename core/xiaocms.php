@@ -62,13 +62,13 @@ abstract class xiaocms {
 			if (is_file(CONTROLLER_DIR . $controller . '.php')) {
 				self::load_file(CONTROLLER_DIR . $controller . '.php');
 			} else {
-                exit('XiaoCms：Controller does not exist.');
+                exit('404');
 			}
 			$app_object = new $controller();
 			if (method_exists($controller, $action)) {
 				$_app[$app_id] = $app_object->$action();
 			} else {
-				exit('XiaoCms：Action does not exist.');
+				exit('404');
 			}
 		}
 		return $_app[$app_id];

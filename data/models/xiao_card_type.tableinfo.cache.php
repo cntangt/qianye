@@ -13,5 +13,7 @@ return array (
     6 => 'createby',
     7 => 'updatetime',
     8 => 'updateby',
+    9 => 'canedit',
+    10 => 'canbuild',
   ),
 );
