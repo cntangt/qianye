@@ -16,6 +16,7 @@ abstract class Base
     protected $member_info;
     protected $cache;
     protected $ispost;
+    protected $isajax;
 
     public function __construct()
     {
@@ -28,7 +29,8 @@ abstract class Base
         }
         if (defined('XIAOCMS_ADMIN') || defined('XIAOCMS_MEMBER')) {
             define('SITE_PATH', self::get_a_url());
-        } else {
+        }
+        else {
             define('SITE_PATH', self::get_base_url());
         }
         if (!is_file(XIAOCMS_PATH . 'data/install.lock')) self::redirect(url('install/index'));
@@ -41,7 +43,7 @@ abstract class Base
         $this->site_config = xiaocms::load_config('config');
         $this->category_cache = get_cache('category');
         $this->content_model = get_cache('content_model');
-        $this->member_info =  self::get_member_info();
+        $this->member_info = self::get_member_info();
         $this->view->assign(array(
             'cats' => $this->category_cache,
             'member' => $this->member_info,
@@ -50,8 +52,9 @@ abstract class Base
             'page' => (int)self::get('page') ? (int)self::get('page') : 1,
             'site_template' => SITE_PATH . basename(TEMPLATE_DIR) . '/' . basename(SYS_THEME_DIR) . '/',
         ));
-        $this->cache=xiaocms::load_class('rediscache');
-        $this->ispost=$_SERVER['REQUEST_METHOD'] == 'POST';
+        $this->cache = xiaocms::load_class('rediscache');
+        $this->ispost = $_SERVER['REQUEST_METHOD'] == 'POST';
+        $this->isajax = isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && strtolower($_SERVER["HTTP_X_REQUESTED_WITH"]) == "xmlhttprequest";
     }
 
     public function show_message($msg, $status = 2, $url = HTTP_REFERER, $time = 1800)
@@ -105,24 +108,24 @@ abstract class Base
     public static function get_base_url()
     {
         $url = str_replace(array('\\', '//'), '/', $_SERVER['SCRIPT_NAME']);
-        $po= strripos($url,'/');
-        return substr($url,0,$po+1);
+        $po = strripos($url, '/');
+        return substr($url, 0, $po + 1);
     }
 
     public static function get_a_url()
     {
         $url = str_replace(array('\\', '//'), '/', $_SERVER['SCRIPT_NAME']);
-        $po = strripos($url,'/');
-        $url = substr($url,0,$po);
-        $po = strripos($url,'/');
-        return substr($url,0,$po+1);
+        $po = strripos($url, '/');
+        $url = substr($url, 0, $po);
+        $po = strripos($url, '/');
+        return substr($url, 0, $po + 1);
     }
 
     protected function redirect($url)
     {
         if (!$url) return false;
         if (!headers_sent()) header("Location:" . $url);
-        else  echo '<script type="text/javascript">location.href="' . $url . '";</script>';
+        else echo '<script type="text/javascript">location.href="' . $url . '";</script>';
         exit();
     }
 
@@ -160,7 +163,7 @@ abstract class Base
             if (!empty($id) && $code == substr(md5($this->site_config['rand_code'] . $id), 5, 20)) {
                 $member = $this->db->setTableName('member')->find($id);
                 if ($member) {
-				    $member_model = get_cache('member_model');
+                    $member_model = get_cache('member_model');
                     $member_info = $this->db->setTableName($member_model[$member['modelid']]['tablename'])->find($id);
                     if ($member_info) {
                         $member = array_merge($member, $member_info);
@@ -195,19 +198,20 @@ abstract class Base
             if (!defined('XIAOCMS_ADMIN') && !$t['isshow']) continue;
             if ($t['pattern']) {
                 if ($t['pattern'] == 1) {
-                    if ($data[$t['field']] == '') $this->show_message(empty($t['errortips']) ? $t['name'] . '不能为空' : $t['errortips'],2,1);
-                } else {
-                    if (!preg_match($t['pattern'], $data[$t['field']])) $this->show_message(empty($t['errortips']) ? $t['name'] . '格式不正确' : $t['errortips'],2,1);
+                    if ($data[$t['field']] == '') $this->show_message(empty($t['errortips']) ? $t['name'] . '不能为空' : $t['errortips'], 2, 1);
+                }
+                else {
+                    if (!preg_match($t['pattern'], $data[$t['field']])) $this->show_message(empty($t['errortips']) ? $t['name'] . '格式不正确' : $t['errortips'], 2, 1);
                 }
             }
             //			if (in_array($t['formtype'], array('checkbox', 'files', 'diy'))) $data[$t['field']] = array2string($data[$t['field']]);
-			if ($t['formtype']=='related'){
-				$data[$t['field']]= explode(',', $data[$t['field']]);
-				foreach( $data[$t['field']] as $k=>$v){
-                    if(!$v) unset( $data[$t['field']][$k] );
-				}
-				$data[$t['field']] = implode(',', $data[$t['field']]);
-			}
+            if ($t['formtype'] == 'related') {
+                $data[$t['field']] = explode(',', $data[$t['field']]);
+                foreach ($data[$t['field']] as $k => $v) {
+                    if (!$v) unset($data[$t['field']][$k]);
+                }
+                $data[$t['field']] = implode(',', $data[$t['field']]);
+            }
             if (is_array($data[$t['field']])) $data[$t['field']] = array2string($data[$t['field']]);
         }
         return $data;
@@ -253,10 +257,10 @@ abstract class Base
         return $title;
     }
 
-    protected function json($val,$succ=true,$msg=null,$code=0)
+    protected function json($val, $succ = true, $msg = null, $code = 0)
     {
         header('Content-Type: application/json; charset=utf-8');
-        echo json_encode(['succ'=>$succ,'msg'=>$msg,'code'=>$code,'val'=>$val]);
+        echo json_encode(['succ' => $succ, 'msg' => $msg, 'code' => $code, 'val' => $val]);
         exit();
     }
 
@@ -265,10 +269,10 @@ abstract class Base
         $type = 'silent';
         $keys['kdt_id'] = $this->site_config['yz_store_id'];
 
-        $token=$this->cache->get('yz:acc_token');
+        $token = $this->cache->get('yz:acc_token');
         if ($token)
-        {
-        	return $token;
+            {
+            return $token;
         }
 
         $accessToken = (new \Youzan\Open\Token($this->site_config['yz_client_id'], $this->site_config['yz_client_secret']))->getToken($type, $keys);

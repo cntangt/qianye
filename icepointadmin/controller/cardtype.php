@@ -1,7 +1,6 @@
 <?php
 class cardtype extends Admin
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -9,6 +8,22 @@ class cardtype extends Admin
 
     public function indexAction()
     {
+        // 为了方便权限管理，利用ajax请求头判断部分页请求
+        if ($this->isajax) {
+            $page = $this->get('page');
+            $size = 15;
+            $this->list_where();
+            $total = $this->db->count();
+            $this->list_where();
+            $list = $this->db->pageLimit($page, $size)->getAll(null, null, null, 'id DESC');
+            $pagelist = xiaocms::load_class('pager');
+            $pagelist = $pagelist->total($total)->url(url('cardtype/index', ['name' => $this->get('name')]) . '&page=[page]')->ext(true)->num($size)->page($page)->output();
+
+            include $this->admin_tpl('cardtype_list');
+            return;
+        }
+
+        // 单独框架页请求
         $key = $this->get('key');
         $token = $this->yz_acc_token();
         $client = new \Youzan\Open\Client($token);
@@ -27,20 +42,6 @@ class cardtype extends Admin
         include $this->admin_tpl('cardtype_index');
     }
 
-    public function listAction()
-    {
-        $page = $this->get('page');
-        $size = 15;
-        $this->list_where();
-        $total = $this->db->count();
-        $this->list_where();
-        $list = $this->db->pageLimit($page, $size)->getAll(null, null, null, 'id DESC');
-        $pagelist = xiaocms::load_class('pager');
-        $pagelist = $pagelist->total($total)->url(url('cardtype/list', ['name' => $this->get('name')]) . '&page=[page]')->ext(true)->num($size)->page($page)->output();
-
-        include $this->admin_tpl('cardtype_list');
-    }
-
     private function list_where()
     {
         $this->db->setTableName('vi_card_type');
@@ -51,6 +52,7 @@ class cardtype extends Admin
         if ($canedit != '') $this->db->where('canedit = ?', $canedit == 'true');
     }
 
+    // 添加卡券类型
     public function addAction()
     {
         // post请求保存数据
@@ -78,6 +80,7 @@ class cardtype extends Admin
         include $this->admin_tpl('cardtype_add');
     }
 
+    // 修改卡券类型
     public function editAction()
     {
         if ($this->ispost) {
@@ -101,8 +104,25 @@ class cardtype extends Admin
         include $this->admin_tpl('cardtype_add');
     }
 
+    // 商品绑定管理
     public function pdlistAction()
     {
+        if ($this->ispost) {
+            $id = $this->post('id');
+            $data = $this->post('data');
+            $count = $this->db->setTableName('card')->count('cardtypeid = ?', $id);
+            if ($count > 0) {
+                $this->json(null, false, '已生成卡券，不能修改');
+            }
+            $this->db->setTableName('card_type_item')->delete('cardtypeid = ?', $id);
+            foreach ($data as $t) {
+                $t['cardtypeid'] = $id;
+                $this->db->setTableName('card_type_item')->insert($t);
+            }
+
+            $this->json(null, true);
+        }
+        
         $list = $this->db->setTableName('card_type_item')->where('cardtypeid=?', $this->get('id'))->getAll();
         if (count($list) == 0) {
             $list[0]['sku'] = '';
@@ -111,23 +131,7 @@ class cardtype extends Admin
         include $this->admin_tpl('cardtype_pdlist');
     }
 
-    public function editpdAction()
-    {
-        $id = $this->post('id');
-        $data = $this->post('data');
-        $count = $this->db->setTableName('card')->count('cardtypeid = ?', $id);
-        if ($count > 0) {
-            $this->json(null, false, '已生成卡券，不能修改');
-        }
-        $this->db->setTableName('card_type_item')->delete('cardtypeid = ?', $id);
-        foreach ($data as $t) {
-            $t['cardtypeid'] = $id;
-            $this->db->setTableName('card_type_item')->insert($t);
-        }
-
-        $this->json(null, true);
-    }
-
+    // 导出数据
     public function exportAction()
     {
         $list = $this->db->setTableName('vi_card_type')->getAll(null, null, "id,name,description,from_unixtime(begintime,'%Y-%m-%d'),from_unixtime(endtime,'%Y-%m-%d'),vailddays,case when canedit=0 then '是' else '否' end canedit");

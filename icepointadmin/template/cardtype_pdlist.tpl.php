@@ -1,4 +1,4 @@
-<form id="pdeditform" action="<?php echo url('cardtype/editpd') ?>">
+<form id="pdeditform" action="<?php echo url('cardtype/pdlist') ?>">
     <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">绑定卡券商品</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">

@@ -13,7 +13,7 @@
             <?php } ?>
         </div>
         <div class="right">
-            <form autocomplete="off" class="form-inline" data-url="<?php echo url('cardtype/list') ?>" id="searchform">
+            <form autocomplete="off" class="form-inline" data-url="<?php echo url('cardtype/index') ?>" id="searchform">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">状态</span>
