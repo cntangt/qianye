@@ -130,7 +130,7 @@ class cardtype extends Admin
 
     public function exportAction()
     {
-        $list = $this->db->setTableName('vi_card_type')->getAll(null, null, 'id,name,description,begintime,endtime,vailddays');
-        exportToExcel(date(YmdHis) . '卡券类型.csv', ['编号', '名称', '商品', '开始时间', '结束时间', '有期天'], $list, ['begintime', 'endtime']);
+        $list = $this->db->setTableName('vi_card_type')->getAll(null, null, "id,name,description,from_unixtime(begintime,'%Y-%m-%d'),from_unixtime(endtime,'%Y-%m-%d'),vailddays,case when canedit=0 then '是' else '否' end canedit");
+        exportToExcel(date(YmdHis) . '卡券类型.csv', ['编号', '名称', '商品', '开始时间', '结束时间', '有期天', '生成卡'], $list);
     }
 }

@@ -338,7 +338,7 @@ function url($route, $params = null)
     return Base::get_base_url() . $url;
 }
 
-function exportToExcel($filename, $tileArray = [], $dataArray = [], $timeFields = [])
+function exportToExcel($filename, $tileArray = [], $dataArray = [])
 {
     ini_set('memory_limit', '512M');
     ini_set('max_execution_time', 0);
@@ -357,9 +357,6 @@ function exportToExcel($filename, $tileArray = [], $dataArray = [], $timeFields 
             flush();
         }
         $index++;
-        foreach ($timeFields as $key) {
-            $item[$key] = date('Y-m-d H:i:s', $item[$key]);
-        }
         fputcsv($fp, $item);
     }
 
