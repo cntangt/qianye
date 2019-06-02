@@ -18,24 +18,21 @@ class card extends Admin
 
 	public function buildAction()
 	{
-		$arr = $this->pass(['len' => $this->get('len'), 'type' => $this->get('type')], 1000);
-	
-		return;
-		if ($this->isajax) {
+		if ($this->ispost) {
 			$data = $this->post('data');
 
 			$this->json(null, true);
 		}
+
 		$list = $this->db->setTableName('vi_card_type')->where('canbuild = 1 and isvalid = 1 and endtime > ?', time())->getAll();
 
 		include $this->admin_tpl('card_build');
 	}
 
-	private function pass($data, $count)
+	private function pass($len, $type, $count)
 	{
-		$len = $data['len'];
 		$str = '';
-		switch ($data['type']) {
+		switch ($type) {
 			case 10:
 				$str = '0123456789';
 				break;

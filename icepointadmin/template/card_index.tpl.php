@@ -38,9 +38,6 @@
     </div>
 </div>
 <script>
-    var list = <?php echo $json ?>
-</script>
-<script>
     $(function() {
         $('#listcontainer,.content-menu').on('click', '.dialog', function() {
             var html = '<div class="progress"><span>加载中...</span><div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div></div>';

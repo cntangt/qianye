@@ -1,4 +1,4 @@
-<form id="typeaddform" action="<?php echo $url ?>">
+<form id="cardbuildform" action="<?php echo $url ?>">
     <input type="hidden" name="id" value="<?php echo $data['id'] ?>">
     <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">生成卡券</h5>
@@ -13,15 +13,24 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">前缀</span>
                 </div>
-                <input type="text" class="form-control" name="data[pre]" placeholder="输入卡号前缀，最多6位" required maxlength="6" />
+                <input type="text" class="form-control checkno" name="data[pre]" placeholder="输入卡号前缀，最多6位" required maxlength="6" />
                 <div class="input-group-prepend">
                     <span class="input-group-text">自增号</span>
                 </div>
-                <input type="text" class="form-control" name="data[no]" placeholder="输入卡号自增号，最多12位" required maxlength="12"/>
+                <input type="text" class="form-control checkno" name="data[no]" placeholder="输入卡号自增号，最多12位" required maxlength="12" />
                 <div class="input-group-prepend">
                     <span class="input-group-text">数量</span>
                 </div>
-                <input type="number" class="form-control" name="data[no]" placeholder="输入生成卡号数量" required min="1"/>
+                <input type="number" class="form-control checkno" name="data[qua]" placeholder="输入生成卡号数量" required min="1" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>卡号示例</label>
+            <div class="input-group mb-3">
+                <input disabled id="demo" class="form-control" data-url="/?c=api&a=checkno">
+                <!-- <div class="input-group-append">
+                    <button type="button" id="check" class="btn btn-success" data-url="/?c=api&a=checkno">检查</button>
+                </div> -->
             </div>
         </div>
         <div class="form-group">
@@ -50,29 +59,42 @@
         </div>
         <div class="form-group">
             <label>卡券类型</label>
-            <select name="data[cardtypeid]" class="form-control" id="cardtypeid">
+            <select name="data[ctid]" class="form-control" id="cardtypeid">
                 <?php if (is_array($list)) foreach ($list as $t) { ?>
                     <option value="<?php echo $t['id'] ?>">【<?php echo $t['name'] ?>】<?php echo $t['description'] ?></option>
                 <?php
             } ?>
             </select>
         </div>
-        <div id="items"></div>
+        <ul id="errors"></ul>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-        <button type="submit" name="data[submit]" value="true" class="btn btn-primary">保存</button>
+        <button type="submit" name="data[submit]" value="true" class="btn btn-primary save" disabled="true">保存</button>
     </div>
 </form>
 <script>
+    var form = $('#cardbuildform');
     $('#cardtypeid').select2();
     $('#datepicker').datepicker({
         language: "zh-CN",
         format: 'yyyy-mm-dd'
     });
     $('#typeaddform').validate({
+        errorLabelContainer: $('#errors'),
+        errorElement: 'li',
+        messages: {
+            'data[pre]': {
+                required: '请输入卡号前缀'
+            },
+            'data[no]': {
+                required: '请输入自增号'
+            },
+            'data[qua]': {
+                required: '请输入生成卡号数量'
+            }
+        },
         submitHandler: function() {
-            var form = $('#typeaddform');
             $.post(form.attr('action'), form.serialize(), function(res) {
                 if (res.succ) {
                     reload();
@@ -82,5 +104,15 @@
             });
             return false;
         }
+    });
+    $('.checkno').blur(function() {
+        $.post($('#demo').data('url'), form.serialize(), function(res) {
+            if (res.succ) {
+                $('#demo').val(res.val).css('color', 'green');
+            } else {
+                $('#demo').val(res.msg).css('color', 'red');
+            }
+            $('.save').attr('disabled', !res.succ);
+        })
     });
 </script>
