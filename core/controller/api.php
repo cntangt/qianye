@@ -85,18 +85,15 @@ class api extends Base
 
 		$len = strlen($data['no']);
 		$min = intval($data['no']);
-		$max = $min + intval($data['qua']);
+		$max = $min + intval($data['qua']) - 1;
 		$len = max($len, strlen($max));
 		$pre = strtoupper($data['pre']);
 
 		$mins = $pre . str_pad($min, $len, '0', STR_PAD_LEFT);
 		$maxs = $pre . str_pad($max, $len, '0', STR_PAD_LEFT);
 
-		if ($this->db->setTableName('card')->getOne('code = ?', $mins) != false) {
-			$this->json(null, false, '起始卡号已经存在');
-		}
-		if ($this->db->setTableName('card')->getOne('code = ?', $maxs) != false) {
-			$this->json(null, false, '结尾卡号已经存在');
+		if ($this->db->setTableName('card')->count('codepre = ? and codelen= ? and codeno >= ? and codeno <= ?', [$pre, $len, $min, $max]) > 0) {
+			$this->json(null, false, '存在重复卡号');
 		}
 
 		$this->json($mins . ' - ' . $maxs, true);

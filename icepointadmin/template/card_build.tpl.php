@@ -1,5 +1,4 @@
-<form id="cardbuildform" action="<?php echo $url ?>">
-    <input type="hidden" name="id" value="<?php echo $data['id'] ?>">
+<form id="cardbuildform" action="<?php echo url('card/build') ?>" autocomplete="off">
     <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">生成卡券</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -39,7 +38,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">长度</span>
                 </div>
-                <select class="form-control">
+                <select class="form-control" name="data[passlen]">
                     <option value="6">6位</option>
                     <option value="8">8位</option>
                     <option value="10">10位</option>
@@ -50,7 +49,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">组成</span>
                 </div>
-                <select class="form-control">
+                <select class="form-control" name="data[passtype]">
                     <option value="10">数字</option>
                     <option value="20">字母</option>
                     <option value="30">数字+字母</option>
@@ -80,7 +79,7 @@
         language: "zh-CN",
         format: 'yyyy-mm-dd'
     });
-    $('#typeaddform').validate({
+    form.validate({
         errorLabelContainer: $('#errors'),
         errorElement: 'li',
         messages: {
@@ -96,6 +95,7 @@
         },
         submitHandler: function() {
             $.post(form.attr('action'), form.serialize(), function(res) {
+                debugger
                 if (res.succ) {
                     reload();
                 } else {

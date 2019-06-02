@@ -15,5 +15,6 @@ return array (
     8 => 'updateby',
     9 => 'canedit',
     10 => 'canbuild',
+    11 => 'isvalid',
   ),
 );
