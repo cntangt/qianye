@@ -53,7 +53,7 @@ function select_type(id) {
 <?php if ($data['type']) { ?>
 $("#text_<?php echo $data['type']; ?>").show();
 <?php } ?>
-</script><script type="text/javascript">top.document.getElementById('position').innerHTML = '区块编辑';</script>
+</script>
 
 </body>
 </html>

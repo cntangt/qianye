@@ -41,7 +41,7 @@ class login extends Admin {
     
     public function logoutAction() {
         if ($this->session->get('user_id')) $this->session->delete('user_id');
-        $this->show_message('已经成功退出XiaoCms系统', 1, url('login'));
+        $this->show_message('已经成功退出系统', 1, url('login'));
     }
 	
 }

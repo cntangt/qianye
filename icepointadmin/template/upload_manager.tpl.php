@@ -1,7 +1,4 @@
 <?php include $this->admin_tpl('header');?>
-<script type="text/javascript">
-top.document.getElementById('position').innerHTML = '附件管理';
-</script>
 <div class="subnav">
 		<table width="100%"  class="m-table m-table-row" id="imgPreview">
 		<thead class="m-table-thead s-table-thead">

@@ -1,8 +1,4 @@
 <?php include $this->admin_tpl('header');?>
-<script type="text/javascript">
-top.document.getElementById('position').innerHTML = '会员列表';
-</script>
-
 <div class="subnav">
 	<div class="content-menu">
 		<a href="../member/index.php?c=register"   class="add" target="_blank"><em>注册会员</em></a>

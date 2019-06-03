@@ -1,7 +1,4 @@
 <?php include $this->admin_tpl('header');?>
-<script type="text/javascript">
-top.document.getElementById('position').innerHTML = '添加内容';
-</script>
 <div class="subnav">
 		<form method="post" action="" id="myform" name="myform">
 		<table width="100%" class="table_form">

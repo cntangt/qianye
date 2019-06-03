@@ -1,8 +1,4 @@
 <?php include $this->admin_tpl('header');?>
-<script type="text/javascript">
-top.document.getElementById('position').innerHTML = '我的账号';
-</script>
-
 <div class="subnav">
   <div class="bk10"></div>
   <form method="post" action="" id="myform" name="myform">

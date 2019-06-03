@@ -1,7 +1,4 @@
 <?php include $this->admin_tpl('header'); ?>
-<script type="text/javascript">
-    top.document.getElementById('position').innerHTML = '卡券类型管理';
-</script>
 <iframe name="export" style="display:none"></iframe>
 <div class="subnav">
     <div class="content-menu">

@@ -1,7 +1,4 @@
 <?php include $this->admin_tpl('header');?>
-<script type="text/javascript">
-top.document.getElementById('position').innerHTML = '模板编辑';
-</script>
 <style type="text/css">
  #codeTextarea{height: 500px; width: 98%;background: #fbfbfb;}
 .textAreaWithLines{font-family: courier;border: 1px solid #ddd;}

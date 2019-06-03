@@ -1,8 +1,4 @@
 <?php include $this->admin_tpl('header');?>
-<script type="text/javascript">
-top.document.getElementById('position').innerHTML = '自定义表列表';
-</script>
-
 <div class="subnav">
 	<div class="content-menu">
 		<a href="<?php echo url('diytable/index',array('modelid'=>$modelid)); ?>" class="on2"><em><?php echo $this->model['modelname'] ?></em></a>

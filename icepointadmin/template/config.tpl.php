@@ -1,7 +1,4 @@
 <?php include $this->admin_tpl('header');?>
-<script type="text/javascript">
-top.document.getElementById('position').innerHTML = '系统配置';
-</script>
 <div class="subnav">
 	<form method="post" action="" id="myform" name="myform">
 	<div class="pad-10">

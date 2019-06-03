@@ -1,7 +1,4 @@
 <?php include $this->admin_tpl('header');?>
-<script type="text/javascript">
-top.document.getElementById('position').innerHTML = '添加/修改后台用户';
-</script>
 <style>input {margin: 0 5px 0 0px;} span {margin-right:10px;}</style>
 <div class="subnav">
 

@@ -1,8 +1,5 @@
 <?php include $this->admin_tpl('header');?>
 <script type="text/javascript">
-top.document.getElementById('position').innerHTML = '会员信息';
-</script>
-<script type="text/javascript">
 function ajaxemail() {
 	$('#email_text').html('');
 	$.post('<?php echo url('member/ajaxemail'); ?>&rid='+Math.random(), { email:$('#email').val(), id:<?php echo $id; ?> }, function(data){ 

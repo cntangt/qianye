@@ -1,7 +1,4 @@
 <?php include $this->admin_tpl('header');?>
-<script type="text/javascript">
-top.document.getElementById('position').innerHTML = '表单信息';
-</script>
 <div class="subnav">
 	<div class="content-menu">
 		<a href="<?php echo url('form/index',array('modelid'=>$this->modelid,'cid'=>$cid)); ?>" class="on"><em>返回列表</em></a>

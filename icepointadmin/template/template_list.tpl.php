@@ -1,7 +1,4 @@
 <?php include $this->admin_tpl('header');?>
-<script type="text/javascript">
-top.document.getElementById('position').innerHTML = '模板管理';
-</script>
 <div class="subnav">
 	<div class="content-menu">
 		<a href="<?php echo url('template/add', array('dir'=>$dir))?>"  class="add"><em>添加模板</em></a>

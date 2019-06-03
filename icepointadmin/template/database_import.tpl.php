@@ -1,7 +1,4 @@
 <?php include $this->admin_tpl('header');?>
-<script type="text/javascript">
-top.document.getElementById('position').innerHTML = '数据库恢复';
-</script>
 <div class="subnav">
 	<div class="content-menu">
 		<a href="<?php echo url('database'); ?>"  class="on2"><em>数据库备份</em></a>

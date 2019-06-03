@@ -1,8 +1,4 @@
 <?php include $this->admin_tpl('header');?>
-<script type="text/javascript">
-top.document.getElementById('position').innerHTML = '表单列表';
-</script>
-
 <div class="subnav">
 	<div class="content-menu">
 		<a href="#" class="on2"><em><?php echo $this->model['modelname'] ?></em></a>
