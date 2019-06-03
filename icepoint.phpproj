@@ -62,11 +62,6 @@
     <Compile Include="data\cache\member_model.cache.php" />
     <Compile Include="data\config\config.ini.php" />
     <Compile Include="data\config\database.ini.php" />
-    <Compile Include="data\models\xiao_admin.tableinfo.cache.php" />
-    <Compile Include="data\models\xiao_block.tableinfo.cache.php" />
-    <Compile Include="data\models\xiao_category.tableinfo.cache.php" />
-    <Compile Include="data\models\xiao_content.tableinfo.cache.php" />
-    <Compile Include="data\models\xiao_model.tableinfo.cache.php" />
     <Compile Include="data\install.lock" />
     <Compile Include="icepointadmin\controller\Admin.class.php" />
     <Compile Include="icepointadmin\controller\administrator.php" />
