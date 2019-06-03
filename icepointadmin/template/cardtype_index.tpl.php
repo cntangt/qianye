@@ -14,11 +14,11 @@
         </div>
         <div class="right">
             <form autocomplete="off" class="form-inline" data-url="<?php echo url('cardtype/index') ?>" id="searchform">
-                <div class="input-group">
+                <div class="input-group input-group-sm">
                     <div class="input-group-prepend">
                         <span class="input-group-text">状态</span>
                     </div>
-                    <select name="canedit" class="form-control form-control-sm">
+                    <select name="canedit" class="form-control">
                     <option value="">全部</option>
                     <option value="false">已生成</option>
                     <option value="true">未生成</option>

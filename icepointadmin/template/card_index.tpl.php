@@ -8,23 +8,48 @@
         <div class="left">
             <?php if ($this->menu('card-add')) { ?>
                 <button type="button" class="btn btn-sm btn-primary dialog" data-url="<?php echo url('card/build') ?>">生成卡券</button>
-            <?php } if ($this->menu('card-export')) {?>
+            <?php }
+        if ($this->menu('card-export')) { ?>
                 <a class="btn btn-sm btn-primary" style="color:#fff" href="<?php echo url('card/export') ?>" target="export">导出</a>
             <?php } ?>
         </div>
         <div class="right">
             <form autocomplete="off" class="form-inline" data-url="<?php echo url('card/index') ?>" id="searchform">
-                <div class="input-group">
+                <div class="input-group input-group-sm" id="ctidc">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">类型</span>
+                    </div>
+                    <select name="ctid" id="ctid" class="form-control" style="width:200px;height:26px;" data-="">
+                        <?php if (is_array($types)) foreach ($types as $t) { ?>
+                            <option value="<?php echo $t['id'] ?>">【<?php echo $t['name'] ?>】<?php echo $t['description'] ?></option>
+                        <?php
+                    } ?>
+                    </select>
+                </div>
+                <div class="input-group input-group-sm mx-sm-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">手机</span>
+                    </div>
+                    <input type="text" class="form-control form-control-sm" name="mobile" placeholder="客户手机号查询" />
+                </div>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">卡号</span>
+                    </div>
+                    <input type="text" class="form-control form-control-sm" name="code" placeholder="卡号查询" />
+                </div>
+                <div class="input-group input-group-sm mx-sm-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">状态</span>
                     </div>
-                    <select name="canedit" class="form-control form-control-sm">
-                    <option value="">全部</option>
-                    <option value="false">已生成</option>
-                    <option value="true">未生成</option>
-                </select>
+                    <select name="status" class="form-control">
+                        <option value="">全部</option>
+                        <option value="10">未销售</option>
+                        <option value="20">销售</option>
+                        <option value="30">激活</option>
+                        <option value="40">作废</option>
+                    </select>
                 </div>
-                <input type="text" class="form-control form-control-sm mx-sm-3" name="name" />
                 <button type="submit" class="btn btn-sm btn-success">查询</button>
             </form>
         </div>
@@ -57,8 +82,11 @@
         });
 
         $('#searchform').submit(loadlist);
+        $('#searchform #ctid').select2({
+            placeholder: "选择卡券类型",
+            allowClear: true
+        }).val(null).trigger("change");
         $('#searchform select').change(loadlist);
-
         loadlist();
     });
 

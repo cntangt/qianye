@@ -10,10 +10,47 @@ class card extends Admin
 	public function indexAction()
 	{
 		if ($this->isajax) {
+			$page = $this->get('page');
+			$size = 15;
+			$this->list_where();
+			$total = $this->db->count();
+			$this->list_where();
+			$list = $this->db->pageLimit($page, $size)->getAll(null, null, null, 'id DESC');
+			$pagelist = xiaocms::load_class('pager');
+			$pagelist = $pagelist->total($total)->url(url('card/index', [
+				'status' => $this->get('status'),
+				'ctid' => $this->get('ctid'),
+				'mobile' => $this->get('mobile'),
+				'code' => $this->get('code')
+			]) . '&page=[page]')->ext(true)->num($size)->page($page)->output();
 
+			include $this->admin_tpl('card_list');
 			return;
 		}
+
+		$types = $this->db->setTableName('vi_card_type')->getAll(null, null, 'id,name,description');
 		include $this->admin_tpl('card_index');
+	}
+
+	private function list_where()
+	{
+		$status = $this->get('status');
+		$ctid = $this->get('ctid');
+		$mobile = $this->get('mobile');
+		$code = $this->get('code');
+		$this->db->setTableName('card');
+		if ($status != '') {
+			$this->db->where('status = ?', $status);
+		}
+		if ($ctid) {
+			$this->db->where('cardtypeid = ?', $ctid);
+		}
+		if ($mobile) {
+			$this->db->where('customermobile = ?', $mobile);
+		}
+		if ($code) {
+			$this->db->where('code = ?', $code);
+		}
 	}
 
 	public function buildAction()
@@ -32,12 +69,12 @@ class card extends Admin
 			$pre = strtoupper($data['pre']); // 卡券前缀
 			$pass = $this->pass($data['passlen'], $data['passtype'], $data['qua']); // 密码数组
 			try {
-				$sql = "INSERT INTO `xiao_card`(`cardtypeid`, `cardtypename`, `status`, `code`, `pass`, `qrcode`, `codepre`, `codeno`, `codelen`) VALUES ";
+				$sql = "INSERT INTO `xiao_card`(`cardtypeid`, `cardtypename`, `status`, `code`, `pass`, `qrcode`, `codepre`, `codeno`, `codelen`, `createtime`, `createby`) VALUES ";
 				for ($i = 0; $i < $qua; $i++) {
 					$no = $i + $min;
 					$code = $pre . str_pad($no, $len, '0', STR_PAD_LEFT);
 					$sql .= sprintf(
-						"(%s,'%s',%s,'%s','%s','%s','%s',%s,%s),",
+						"(%s,'%s',%s,'%s','%s','%s','%s',%s,%s,%s,'%s'),",
 						$data['ctid'],
 						$cardtype['name'],
 						10,
@@ -46,7 +83,9 @@ class card extends Admin
 						sha1($code . $pass[$i]),
 						$pre,
 						$no,
-						$len
+						$len,
+						time(),
+						$this->admin['realname']
 					);
 				}
 				$sql = rtrim($sql, ',');

@@ -1,10 +1,36 @@
-body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+blockquote,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+form,
+fieldset,
+legend,
+button,
+input,
+textarea,
+th,
+td {
     margin: 0;
     padding: 0;
     word-wrap: break-word
 }
 
-body, html, input {
+body,
+html,
+input {
     font-size: 12px;
     font-family: 'Microsoft YaHei';
     color: #444
@@ -19,30 +45,45 @@ img {
     border: 0
 }
 
-a:focus, *:focus {
+a:focus,
+*:focus {
     outline: 0
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-size: 100%
 }
 
-input, label, img, th {
+input,
+label,
+img,
+th {
     vertical-align: middle
 }
 
 .font-fixh {
-    font-family: Georgia,Arial;
+    font-family: Georgia, Arial;
     color: #f00;
     font-size: 16px;
     font-weight: 700
 }
 
-address, cite, dfn, em, var {
+address,
+cite,
+dfn,
+em,
+var {
     font-style: normal
 }
 
-ul, ol, li {
+ul,
+ol,
+li {
     list-style: none
 }
 
@@ -55,11 +96,14 @@ a:hover {
     text-decoration: underline
 }
 
-.gray4, a.gray4 {
+.gray4,
+a.gray4 {
     color: #999
 }
 
-.red, .red a, a.red {
+.red,
+.red a,
+a.red {
     color: red
 }
 
@@ -111,7 +155,14 @@ textarea {
     font-weight: normal
 }
 
-.bk, .bk3, .bk6, .bk8, .bk10, .bk15, .bk20, .bk30 {
+.bk,
+.bk3,
+.bk6,
+.bk8,
+.bk10,
+.bk15,
+.bk20,
+.bk30 {
     clear: both;
     font-size: 1px;
     height: 0;
@@ -146,7 +197,9 @@ textarea {
     height: 30px
 }
 
-.cu, .cu-li li, .cu-span span {
+.cu,
+.cu-li li,
+.cu-span span {
     cursor: pointer
 }
 
@@ -299,8 +352,6 @@ body fieldset legend {
     vertical-align: middle
 }
 
-
-
 .pageleft {
     float: left
 }
@@ -328,14 +379,17 @@ body fieldset legend {
     background: url(button.png) repeat-x
 }
 
-.input-text-c, .input-text, textarea, input.date {
+.input-text-c,
+.input-text,
+textarea,
+input.date {
     border: 1px solid #d0d0d0;
     height: 18px;
     margin: 0 5px 0 0;
     padding: 2px 0 2px 5px;
     border: 1px solid #d0d0d0;
     background: url("input.png") repeat-x scroll 0 0 #fff;
-    font-family: Verdana,Geneva,sans-serif,\5b8b\4f53;
+    font-family: Verdana, Geneva, sans-serif, \5b8b\4f53;
     font-size: 12px
 }
 
@@ -345,7 +399,9 @@ input.date {
     font-size: 12px
 }
 
-textarea, textarea.input-text, textarea {
+textarea,
+textarea.input-text,
+textarea {
     font-size: 12px;
     height: auto;
     padding: 5px;
@@ -453,7 +509,8 @@ textarea, textarea.input-text, textarea {
     vertical-align: middle
 }
 
-.table_form td, .table_form th {
+.table_form td,
+.table_form th {
     padding: 8px 8px 8px 0
 }
 
@@ -585,7 +642,8 @@ textarea, textarea.input-text, textarea {
     overflow: hidden
 }
 
-.list-dot li, .list-dot-othors li {
+.list-dot li,
+.list-dot-othors li {
     background: url(bg.gif) no-repeat -140px -832px;
     padding: 5px 15px;
     border-bottom: 1px dotted #c6dde0;
@@ -594,15 +652,18 @@ textarea, textarea.input-text, textarea {
     _height: 22px
 }
 
-.list-dot li span, .list-dot-othors li span {
+.list-dot li span,
+.list-dot-othors li span {
     color: #0970a2
 }
 
-.list-dot li a.close span, .list-dot-othors li a.close span {
+.list-dot li a.close span,
+.list-dot-othors li a.close span {
     display: none
 }
 
-.list-dot li a.close, .list-dot-othors li a.close {
+.list-dot li a.close,
+.list-dot-othors li a.close {
     background: url(icon-sobox.png) no-repeat -145px 0;
     display: block;
     width: 24px;
@@ -613,7 +674,8 @@ textarea, textarea.input-text, textarea {
     bottom: 5px
 }
 
-.list-dot li a.close:hover, .list-dot-othors li a.close:hover {
+.list-dot li a.close:hover,
+.list-dot-othors li a.close:hover {
     background: url(icon-sobox.png) no-repeat -120px 0
 }
 
@@ -623,7 +685,9 @@ textarea, textarea.input-text, textarea {
     overflow: hidden
 }
 
-.so-popbox .s-sopop-close, a.a-sopop-btn, span.s-sopop-btn {
+.so-popbox .s-sopop-close,
+a.a-sopop-btn,
+span.s-sopop-btn {
     background: url(icon-sobox.png) no-repeat
 }
 
@@ -791,7 +855,10 @@ a.a-sopop-cancel span.s-sopop-btn {
     height: 9px;
     background-position: 0 -101px
 }
+
+
 /*------------------------------------*/
+
 .progress {
     margin: 40px 30px 30px;
 }
@@ -826,11 +893,11 @@ a.a-sopop-cancel span.s-sopop-btn {
     padding-left: 50px;
 }
 
-.content-menu span {
-    /* color: #ddd;*/
-    padding: 0 5px
-}
 
+/* .content-menu span {
+    color: #ddd;
+    padding: 0 5px
+} */
 
 .m-table th {
     height: 14px;
@@ -863,7 +930,8 @@ a.a-sopop-cancel span.s-sopop-btn {
     line-height: 1.0
 }
 
-.m-table td.l, .m-table th.l {
+.m-table td.l,
+.m-table th.l {
     text-align: left;
 }
 
@@ -902,7 +970,8 @@ a.a-sopop-cancel span.s-sopop-btn {
     font-size: 14px
 }
 
-.m-table-row th, .m-table-row td {
+.m-table-row th,
+.m-table-row td {
     border-width: 0 0 1px;
     word-break: break-all;
     text-align: center;
@@ -922,4 +991,9 @@ a.a-sopop-cancel span.s-sopop-btn {
     display: block;
     width: 100%;
     cursor: text
+}
+
+.select2-container--default .select2-selection--single {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }

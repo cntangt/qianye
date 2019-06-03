@@ -278,7 +278,6 @@
     <Folder Include="core" />
     <Folder Include="data\cache" />
     <Folder Include="data\config" />
-    <Folder Include="data\models" />
     <Folder Include="data" />
     <Folder Include="icepointadmin\controller" />
     <Folder Include="icepointadmin\img" />

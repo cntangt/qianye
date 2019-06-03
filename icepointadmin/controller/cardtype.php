@@ -64,7 +64,7 @@ class cardtype extends Admin
             $data = $this->post('data');
 
             $data['createtime'] = time();
-            $data['createby'] = $this->admin['username'];
+            $data['createby'] = $this->admin['realname'];
             $data['begintime'] = strtotime($data['begintime']);
             $data['endtime'] = strtotime($data['endtime']);
             $this->db->setTableName('card_type')->insert($data);
@@ -91,7 +91,7 @@ class cardtype extends Admin
             $data = $this->post('data');
 
             $data['updatetime'] = time();
-            $data['updateby'] = $this->admin['username'];
+            $data['updateby'] = $this->admin['realname'];
             $data['begintime'] = strtotime($data['begintime']);
             $data['endtime'] = strtotime($data['endtime']);
             $this->db->setTableName('card_type')->update($data, 'id = ?', $this->post('id'));
