@@ -2,7 +2,7 @@
 <form id="typeaddform" action="<?php echo $url ?>">
     <input type="hidden" name="id" value="<?php echo $data['id'] ?>">
     <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><?php echo $title ?></h5>
+        <h5 class="modal-title" ><?php echo $title ?></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>

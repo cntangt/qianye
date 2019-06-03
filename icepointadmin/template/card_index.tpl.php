@@ -11,6 +11,12 @@
             <?php }
         if ($this->menu('card-export')) { ?>
                 <a class="btn btn-sm btn-primary" style="color:#fff" href="<?php echo url('card/export') ?>" target="export">导出</a>
+            <?php }
+        if ($this->menu('card-sale')) { ?>
+                <button class="btn btn-sm btn-success dialog"  data-url="<?php echo url('card/sale') ?>">批量销售</button>
+            <?php }
+        if ($this->menu('card-disable')) { ?>
+                <button class="btn btn-sm btn-danger dialog" data-url="<?php echo url('card/disable') ?>">批量作废</butto >
             <?php } ?>
         </div>
         <div class="right">
@@ -71,6 +77,10 @@
         }).on('click', '.xiaocms-page a', function() {
             $('#listcontainer').load($(this).attr('href'));
             return false;
+        }).on('click', '.confirm', function() {
+            if (confirm($(this).data('tip'))) {
+                $.post($(this).data('url'), reload);
+            }
         });
 
         $('#modal').on('click', '#addnew', function() {

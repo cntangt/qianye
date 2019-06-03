@@ -98,4 +98,36 @@ class api extends Base
 
 		$this->json($mins . ' - ' . $maxs, true);
 	}
+
+	public function checkcountAction()
+	{
+		$data = $this->post('data');
+
+		if (empty($data['pre'])) {
+			$this->json(0, false, '请输入卡号前缀');
+		}
+		if (empty($data['begin'])) {
+			$this->json(0, false, '请输入起始卡号');
+		}
+		if (empty($data['end'])) {
+			$this->json(0, false, '请输入结尾卡号');
+		}
+
+		$pre = strtoupper($data['pre']);
+		$min = intval($data['begin']);
+		$max = intval($data['end']);
+
+		if ($min > $max) {
+			$this->json(0, false, '起始卡号不能大于结尾卡号');
+		}
+
+		$len = strlen($data['end']);
+
+		$mins = $pre . str_pad($min, $len, '0', STR_PAD_LEFT);
+		$maxs = $pre . str_pad($max, $len, '0', STR_PAD_LEFT);
+
+		$count = $this->db->setTableName('card')->count('codepre = ? and codelen= ? and codeno >= ? and codeno <= ?', [$pre, $len, $min, $max]);
+
+		$this->json($count, true, sprintf('%s%s - %s%s 匹配%d条', $pre, str_pad($min, $len, '0', STR_PAD_LEFT), $pre, str_pad($max, $len, '0', STR_PAD_LEFT), $count));
+	}
 }

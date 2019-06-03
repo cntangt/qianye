@@ -1,6 +1,6 @@
 <form id="cardbuildform" action="<?php echo url('card/build') ?>" autocomplete="off">
     <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">生成卡券</h5>
+        <h5 class="modal-title" >生成卡券</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -75,10 +75,6 @@
 <script>
     var form = $('#cardbuildform');
     $('#cardtypeid').select2();
-    $('#datepicker').datepicker({
-        language: "zh-CN",
-        format: 'yyyy-mm-dd'
-    });
     form.validate({
         errorLabelContainer: $('#errors'),
         errorElement: 'li',
@@ -95,7 +91,6 @@
         },
         submitHandler: function() {
             $.post(form.attr('action'), form.serialize(), function(res) {
-                debugger
                 if (res.succ) {
                     reload();
                 } else {

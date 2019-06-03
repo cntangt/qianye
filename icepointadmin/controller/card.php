@@ -127,4 +127,69 @@ class card extends Admin
 		}
 		return $arr;
 	}
+
+	public function disableAction()
+	{
+		if ($this->ispost) {
+			$data = $this->post('data');
+			$count = 0;
+			if (isset($data)) {
+				$count = $this->db->setTableName('card') -> update(['status' => 40], 'codepre = ? and codelen= ? and codeno >= ? and codeno <= ?', $this->batch_data());
+			} else {
+				$count = $this->db->setTableName('card')->update(['status' => 40], 'id = ?', $this->get('id'));
+			}
+			$this->json($count, $count > 0);
+		}
+
+		$url = url('card/disable');
+		$title = '批量作废卡券';
+
+		include $this->admin_tpl('card_batch');
+	}
+
+	public function saleAction()
+	{
+		if ($this->ispost) {
+			$data = $this->post('data');
+			$count = 0;
+			if (isset($data)) {
+				$count = $this->db->setTableName('card') -> update(['status' => 20], 'codepre = ? and codelen= ? and codeno >= ? and codeno <= ? and status = 10', $this->batch_data());
+			} else {
+				$count = $this->db->setTableName('card')->update(['status' => 20], 'id = ? and status = 10', $this->get('id'));
+			}
+			$this->json($count, $count > 0);
+		}
+
+		$url = url('card/sale');
+		$title = '批量销售卡券';
+
+		include $this->admin_tpl('card_batch');
+	}
+
+	private function batch_data()
+	{
+		$data = $this->post('data');
+
+		if (empty($data['pre'])) {
+			$this->json(0, false, '请输入卡号前缀');
+		}
+		if (empty($data['begin'])) {
+			$this->json(0, false, '请输入起始卡号');
+		}
+		if (empty($data['end'])) {
+			$this->json(0, false, '请输入结尾卡号');
+		}
+
+		$pre = strtoupper($data['pre']);
+		$min = intval($data['begin']);
+		$max = intval($data['end']);
+
+		if ($min > $max) {
+			$this->json(0, false, '起始卡号不能大于结尾卡号');
+		}
+
+		$len = strlen($data['end']);
+
+		return [$pre, $len, $min, $max];
+	}
 }
