@@ -58,6 +58,7 @@ class card extends Admin
 		if ($this->ispost) {
 			$data = $this->post('data');
 			$cardtype = $this->db->setTableName('card_type')->find($data['ctid']);
+			$cardtypeitems = $this->db->setTableName('card_type_item')->getAll('cardtypeid = ?', $data['ctid']);
 			if ($cardtype == false) {
 				$this->json(null, false, '请选择卡券类型');
 			}
@@ -134,7 +135,7 @@ class card extends Admin
 			$data = $this->post('data');
 			$count = 0;
 			if (isset($data)) {
-				$count = $this->db->setTableName('card') -> update(['status' => 40], 'codepre = ? and codelen= ? and codeno >= ? and codeno <= ?', $this->batch_data());
+				$count = $this->db->setTableName('card')->update(['status' => 40], 'codepre = ? and codelen= ? and codeno >= ? and codeno <= ?', $this->batch_data());
 			} else {
 				$count = $this->db->setTableName('card')->update(['status' => 40], 'id = ?', $this->get('id'));
 			}
@@ -153,7 +154,7 @@ class card extends Admin
 			$data = $this->post('data');
 			$count = 0;
 			if (isset($data)) {
-				$count = $this->db->setTableName('card') -> update(['status' => 20], 'codepre = ? and codelen= ? and codeno >= ? and codeno <= ? and status = 10', $this->batch_data());
+				$count = $this->db->setTableName('card')->update(['status' => 20], 'codepre = ? and codelen= ? and codeno >= ? and codeno <= ? and status = 10', $this->batch_data());
 			} else {
 				$count = $this->db->setTableName('card')->update(['status' => 20], 'id = ? and status = 10', $this->get('id'));
 			}

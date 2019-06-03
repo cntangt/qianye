@@ -46,6 +46,30 @@
               </a>
             </li>
           <?php } ?>
+          <?php if ($this->menu('customer-index')) { ?>
+            <li class="nav-item">
+              <a class="nav-link" href="<?php echo url('customer/index') ?>" target="rightMain">
+                <span data-feather="shopping-cart"></span>
+                提货管理
+              </a>
+            </li>
+          <?php } ?>
+          <?php if ($this->menu('customer-index')) { ?>
+            <li class="nav-item">
+              <a class="nav-link" href="<?php echo url('customer/index') ?>" target="rightMain">
+                <span data-feather="dollar-sign"></span>
+                会员财富
+              </a>
+            </li>
+          <?php } ?>
+          <?php if ($this->menu('customer-index')) { ?>
+            <li class="nav-item">
+              <a class="nav-link" href="<?php echo url('customer/index') ?>" target="rightMain">
+                <span data-feather="message-square"></span>
+                评价管理
+              </a>
+            </li>
+          <?php } ?>
         </ul>
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
           <span>System Config</span>

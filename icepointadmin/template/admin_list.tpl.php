@@ -2,7 +2,7 @@
 <div class="subnav">
 	<div class="content-menu">
 		<?php if ($this->menu('administrator-add')) { ?>
-			<a class="btn btn-sm btn-primary" href="<?php echo url('administrator/add') ?>" style="color:#fff">添加用户</a>
+			<a class="btn btn-sm btn-primary" href="<?php echo url('administrator/add') ?>">添加用户</a>
 		<?php } ?>
 	</div>
 	<div class="bk10"></div>
@@ -21,15 +21,18 @@
 				<tr height="25">
 					<td align="left"><?php echo $t['userid']; ?></td>
 					<td align="left"><a href="<?php echo url('administrator/edit', array('userid' => $t['userid'])); ?>"><?php echo $t['username']; ?></a></td>
-					<td align="left"><?php if ($t['roleid'] == 1) {
-											echo '是';
-										} else {
-											echo '否';
-										} ?></td>
-
+					<td align="left">
+						<?php if ($t['roleid'] == 1) {
+							echo '是';
+						} else {
+							echo '否';
+						} ?>
+					</td>
 					<td align="left"><?php echo $t['realname']; ?></td>
-
-					<td align="left"><a href="<?php echo url('administrator/edit', array('userid' => $t['userid'])); ?>">编辑</a> | <a href="javascript:confirmurl('<?php echo url('administrator/del/', array('userid' => $t['userid'])); ?>','确定删除 『<?php echo $t['username']; ?> 』用户吗？')">删除</a> </td>
+					<td align="left">
+						<a class="btn btn-sm btn-primary" href="<?php echo url('administrator/edit', array('userid' => $t['userid'])); ?>">编辑</a>
+						<a class="btn btn-sm btn-danger" href="javascript:confirmurl('<?php echo url('administrator/del/', array('userid' => $t['userid'])); ?>','确定删除 『<?php echo $t['username']; ?> 』用户吗？')">删除</a>
+					</td>
 				</tr>
 			<?php } ?>
 		<tbody>
