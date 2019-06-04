@@ -49,7 +49,7 @@ class card extends Admin
 			$this->db->where('customermobile = ?', $mobile);
 		}
 		if ($code) {
-			$this->db->where('code = ?', $code);
+			$this->db->where('code like ?', '%'.$code.'%');
 		}
 	}
 

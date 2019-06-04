@@ -10,11 +10,11 @@
                 <a class="btn btn-sm btn-primary" style="color:#fff" href="<?php echo url('card/export') ?>" target="export">导出</a>
             <?php }
         if ($this->menu('card-sale')) { ?>
-                <button class="btn btn-sm btn-success dialog"  data-url="<?php echo url('card/sale') ?>">批量销售</button>
+                <button class="btn btn-sm btn-success dialog" data-url="<?php echo url('card/sale') ?>">批量销售</button>
             <?php }
         if ($this->menu('card-disable')) { ?>
-                <button class="btn btn-sm btn-danger dialog" data-url="<?php echo url('card/disable') ?>">批量作废</butto >
-            <?php } ?>
+                <button class="btn btn-sm btn-danger dialog" data-url="<?php echo url('card/disable') ?>">批量作废</butto>
+                <?php } ?>
         </div>
         <div class="right">
             <form autocomplete="off" class="form-inline" data-url="<?php echo url('card/index') ?>" id="searchform">
@@ -66,13 +66,13 @@
     </div>
 </div>
 <script>
+    var html = '<div class="progress"><span>加载中...</span><div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div></div>';
     $(function() {
         $('#listcontainer,.content-menu').on('click', '.dialog', function() {
-            var html = '<div class="progress"><span>加载中...</span><div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div></div>';
             $('#modal').modal('show');
             $('#modal .modal-content').html(html).load($(this).data('url'));
         }).on('click', '.xiaocms-page a', function() {
-            $('#listcontainer').load($(this).attr('href'));
+            load($(this).attr('href'));
             return false;
         }).on('click', '.confirm', function() {
             if (confirm($(this).data('tip'))) {
@@ -99,13 +99,20 @@
 
     function loadlist() {
         var form = $('#searchform');
-        $('#listcontainer').load(form.data('url'), form.serialize());
+        load(form.data('url'), form.serialize());
         return false;
     }
 
     function reload() {
-        $('#modal').modal('hide');
-        $('#listcontainer').load($('#currentpage').val());
+        load($('#currentpage').val());
+    }
+
+    function load(url, data) {
+        $('#modal').modal('show');
+        $('#modal .modal-content').html(html);
+        $('#listcontainer').load(url, data, function() {
+            $('#modal').modal('hide');
+        });
     }
 </script>
 </body>
