@@ -90,7 +90,7 @@
             }
         },
         submitHandler: function() {
-            $('.btn').attr('disabled', true);
+            $('modal-footer .btn').attr('disabled', true);
             $('.save').text('正在生成');
             $.post(form.attr('action'), form.serialize(), function(res) {
                 if (res.succ) {
@@ -98,7 +98,7 @@
                 } else {
                     alert(res.msg);
                 }
-                $('.btn').attr('disabled', false);
+                $('modal-footer .btn').attr('disabled', false);
                 $('.save').text('保存');
             });
             return false;

@@ -83,22 +83,18 @@
               </a>
             </li>
           <?php } ?>
-          <?php if ($this->menu('administrator-index')) { ?>
-            <li class="nav-item">
-              <a class="nav-link" href="<?php echo url('index/my') ?>" target="rightMain">
-                <span data-feather="key"></span>
-                修改密码
-              </a>
-            </li>
-          <?php } ?>
-          <?php if ($this->menu('administrator-index')) { ?>
-            <li class="nav-item">
-              <a class="nav-link" href="<?php echo url("login/logout"); ?>">
-                <span data-feather="log-out"></span>
-                退出
-              </a>
-            </li>
-          <?php } ?>
+          <li class="nav-item">
+            <a class="nav-link" href="<?php echo url('index/my') ?>" target="rightMain">
+              <span data-feather="key"></span>
+              修改密码
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?php echo url("login/logout"); ?>">
+              <span data-feather="log-out"></span>
+              退出
+            </a>
+          </li>
         </ul>
       </div>
     </nav>

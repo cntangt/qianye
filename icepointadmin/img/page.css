@@ -618,3 +618,13 @@ textarea {
 a.btn {
     color: #fff;
 }
+
+.auths label {
+    display: inline-block;
+    margin-left: 10px;
+    width: 70px;
+}
+
+.auths label.checkall {
+    float: right;
+}
