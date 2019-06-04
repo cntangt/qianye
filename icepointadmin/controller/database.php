@@ -105,7 +105,6 @@ class database extends Admin {
 	 * 数据库导出方法
 	 */
 	private function export_database($sizelimit, $action, $fileid, $random, $tableid, $startfrom) {
-	    set_time_limit(0);
 		$fileid      = ($fileid != '') ? $fileid : 1;
         $c_data      = get_cache('bakup_tables');
 		$tables      = $c_data['tables'];

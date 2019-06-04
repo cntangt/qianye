@@ -21,8 +21,11 @@ if (!defined('CONTROLLER_DIR')) define('CONTROLLER_DIR',     CORE_PATH . 'contro
 define('COOKIE_PRE',			'xiaocms_');//Cookie 前缀，同一域名下安装多套系统时，请修改Cookie前缀
 date_default_timezone_set('Asia/Shanghai');
 xiaocms::load_file(CORE_PATH . 'library' . DIRECTORY_SEPARATOR . 'global.function.php');
-xiaocms::load_file(CORE_PATH . 'version.php');
 xiaocms::load_file(CORE_PATH . 'controller/Base.class.php');
+
+
+ini_set('memory_limit', '1024M');
+set_time_limit(0);
 
 /**
  * 系统核心全局控制类

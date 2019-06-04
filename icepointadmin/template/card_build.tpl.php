@@ -1,6 +1,6 @@
 <form id="cardbuildform" action="<?php echo url('card/build') ?>" autocomplete="off">
     <div class="modal-header">
-        <h5 class="modal-title" >生成卡券</h5>
+        <h5 class="modal-title">生成卡券</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -90,12 +90,16 @@
             }
         },
         submitHandler: function() {
+            $('.btn').attr('disabled', true);
+            $('.save').text('正在生成');
             $.post(form.attr('action'), form.serialize(), function(res) {
                 if (res.succ) {
                     reload();
                 } else {
                     alert(res.msg);
                 }
+                $('.btn').attr('disabled', false);
+                $('.save').text('保存');
             });
             return false;
         }
