@@ -261,4 +261,4 @@ __pycache__/
 *.pyc
 /.vscode
 
-models
+*.cache.php
