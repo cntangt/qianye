@@ -1,8 +1,8 @@
 <?php
+include_once SDK_DIR . 'wx/wxBizDataCrypt.php';
 
 class api extends Base
 {
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -18,63 +18,56 @@ class api extends Base
 			$this->site_config['wx_secret'],
 			$code
 		));
-
+		// todo 根据openid查找用户
 		$key = md5($code);
-		$this->cache->set('wx:' . $key, $res);
+		$this->cache->set('wx:' . $key, json_decode($res));
 
 		$this->json($key, true);
 	}
-	public function ajaxkwAction()
+
+	public function wxregAction()
 	{
-		$subject = $this->post('data');
-		if (empty($subject)) exit('');
-		$data = @implode('', file('http://keyword.discuz.com/related_kw.html?ics=utf-8&ocs=utf-8&title=' . rawurlencode($subject) . '&content=' . rawurlencode($subject)));
-		if ($data) {
-			$parser = xml_parser_create();
-			xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
-			xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
-			xml_parse_into_struct($parser, $data, $values, $index);
-			xml_parser_free($parser);
-			$kws = array();
-			foreach ($values as $valuearray) {
-				if ($valuearray['tag'] == 'kw' || $valuearray['tag'] == 'ekw') {
-					$kws[] = trim($valuearray['value']);
-				}
+		$loginInfo = $this->get_lgoinInfo();
+
+		$user = $this->db->setTableName('customer')->getOne('openid = ?', $loginInfo['openid']);
+		if ($user) {
+			$this->json(null, true, '用户已经存在');
+		} else {
+			$addRes = $this->db->setTableName('customer')->insert([
+				'name' => $this->post('nickName'),
+				'nickname' => $this->post('nickName'),
+				'openid' =>  $loginInfo['openid'],
+				'unionid' => isset($loginInfo['unionid']) ? $loginInfo['unionid'] : '',
+				'headimg' => $this->post('avatarUrl'),
+				'createtime' => time()
+			]);
+			if ($addRes) {
+				$this->json(null, true, '绑定用户成功');
+			} else {
+				$this->json(null, false, '绑定用户失败');
 			}
-			echo implode(',', $kws);
 		}
 	}
 
-	public function userAction()
+	public function activeAction()
 	{
-		if (!defined('XIAOCMS_MEMBER')) exit();
-		ob_start();
-		$this->view->display('member/user.html');
-		$html = ob_get_contents();
-		ob_clean();
-		$html = addslashes(str_replace(array("\r", "\n", "\t"), array('', '', ''), $html));
-		echo 'document.write("' . $html . '");';
-	}
+		$loginInfo = $this->get_lgoinInfo();
+		$pc = new WXBizDataCrypt($this->site_config['wx_appid'], $loginInfo['session_key']);
+		$errCode = $pc->decryptData($this->post('encryptedData'), $this->post('iv'), $json);
 
-	public function hitsAction()
-	{
-		$id   = (int)$this->get('id');
-		if (empty($id))	exit;
-		$data = $this->db->setTableName('content')->find($id, 'hits');
-		$hits = $data['hits'] + 1;
-		$this->db->setTableName('content')->update(array('hits' => $hits), 'id=?', $id);
-		echo "document.write('$hits');";
-	}
-
-	public function pinyinAction()
-	{
-		echo word2pinyin($this->post('name'));
-	}
-
-	public function indexAction()
-	{
-		$cards = $this->db->setTableName('card')->findAll();
-		$this->json($cards);
+		if ($errCode == 0) {
+			$data = json_decode($json, true);
+			$mobile = $data['purePhoneNumber'];
+			$customer = $this->db->setTableName('customer')->getOne('openid = ?', $loginInfo['openid']);
+			if ($customer) {
+				$this->db->setTableName('customer')->update(['mobile' => $mobile], 'id = ?', $customer['id']);
+				$this->json(null, true, '绑定用户手机成功');
+			} else {
+				$this->json(null, false, '用户不存在');
+			}
+		} else {
+			$this->json(null, false, '获取手机号码失败');
+		}
 	}
 
 	public function checkcodeAction()
@@ -145,5 +138,16 @@ class api extends Base
 		$count = $this->db->setTableName('card')->count('codepre = ? and codelen= ? and codeno >= ? and codeno <= ?', [$pre, $len, $min, $max]);
 
 		$this->json($count, true, sprintf('%s%s - %s%s 匹配%d条', $pre, str_pad($min, $len, '0', STR_PAD_LEFT), $pre, str_pad($max, $len, '0', STR_PAD_LEFT), $count));
+	}
+
+	private function get_lgoinInfo()
+	{
+		$loginInfo = $this->cache->get('wx:' . $_SERVER['HTTP_TOKEN']);
+
+		if (!$loginInfo) {
+			$this->json(null, false, '微信登录过期，请重新登录');
+		}
+
+		return $loginInfo;
 	}
 }
