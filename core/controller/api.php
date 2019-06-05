@@ -8,6 +8,22 @@ class api extends Base
 		parent::__construct();
 	}
 
+	public function wxloginAction()
+	{
+		$code = $this->get('code');
+
+		$res = $this->http_get(sprintf(
+			'https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code',
+			$this->site_config['wx_appid'],
+			$this->site_config['wx_secret'],
+			$code
+		));
+
+		$key = md5($code);
+		$this->cache->set('wx:' . $key, $res);
+
+		$this->json($key, true);
+	}
 	public function ajaxkwAction()
 	{
 		$subject = $this->post('data');

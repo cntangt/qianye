@@ -29,8 +29,7 @@ abstract class Base
         }
         if (defined('XIAOCMS_ADMIN') || defined('XIAOCMS_MEMBER')) {
             define('SITE_PATH', self::get_a_url());
-        }
-        else {
+        } else {
             define('SITE_PATH', self::get_base_url());
         }
         if (!is_file(XIAOCMS_PATH . 'data/install.lock')) self::redirect(url('install/index'));
@@ -199,8 +198,7 @@ abstract class Base
             if ($t['pattern']) {
                 if ($t['pattern'] == 1) {
                     if ($data[$t['field']] == '') $this->show_message(empty($t['errortips']) ? $t['name'] . '不能为空' : $t['errortips'], 2, 1);
-                }
-                else {
+                } else {
                     if (!preg_match($t['pattern'], $data[$t['field']])) $this->show_message(empty($t['errortips']) ? $t['name'] . '格式不正确' : $t['errortips'], 2, 1);
                 }
             }
@@ -270,8 +268,7 @@ abstract class Base
         $keys['kdt_id'] = $this->site_config['yz_store_id'];
 
         $token = $this->cache->get('yz:acc_token');
-        if ($token)
-            {
+        if ($token) {
             return $token;
         }
 
@@ -280,5 +277,33 @@ abstract class Base
         $this->cache->set('yz:acc_token', $accessToken['access_token'], 3600);
 
         return $accessToken['access_token'];
+    }
+
+    protected function http_get($url)
+    {
+        $curl = curl_init(); //初始化
+        curl_setopt($curl, CURLOPT_URL, $url); //设置抓取的url
+        curl_setopt($curl, CURLOPT_HEADER, 0); //设置为0不返回请求头信息
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); //设置获取的信息以文件流的形式返回，而不是直接输出。
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE); // 跳过https请求 不验证证书和hosts
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+        $data = curl_exec($curl); //执行命令
+        curl_close($curl); //关闭URL请求
+        return $data; //返回获得的数据
+    }
+
+    protected function http_post($url, $data) {
+        $curl = curl_init(); //初始化
+        curl_setopt($curl, CURLOPT_URL, $url); //设置抓取的url
+        curl_setopt($curl, CURLOPT_HEADER, 0); //设置为0不返回请求头信息
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); //设置获取的信息以文件流的形式返回，而不是直接输出。
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE); // 跳过https请求 不验证证书和hosts
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($curl, CURLOPT_POST, 1); //设置post方式提交
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data); //设置post数据，
+        $data = curl_exec($curl); //执行命令
+        curl_close($curl); //关闭URL请求
+        return $data; //返回获得的数据
+        
     }
 }
