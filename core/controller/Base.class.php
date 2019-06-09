@@ -289,10 +289,11 @@ abstract class Base
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
         $data = curl_exec($curl); //执行命令
         curl_close($curl); //关闭URL请求
-        return $data; //返回获得的数据
+        return json_decode($data); //返回获得的数据
     }
 
-    protected function http_post($url, $data) {
+    protected function http_post($url, $data)
+    {
         $curl = curl_init(); //初始化
         curl_setopt($curl, CURLOPT_URL, $url); //设置抓取的url
         curl_setopt($curl, CURLOPT_HEADER, 0); //设置为0不返回请求头信息
@@ -303,7 +304,6 @@ abstract class Base
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data); //设置post数据，
         $data = curl_exec($curl); //执行命令
         curl_close($curl); //关闭URL请求
-        return $data; //返回获得的数据
-        
+        return json_decode($data); //返回获得的数据
     }
 }

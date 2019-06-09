@@ -29,5 +29,9 @@ return array(
   'yz_client_secret' => 'a8e6767b5dd75737a32c6d1c4d622e23',
   'yz_store_id' => '42559182',
   'wx_appid' => 'wx85d2994a93f51ad8',
-  'wx_secret' => 'd6d65f0130b841a85ecdd6b4bfd22bf1'
+  'wx_secret' => 'd6d65f0130b841a85ecdd6b4bfd22bf1',
+  'wln_key' => 'ip',
+  'wln_secret' => 'hkLW1faNQKA7a80vGT7FRZ7X6g8FrncW',
+  'wln_domain' => 'http://open.hupun.com/api/v1/',
+  'wln_shop' => 'ip', //店铺名称
 );

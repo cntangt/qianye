@@ -20,7 +20,7 @@ class api extends Base
 		));
 		// todo 根据openid查找用户
 		$key = md5($code);
-		$this->cache->set('wx:' . $key, json_decode($res));
+		$this->cache->set('wx:' . $key, $res);
 
 		$this->json($key, true);
 	}
