@@ -289,7 +289,7 @@ abstract class Base
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
         $data = curl_exec($curl); //执行命令
         curl_close($curl); //关闭URL请求
-        return json_decode($data); //返回获得的数据
+        return json_decode($data, true); //返回获得的数据
     }
 
     protected function http_post($url, $data)
@@ -301,9 +301,10 @@ abstract class Base
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE); // 跳过https请求 不验证证书和hosts
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
         curl_setopt($curl, CURLOPT_POST, 1); //设置post方式提交
+        curl_setopt($curl, CURLOPT_HTTPHEADER, ['content-type' => 'application/x-www-form-urlencoded']);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data); //设置post数据，
         $data = curl_exec($curl); //执行命令
         curl_close($curl); //关闭URL请求
-        return json_decode($data); //返回获得的数据
+        return json_decode($data, true); //返回获得的数据
     }
 }

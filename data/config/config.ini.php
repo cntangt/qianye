@@ -30,8 +30,8 @@ return array(
   'yz_store_id' => '42559182',
   'wx_appid' => 'wx85d2994a93f51ad8',
   'wx_secret' => 'd6d65f0130b841a85ecdd6b4bfd22bf1',
-  'wln_key' => 'ip',
-  'wln_secret' => 'hkLW1faNQKA7a80vGT7FRZ7X6g8FrncW',
-  'wln_domain' => 'http://open.hupun.com/api/v1/',
+  'wln_key' => '19CHUHAO0610TEST',
+  'wln_secret' => '3959558E813D3340B18342BE396D25A0',
+  'wln_domain' => 'http://114.67.231.99/open/api/v1/',
   'wln_shop' => 'ip', //店铺名称
 );
