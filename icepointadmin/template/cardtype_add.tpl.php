@@ -39,7 +39,8 @@
 <script>
     $('#datepicker').datepicker({
         language: "zh-CN",
-        format: 'yyyy-mm-dd'
+        format: 'yyyy-mm-dd',
+        autoclose: true
     });
     $('#typeaddform').validate({submitHandler:function(){
         var form = $('#typeaddform');

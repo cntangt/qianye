@@ -98,7 +98,7 @@ class sync extends Base
 				'receiverCity' => $o['city'],
 				'receiverArea' => $o['area'],
 				'receiverAddress' => $o['address'],
-				'receiverMobile' => $o['phone'],
+				'receiverMobile' => $o['mobile'],
 				'hasRefund' => 0,
 				'orders' => $is
 			]]);

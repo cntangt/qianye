@@ -46,9 +46,9 @@
               </a>
             </li>
           <?php } ?>
-          <?php if ($this->menu('customer-index')) { ?>
+          <?php if ($this->menu('order-index')) { ?>
             <li class="nav-item">
-              <a class="nav-link" href="<?php echo url('customer/index') ?>" target="rightMain">
+              <a class="nav-link" href="<?php echo url('order/index') ?>" target="rightMain">
                 <span data-feather="shopping-cart"></span>
                 提货管理
               </a>
