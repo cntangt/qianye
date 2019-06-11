@@ -36,21 +36,21 @@ abstract class Base
         if (is_file(XIAOCMS_PATH . 'member' . DIRECTORY_SEPARATOR . 'index.php'))
             define('XIAOCMS_MEMBER', XIAOCMS_PATH . 'member' . DIRECTORY_SEPARATOR);
         $this->db = xiaocms::load_class('Model');
-        $this->view = xiaocms::load_class('view');
+        //$this->view = xiaocms::load_class('view');
         $this->cookie = xiaocms::load_class('cookie');
         $this->session = xiaocms::load_class('session');
         $this->site_config = xiaocms::load_config('config');
         $this->category_cache = get_cache('category');
         $this->content_model = get_cache('content_model');
         $this->member_info = self::get_member_info();
-        $this->view->assign(array(
-            'cats' => $this->category_cache,
-            'member' => $this->member_info,
-            'site_url' => self::get_http_host() . SITE_PATH,
-            'site_name' => $this->site_config['site_name'],
-            'page' => (int)self::get('page') ? (int)self::get('page') : 1,
-            'site_template' => SITE_PATH . basename(TEMPLATE_DIR) . '/' . basename(SYS_THEME_DIR) . '/',
-        ));
+        // $this->view->assign(array(
+        //     'cats' => $this->category_cache,
+        //     'member' => $this->member_info,
+        //     'site_url' => self::get_http_host() . SITE_PATH,
+        //     'site_name' => $this->site_config['site_name'],
+        //     'page' => (int)self::get('page') ? (int)self::get('page') : 1,
+        //     'site_template' => SITE_PATH . basename(TEMPLATE_DIR) . '/' . basename(SYS_THEME_DIR) . '/',
+        // ));
         $this->cache = xiaocms::load_class('rediscache');
         $this->ispost = $_SERVER['REQUEST_METHOD'] == 'POST';
         $this->isajax = isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && strtolower($_SERVER["HTTP_X_REQUESTED_WITH"]) == "xmlhttprequest";

@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>提示信息 - XiaoCms</title>
+<title>提示信息</title>
 <link type="text/css" rel="stylesheet" href="<?php echo SITE_PATH; ?>core/img/message/xiaocms.css"/>
 </head>
 <body>

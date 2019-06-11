@@ -13,7 +13,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">区域</span>
                     </div>
-                    <select name="status" class="form-control">
+                    <select name="area" class="form-control">
                         <option value="">全部</option>
                         <option value="重庆市">重庆市</option>
                         <option value="万州区">万州区</option>
@@ -91,6 +91,7 @@
                         <option value="50">待签收</option>
                         <option value="60">已签收</option>
                         <option value="70">已完成</option>
+                        <option value="-10">关闭</option>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-sm btn-success">查询</button>

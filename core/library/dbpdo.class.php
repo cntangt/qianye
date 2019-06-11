@@ -15,7 +15,7 @@ class dbpdo
               $flags = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8';", PDO::ATTR_ERRMODE    => PDO::ERRMODE_EXCEPTION);
               $this->_dbLink = new PDO($params['dsn'], $params['username'], $params['password'], $flags);
         } catch (PDOException $e) {  
-              exit('XiaoCms提示您：数据库连接错误！错误信息：'.$e->getMessage());  
+              exit('数据库连接错误！错误信息：'.$e->getMessage());  
         }
  		$version = $this->getServerVersion();
 		if($version > '5.0') $this->_dbLink->exec("SET sql_mode=''");
