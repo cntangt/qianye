@@ -49,7 +49,7 @@ class card extends Admin
 			$this->db->where('customermobile = ?', $mobile);
 		}
 		if ($code) {
-			$this->db->where('code like ?', '%'.$code.'%');
+			$this->db->where('code like ?', '%' . $code . '%');
 		}
 	}
 
@@ -110,6 +110,18 @@ class card extends Admin
 		$list = $this->db->setTableName('vi_card_type')->where('canbuild = 1 and isvalid = 1 and endtime > ?', time())->getAll();
 
 		include $this->admin_tpl('card_build');
+	}
+
+	public function exportAction()
+	{
+		$this->list_where();
+		$list = $this->db->getAll(
+			null,
+			null,
+			"id,cardtypename,code,pass,customermobile,from_unixtime(createtime,'%Y-%m-%d'),createby,from_unixtime(saletime,'%Y-%m-%d'),saleby,from_unixtime(activetime,'%Y-%m-%d'),from_unixtime(exptime,'%Y-%m-%d'),case when status=10 then '未销售' when status=20 then '销售' when status=30 then '激活' when status=40 then '失效' else '其它' end",
+			'id desc'
+		);
+		exportToExcel(date(YmdHis) . '卡券列表.csv', ['ID', '卡券类型', '卡券编号', '卡券密码', '会员手机', '创建时间', '创建人', '销售时间', '销售人', '激活时间', '过期时间', '状态'], $list);
 	}
 
 	private function pass($len, $type, $count)

@@ -7,7 +7,7 @@
                 <button type="button" class="btn btn-sm btn-primary dialog" data-url="<?php echo url('card/build') ?>">生成卡券</button>
             <?php }
         if ($this->menu('card-export')) { ?>
-                <a class="btn btn-sm btn-primary" style="color:#fff" href="<?php echo url('card/export') ?>" target="export">导出</a>
+                <a class="btn btn-sm btn-primary" href="#" style="color:#fff" data-url="<?php echo url('card/export') ?>" id="export" target="export">导出</a>
             <?php }
         if ($this->menu('card-sale')) { ?>
                 <button class="btn btn-sm btn-success dialog" data-url="<?php echo url('card/sale') ?>">批量销售</button>
@@ -79,6 +79,10 @@
                 $.post($(this).data('url'), reload);
             }
         });
+
+        $('#export').click(function() {
+            $(this).attr('href', $(this).data('url') + '&' + $('#searchform').serialize())
+        })
 
         $('#modal').on('click', '#addnew', function() {
             $($('#row0')[0].innerHTML).appendTo('#rows').find('.pdid').select2({

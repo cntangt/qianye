@@ -19,7 +19,7 @@ class login extends Admin {
 				{
 				$this->session->delete('admin_login_error_num');
 				}
-			    $this->show_message('恭喜您！'.$username.' 登录成功', 1, base64_decode('Li8/eGlhb2Ntcw=='));
+			    $this->show_message('恭喜您！'.$username.' 登录成功', 1, './');
 		    } else {
 			    if ($this->session->get('admin_login_error_num')) {
 				    $error = (int)$this->session->get('admin_login_error_num') - 1;
