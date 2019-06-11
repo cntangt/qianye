@@ -628,3 +628,11 @@ a.btn {
 .auths label.checkall {
     float: right;
 }
+
+.mh td{
+    height: 40px;
+}
+.mh .comment span{
+    display: inline-block;
+    margin: 0 10px;
+}
