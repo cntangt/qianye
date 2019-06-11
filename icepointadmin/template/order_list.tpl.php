@@ -67,6 +67,12 @@
                         case '70':
                             echo '已完成';
                             break;
+                        case '-10':
+                            echo '关闭';
+                            break;
+                        default:
+                            echo '其它';
+                            break;
                     } ?></td>
                 <td>
                     <?php if ($t['status'] != 10) { ?>
