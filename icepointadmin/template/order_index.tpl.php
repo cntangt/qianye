@@ -4,7 +4,7 @@
     <div class="content-menu">
         <div class="left">
             <?php if ($this->menu('order-export')) { ?>
-                <a class="btn btn-sm btn-primary" style="color:#fff" href="<?php echo url('cardtype/export') ?>" target="export">导出</a>
+                <a class="btn btn-sm btn-primary" href="#" style="color:#fff" data-url="<?php echo url('order/export') ?>" id="export" target="export">导出</a>
             <?php } ?>
         </div>
         <div class="right">
@@ -119,6 +119,10 @@
                 $.post($(this).data('url'), reload);
             }
         });
+
+        $('#export').click(function() {
+            $(this).attr('href', $(this).data('url') + '&' + $('#searchform').serialize())
+        })
 
         $('#datepicker').datepicker({
             clearBtn: true,
