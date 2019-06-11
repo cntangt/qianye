@@ -65,7 +65,7 @@
                 });
             });
             if (data.length < 1) {
-                alert('请绑定产品')
+                alert('请绑定商品')
                 return false;
             }
             $.post($('#pdeditform').attr('action'), {

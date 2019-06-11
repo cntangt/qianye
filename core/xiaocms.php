@@ -65,13 +65,13 @@ abstract class xiaocms {
 			if (is_file(CONTROLLER_DIR . $controller . '.php')) {
 				self::load_file(CONTROLLER_DIR . $controller . '.php');
 			} else {
-                exit('404');
+                exit('hello');
 			}
 			$app_object = new $controller();
 			if (method_exists($controller, $action)) {
 				$_app[$app_id] = $app_object->$action();
 			} else {
-				exit('404');
+				exit('hello');
 			}
 		}
 		return $_app[$app_id];

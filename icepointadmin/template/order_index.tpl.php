@@ -68,7 +68,7 @@
                 </div>
                 <div class="input-group input-group-sm mx-sm-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">产品</span>
+                        <span class="input-group-text">商品</span>
                     </div>
                     <input type="text" class="form-control form-control-sm" name="pdname" placeholder="提货商品关键字" />
                 </div>

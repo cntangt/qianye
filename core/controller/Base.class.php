@@ -32,9 +32,6 @@ abstract class Base
         } else {
             define('SITE_PATH', self::get_base_url());
         }
-        if (!is_file(XIAOCMS_PATH . 'data/install.lock')) self::redirect(url('install/index'));
-        if (is_file(XIAOCMS_PATH . 'member' . DIRECTORY_SEPARATOR . 'index.php'))
-            define('XIAOCMS_MEMBER', XIAOCMS_PATH . 'member' . DIRECTORY_SEPARATOR);
         $this->db = xiaocms::load_class('Model');
         //$this->view = xiaocms::load_class('view');
         $this->cookie = xiaocms::load_class('cookie');

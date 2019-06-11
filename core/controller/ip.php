@@ -95,7 +95,8 @@ class ip extends Base
 				'customermobile' => $this->user['mobile'],
 				'customerid' => $this->user['id'],
 				'status' => 30,
-				'activetime' => time()
+				'activetime' => time(),
+				'exptime' => time() + $ct['vailddays'] * 24 * 3600
 			], 'id = ?', $card['id'])) {
 				$this->db->setTableName('card_item')->delete('cardid = ?', $card['id']);
 				$this->json(null, false, '激活卡券失败，请重试');

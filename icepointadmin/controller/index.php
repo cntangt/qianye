@@ -48,5 +48,4 @@ class index extends Admin
         $data   = $this->db->setTableName('admin')->find($userid);
         include $this->admin_tpl('my');
     }
-
 }

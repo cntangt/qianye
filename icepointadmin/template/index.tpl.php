@@ -54,9 +54,9 @@
               </a>
             </li>
           <?php } ?>
-          <?php if ($this->menu('customer-index')) { ?>
+          <?php if ($this->menu('wealth-index')) { ?>
             <li class="nav-item">
-              <a class="nav-link" href="<?php echo url('customer/index') ?>" target="rightMain">
+              <a class="nav-link" href="<?php echo url('wealth/index') ?>" target="rightMain">
                 <span data-feather="dollar-sign"></span>
                 会员财富
               </a>

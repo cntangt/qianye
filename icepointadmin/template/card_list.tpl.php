@@ -57,11 +57,11 @@
                     } ?></td>
                 <td>
                     <?php if ($t['status'] == 40) { ?>
-                        <button class="btn btn-sm btn-secondary dialog" title="已作废" disabled>作废</button>
+                        <button class="btn btn-sm btn-secondary" title="已作废" disabled>作废</button>
                     <?php } else if ($this->menu('card-disable')) { ?>
                         <button class="btn btn-sm btn-danger confirm" data-url="<?php echo url('card/disable', ['id' => $t['id']]) ?>" data-tip="确定作废当前卡券，此操作不可撤回！">作废</button>
                     <?php } else { ?>
-                        <button class="btn btn-sm btn-secondary dialog" title="没有操作权限" disabled>作废</button>
+                        <button class="btn btn-sm btn-secondary" title="没有操作权限" disabled>作废</button>
                     <?php } ?>
                 </td>
             </tr>

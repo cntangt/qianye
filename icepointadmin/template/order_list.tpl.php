@@ -5,7 +5,7 @@
             <th>提货单号</th>
             <th>提货会员</th>
             <th>会员电话</th>
-            <th class="l">提货产品</th>
+            <th class="l">提货商品</th>
             <th>提货数量</th>
             <th>收货人</th>
             <th class="l">收货地址</th>
@@ -76,11 +76,11 @@
                     } ?></td>
                 <td>
                     <?php if ($t['status'] != 10) { ?>
-                        <button class="btn btn-sm btn-secondary dialog" title="仅待发货订单可以关闭" disabled>关闭</button>
+                        <button class="btn btn-sm btn-secondary" title="仅待发货订单可以关闭" disabled>关闭</button>
                     <?php } else if ($this->menu('order-close')) { ?>
                         <button class="btn btn-sm btn-danger confirm" data-url="<?php echo url('order/close', ['id' => $t['id']]) ?>" data-tip="确定关闭当前提货单，此操作不可撤回！">关闭</button>
                     <?php } else { ?>
-                        <button class="btn btn-sm btn-secondary dialog" title="没有操作权限" disabled>关闭</button>
+                        <button class="btn btn-sm btn-secondary" title="没有操作权限" disabled>关闭</button>
                     <?php } ?>
                 </td>
             </tr>
