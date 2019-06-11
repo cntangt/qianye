@@ -44,17 +44,22 @@
 					</li>
 					<li class="list-group-item">
 						<label>提货管理：</label>
-
+						<label><input name="auth[order-index]" value="1" type="checkbox" <?php if ($auth['order-index']) echo 'checked' ?>>列表</label>
+						<label><input name="auth[order-close]" value="1" type="checkbox" <?php if ($auth['order-close']) echo 'checked' ?>>关闭</label>
+						<label><input name="auth[order-export]" value="1" type="checkbox" <?php if ($auth['order-export']) echo 'checked' ?>>导出</label>
 						<label class="checkall"><input type="checkbox" class="checkall">全选</label>
 					</li>
 					<li class="list-group-item">
 						<label>会员财富：</label>
-
+						<label><input name="auth[wealth-index]" value="1" type="checkbox" <?php if ($auth['wealth-index']) echo 'checked' ?>>列表</label>
+						<label><input name="auth[wealth-edit]" value="1" type="checkbox" <?php if ($auth['wealth-edit']) echo 'checked' ?>>编辑</label>
+						<label><input name="auth[wealth-export]" value="1" type="checkbox" <?php if ($auth['wealth-export']) echo 'checked' ?>>导出</label>
 						<label class="checkall"><input type="checkbox" class="checkall">全选</label>
 					</li>
 					<li class="list-group-item">
 						<label>评价管理：</label>
-
+						<label><input name="auth[comment-index]" value="1" type="checkbox" <?php if ($auth['comment-index']) echo 'checked' ?>>列表</label>
+						<label><input name="auth[comment-export]" value="1" type="checkbox" <?php if ($auth['comment-export']) echo 'checked' ?>>导出</label>
 						<label class="checkall"><input type="checkbox" class="checkall">全选</label>
 					</li>
 				</ul>
