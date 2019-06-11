@@ -18,11 +18,24 @@ class api extends Base
 			$this->site_config['wx_secret'],
 			$code
 		));
-		// todo 根据openid查找用户
+
+		if (isset($res['errcode'])) {
+			$this->json(null, false, '微信登录失败，请重试');
+		}
+
 		$key = md5($code);
 		$this->cache->set('wx:' . $key, $res);
 
-		$this->json($key, true);
+		$user = $this->db->setTableName('customer')->getOne('openid = ?', $res['openid'], 'nickname,mobile,headimg');
+
+		$data['token'] = $key;
+		if ($user) {
+			$data['user'] = $user;
+		} else {
+			$data['user'] = null;
+		}
+
+		$this->json($data, true);
 	}
 
 	public function wxregAction()
