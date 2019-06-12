@@ -75,7 +75,7 @@ class sync extends Base
 					'itemID' => $i['sku'],
 					'itemTitle' => $i['productname'],
 					'skuTitle' => $i['productname'],
-					'status' => 0,// 待审核订单
+					'status' => 0, // 待审核订单
 					'price' => 0,
 					'size' => $i['quantity'],
 					'snapshot' => '#',

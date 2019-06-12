@@ -34,4 +34,8 @@ return array(
   'wln_secret' => '3959558E813D3340B18342BE396D25A0',
   'wln_domain' => 'http://114.67.231.99/open/api/v1/',
   'wln_shop' => 'ip', //店铺名称
+  'hdt_appkey' => 'OTkyOTMyMjY1RDYyQUI1NjZGRTY2MUM3Qzg5RTRDNEQ=', //'dAvjTtPe8yzDZdutCjpPu2Ze65LBbVH5',
+  'hdt_order' => 'http://222.178.233.58:8086/api.ashx?api=ALOG',
+  'hdt_comid' => 'alog',
+  'hdt_status' => 'http://222.178.233.58:8082/api.ashx?api=WebQuery&profile=XY181227&order_id='
 );
