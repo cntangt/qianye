@@ -25,7 +25,7 @@ class ip extends Base
 			return;
 		}
 
-		$this->json(null, false, '微信登录过期，请重新登录',-1);
+		$this->json(null, false, '用户登录信息过期');
 	}
 
 	// 激活卡券

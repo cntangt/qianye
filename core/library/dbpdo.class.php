@@ -157,9 +157,8 @@ class dbpdo
         if (!$tableName || !$data || !is_array($data)) return false;
         $contentArray = array_values($data);
         $fieldString = implode(',', array_keys($data));
-        //$contentString = rtrim(str_repeat('?,',',',$contentArray));
-        $contentString = implode("','",$contentArray);
-        $sql = "INSERT INTO {$tableName} ({$fieldString}) VALUES ('$contentString')";
+        $contentString = rtrim(str_repeat('?,', count($contentArray)), ',');
+        $sql = "INSERT INTO {$tableName} ({$fieldString}) VALUES ({$contentString})";
         $reulst = $this->execute($sql, $contentArray);
         unset($fieldString, $contentString, $contentString);
         if ($reulst && $returnId === true) {
