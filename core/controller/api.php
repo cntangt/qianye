@@ -158,7 +158,10 @@ class api extends Base
 		$loginInfo = $this->cache->get('wx:' . $_SERVER['HTTP_TOKEN']);
 
 		if (!$loginInfo) {
-			$this->json(null, false, '微信登录过期，请重新登录');
+			$this->json(null, false, '微信登录过期，请重新登录',-1);
+		}else{
+			//验证成功,再次刷新token避免操作中途过期
+			$this->cache->set('wx:' . $_SERVER['HTTP_TOKEN'], $loginInfo);
 		}
 
 		return $loginInfo;

@@ -20,10 +20,12 @@ class ip extends Base
 		if ($loginInfo) {
 			$this->user = $this->db->setTableName('customer')->getOne('openid = ?', $loginInfo['openid']);
 			$this->cache->set('ip:' . $token, $this->user);
+			//验证成功,再次刷新token避免操作中途过期
+			$this->cache->set('wx:' . $_SERVER['HTTP_TOKEN'], $loginInfo);
 			return;
 		}
 
-		$this->json(null, false, '用户登录信息过期');
+		$this->json(null, false, '微信登录过期，请重新登录',-1);
 	}
 
 	// 激活卡券
