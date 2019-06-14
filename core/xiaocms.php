@@ -18,7 +18,7 @@ define('DATA_DIR',         XIAOCMS_PATH . 'data' . DIRECTORY_SEPARATOR);
 define('SDK_DIR',         XIAOCMS_PATH . 'sdk' . DIRECTORY_SEPARATOR);
 define('TEMPLATE_DIR',           XIAOCMS_PATH . 'template' . DIRECTORY_SEPARATOR);
 if (!defined('CONTROLLER_DIR')) define('CONTROLLER_DIR',     CORE_PATH . 'controller' . DIRECTORY_SEPARATOR);
-define('COOKIE_PRE',			'xiaocms_');//Cookie 前缀，同一域名下安装多套系统时，请修改Cookie前缀
+define('COOKIE_PRE',			'cqbd_');//Cookie 前缀，同一域名下安装多套系统时，请修改Cookie前缀
 date_default_timezone_set('Asia/Shanghai');
 xiaocms::load_file(CORE_PATH . 'library' . DIRECTORY_SEPARATOR . 'global.function.php');
 xiaocms::load_file(CORE_PATH . 'controller/Base.class.php');

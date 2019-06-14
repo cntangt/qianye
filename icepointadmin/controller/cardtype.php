@@ -23,15 +23,19 @@ class cardtype extends Admin
             return;
         }
 
-        // 单独框架页请求
-        $key = $this->get('key');
-        $token = $this->yz_acc_token();
-        $client = new \Youzan\Open\Client($token);
+        $res = $this->cache->get('yz:product_list');
+        if (!$res) {
+            // 单独框架页请求
+            $key = $this->get('key');
+            $token = $this->yz_acc_token();
+            $client = new \Youzan\Open\Client($token);
 
-        $method = 'youzan.items.onsale.get';
-        $apiVersion = '3.0.0';
+            $method = 'youzan.items.onsale.get';
+            $apiVersion = '3.0.0';
 
-        $res = $client->get($method, $apiVersion, ['q' => $key]);
+            $res = $client->get($method, $apiVersion, ['q' => $key]);
+            $this->cache->set('yz:product_list', $res, 600);
+        }
         $data = $res['data']['items'];
         $list = array();
         for ($i = 0; $i < count($data); $i++) {
@@ -110,8 +114,8 @@ class cardtype extends Admin
     public function disableAction()
     {
         $id = $this->get('id');
-        $this->db->setTableName('card_type')->update(['isvalid'=>0], 'id = ?', $id);
-        
+        $this->db->setTableName('card_type')->update(['isvalid' => 0], 'id = ?', $id);
+
         $this->json(null, true);
     }
 
@@ -131,11 +135,11 @@ class cardtype extends Admin
                 $this->db->setTableName('card_type_item')->insert($t);
             }
 
-            $this->db->setTableName('card_type')->update(['canbuild'=>1], 'id = ?', $id);
+            $this->db->setTableName('card_type')->update(['canbuild' => 1], 'id = ?', $id);
 
             $this->json(null, true);
         }
-        
+
         $list = $this->db->setTableName('card_type_item')->where('cardtypeid=?', $this->get('id'))->getAll();
         if (count($list) == 0) {
             $list[0]['sku'] = '';
