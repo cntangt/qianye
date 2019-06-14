@@ -10,12 +10,9 @@
     <script src="https://cdn.bootcss.com/jquery-validate/1.19.0/localization/messages_zh.min.js"></script>
     <script src="https://cdn.bootcss.com/select2/4.0.7/js/select2.min.js"></script>
     <script src="https://cdn.bootcss.com/select2/4.0.7/js/i18n/zh-CN.js"></script>
-    <script type="text/javascript" src="../core/img/js/jquery.sobox.min.js"></script>
-    <!--<script type="text/javascript" src="../core/img/uploadify/jquery.uploadify.min.js?ver=<?php echo microtime(TRUE);?>"></script>-->
     <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/select2/4.0.7/css/select2.min.css" rel="stylesheet">
-    <script type="text/javascript" src="../core/img/js/xiaocms.js"></script>
     <link rel="stylesheet" type="text/css" href="./img/page.css" />
 </head>
 <body>
