@@ -294,9 +294,12 @@ class ip extends Base
 	{
 		$status = $this->get('status');
 		$list = null;
-		if ($status == 40) {
-			$list =	$this->db->setTableName('order')->getAll('customerid = ? and status= 40', $this->user['id']);
-		} else if ($status == 70) {
+		//待签收
+		if ($status == 50) {
+			$list =	$this->db->setTableName('order')->getAll('customerid = ? and status= 50', $this->user['id']);
+		} else if ($status == 60) { //待评价
+			$list =	$this->db->setTableName('order')->getAll('customerid = ? and status= 60', $this->user['id']);
+		} else if ($status == 70) { //已完成
 			$list =	$this->db->setTableName('order')->getAll('customerid = ? and status= 70', $this->user['id']);
 		} else {
 			$list =	$this->db->setTableName('order')->getAll('customerid = ? ', $this->user['id']);
@@ -338,7 +341,39 @@ class ip extends Base
 	}
 	//提交评价
 	public function commitordercommentAction()
-	{ }
+	{ 
+		$addRes = $this->db->setTableName('comment')->insert([
+			'orderid' => $this->post('orderid'),
+			'isontime' => $this->post('isontime'),
+			'iscontact' => $this->post('iscontact'),
+			'isdestination' => $this->post('isdestination'),
+			'isattitude' => $this->post('isattitude'),
+			'isclothing' => $this->post('isclothing'),
+			'createtime' => time()
+		]);
+		if ($addRes) {
+			$this->json(null, true, '评价成功');
+		} else {
+			$this->json(null, false, '评价失败');
+		}
+	}
+	//获取用户订单数量
+	public function selectordercountAction()
+	{
+		//待签收
+		$waitorders =	$this->db->setTableName('order')->getAll('customerid = ? and status= 50', $this->user['id']);
+		//待评价
+		$commentorders =	$this->db->setTableName('order')->getAll('customerid = ? and status= 60', $this->user['id']);
+		$result["waitcount"]=count($waitorders);
+		$result["commentcount"]=count($commentorders);
+		$order=$this->db->setTableName('order')->getOne('customerid = ? ', $this->user['id'],null,'id DESC');
+		if($order){
+			$result["lastorder"]=$order;
+		}else{
+			$result["lastorder"]=null;
+		}
+		$this->json($result);
+	}
 	//重写返回json(返回对象)
 	protected function getjson($val, $succ = true, $msg = null, $code = 0)
 	{
