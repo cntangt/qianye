@@ -262,7 +262,7 @@ class ip extends Base
 			foreach ($orderProduct as $key => $value) {
 				$addRes = $this->db->setTableName('order_item')->insert([
 					'sku' => $value->sku,
-					'orderid' => $value->$addOrderRes,
+					'orderid' => $addOrderRes,
 					'cardid' => $value->cardid,
 					'cardtypeid' => $value->cardtypeid,
 					'productname' => $value->productname,
