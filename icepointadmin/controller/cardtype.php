@@ -41,6 +41,18 @@ class cardtype extends Admin
         for ($i = 0; $i < count($data); $i++) {
             $list[$i]['id'] = $data[$i]['item_id'];
             $list[$i]['text'] = $data[$i]['title'];
+            $pd = $this->db->setTableName('product')->getOne('sku = ?', $data[$i]['item_id']);
+            if (!$pd) {
+                $succ =  $this->db->setTableName('product')->insert([
+                    'sku' => $data[$i]['item_id'],
+                    'title' => $data[$i]['title'],
+                    'subtitle' => $data[$i]['sub_title'],
+                    'thumb' => $data[$i]['image'],
+                    'img' => $data[$i]['item_imgs'][0]['url'],
+                    'createtime' => strtotime($data[$i]['created_time']),
+                    'synctime' => time()
+                ]);
+            }
         }
         $json = json_encode($list);
         include $this->admin_tpl('cardtype_index');
