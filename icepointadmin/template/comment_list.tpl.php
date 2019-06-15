@@ -22,36 +22,11 @@
                     <?php echo $t['mobile'] ?>
                 </td>
                 <td class="comment">
-                    <span>收货：<input type="checkbox" disabled <?php echo ($t['isreceive'] ? 'checked' : '') ?>></span>
-                    <span>到位：<input type="checkbox" disabled <?php echo ($t['isdestination'] ? 'checked' : '') ?>></span>
-                    <span>态度：<?php
-                                switch ($t['attitude']) {
-                                    case '10':
-                                        echo '热情';
-                                        break;
-                                    case '20':
-                                        echo '消极';
-                                        break;
-                                    default:
-                                        echo '未知';
-                                        break;
-                                }
-                                ?>
-                    </span>
-                    <span>衣着：<?php
-                                switch ($t['clothing']) {
-                                    case '10':
-                                        echo '正规';
-                                        break;
-                                    case '20':
-                                        echo '随意';
-                                        break;
-                                    default:
-                                        echo '未知';
-                                        break;
-                                }
-                                ?>
-                    </span>
+                    <span>准时：<input type="checkbox" disabled <?php echo ($t['isontime'] ? 'checked' : '') ?>></span>
+                    <span>联系：<input type="checkbox" disabled <?php echo ($t['iscontact'] ? 'checked' : '') ?>></span>
+                    <span>送达：<input type="checkbox" disabled <?php echo ($t['isdestination'] ? 'checked' : '') ?>></span>
+                    <span>态度：<input type="checkbox" disabled <?php echo ($t['isattitude'] ? 'checked' : '') ?>></span>
+                    <span>着装：<input type="checkbox" disabled <?php echo ($t['isclothing'] ? 'checked' : '') ?>></span>
                 </td>
                 <td>
                     <?php echo date('Y-m-d H:i', $t['createtime']) ?>
