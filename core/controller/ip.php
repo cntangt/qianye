@@ -273,4 +273,18 @@ class ip extends Base
 			$this->json(null, false, '未找到激活卡券，请确认卡券编码和密码');
 		}
 	}
+
+	/**
+	 * 用户可用财富
+	 * @return order_item[]
+	 */
+	public function wealthAction()
+	{
+		$list =	$this->db->setTableName('vi_wealth_valid')->getAll('customerid = ?', $this->user['id'],'cardid,carditemid,productname,quantity,validquantity,cardtypename,thumb');
+		if (!$list) {
+			$list = null;
+		}
+
+		$this->json($list, true);
+	}
 }
