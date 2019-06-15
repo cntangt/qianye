@@ -273,7 +273,7 @@ class ip extends Base
 					$this->json(null, false, '创建订单失败');
 				}
 				//2.修改数量
-				if (!$this->db->setTableName('order_item')->update([
+				if (!$this->db->setTableName('card_item')->update([
 					'validquantity' => ($value->validquantity - $value->pickcount),
 				], 'id = ?', $value->carditemid)) {
 					$this->db->setTableName('order')->delete('id = ?', $addOrderRes);
