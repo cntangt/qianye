@@ -153,6 +153,10 @@ class api extends Base
 		$this->json($count, true, sprintf('%s%s - %s%s 匹配%d条', $pre, str_pad($min, $len, '0', STR_PAD_LEFT), $pre, str_pad($max, $len, '0', STR_PAD_LEFT), $count));
 	}
 
+	public function checktokenAction(){
+		$loginInfo = $this->get_lgoinInfo();
+		$this->json(null,true);
+	}
 	private function get_lgoinInfo()
 	{
 		$loginInfo = $this->cache->get('wx:' . $_SERVER['HTTP_TOKEN']);
