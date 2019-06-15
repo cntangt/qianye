@@ -328,7 +328,7 @@ class ip extends Base
 				'status' => 60,
 			], 'id = ? and status = 50', $id);
 			if ($res) {
-				$this->json(null, false, "确认订单成功");
+				$this->json(null, true, "确认订单成功");
 			} else {
 				$this->json(null, false, "确认订单失败,请确认状态是否正确");
 			}
