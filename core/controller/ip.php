@@ -262,7 +262,7 @@ class ip extends Base
 			foreach ($orderProduct as $key => $value) {
 				$addRes = $this->db->setTableName('order_item')->insert([
 					'sku' => $value->sku,
-					'orderid' => $value > $addOrderRes,
+					'orderid' => $value->$addOrderRes,
 					'cardid' => $value->cardid,
 					'cardtypeid' => $value->cardtypeid,
 					'productname' => $value->productname,
@@ -273,8 +273,8 @@ class ip extends Base
 					$this->json(null, false, '创建订单失败');
 				}
 				//2.修改数量
-				if (!$this->db->setTableName('card_item')->update([
-					'validquantity' => ($value->validquantity-$value->pickcount),
+				if (!$this->db->setTableName('order_item')->update([
+					'validquantity' => ($value->validquantity - $value->pickcount),
 				], 'id = ?', $value->carditemid)) {
 					$this->db->setTableName('order')->delete('id = ?', $addOrderRes);
 					$this->db->setTableName('order_item')->delete('orderid = ?', $addOrderRes);
@@ -285,10 +285,60 @@ class ip extends Base
 			$this->db->setTableName('order')->delete('id = ?', $addOrderRes);
 			$this->json(null, false, '创建订单失败' . $e->getMessage());
 		}
-		$orderNo= $this->db->setTableName('order')->getOne('id = ?', $addOrderRes);
+		$orderNo = $this->db->setTableName('order')->getOne('id = ?', $addOrderRes);
 		$this->json($orderNo, true, "创建订单成功");
 	}
 
+	//获取订单
+	public function getorderAction()
+	{
+		$status = $this->get('status');
+		$list = null;
+		if ($status == 40) {
+			$list =	$this->db->setTableName('order')->getAll('customerid = ? and status= 40', $this->user['id']);
+		} else if ($status == 70) {
+			$list =	$this->db->setTableName('order')->getAll('customerid = ? and status= 70', $this->user['id']);
+		} else {
+			$list =	$this->db->setTableName('order')->getAll('customerid = ? ', $this->user['id']);
+		}
+
+		if (!$list) {
+			$list = null;
+		} else {
+			foreach ($list as $key => $value) {
+				$products = $this->db->setTableName('order_item')->getAll('orderid = ?', $value['id']);
+				foreach ($products as $productkey => $productsitem) {
+					$product = $this->db->setTableName('product')->getOne('sku = ?', $productsitem['sku']);
+					$productsitem['thumb'] = $product['thumb'];
+					$productsitem['subtitle'] = $product['subtitle'];
+					$products[$productkey] = $productsitem;
+				}
+				$value['products'] = $products;
+				$list[$key] = $value;
+			}
+		}
+		$this->json($list, true);
+	}
+	//确认收货
+	public function comfirmorderAction()
+	{
+		$id = $this->get('id');
+		if ($id > 0) {
+			$res =	$this->db->setTableName('order')->update([
+				'status' => 60,
+			], 'id = ? and status = 50', $id);
+			if ($res) {
+				$this->json(null, false, "确认订单成功");
+			} else {
+				$this->json(null, false, "确认订单失败,请确认状态是否正确");
+			}
+		} else {
+			$this->json(null, false, "确认订单失败");
+		}
+	}
+	//提交评价
+	public function commitordercommentAction()
+	{ }
 	//重写返回json(返回对象)
 	protected function getjson($val, $succ = true, $msg = null, $code = 0)
 	{
@@ -305,7 +355,7 @@ class ip extends Base
 	 */
 	public function wealthAction()
 	{
-		$list =	$this->db->setTableName('vi_wealth_valid')->getAll('customerid = ?', $this->user['id'],'cardid,carditemid,productname,quantity,validquantity,cardtypename,thumb');
+		$list =	$this->db->setTableName('vi_wealth_valid')->getAll('customerid = ?', $this->user['id'], 'cardid,carditemid,productname,quantity,validquantity,cardtypename,thumb');
 		if (!$list) {
 			$list = null;
 		}
