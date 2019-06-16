@@ -341,7 +341,7 @@ class ip extends Base
 	}
 	//提交评价
 	public function commitordercommentAction()
-	{ 
+	{
 		$addRes = $this->db->setTableName('comment')->insert([
 			'orderid' => $this->post('orderid'),
 			'isontime' => $this->post('isontime'),
@@ -352,6 +352,12 @@ class ip extends Base
 			'createtime' => time()
 		]);
 		if ($addRes) {
+			if (!$this->db->setTableName('order')->update([
+				'status' => 70,
+			], 'id = ? and status = 60', $this->post('orderid'))) {
+				$this->db->setTableName('comment')->delete('orderid = ?', $this->post('orderid'));
+				$this->json(null, false, '评价失败');
+			}
 			$this->json(null, true, '评价成功');
 		} else {
 			$this->json(null, false, '评价失败');
@@ -364,13 +370,13 @@ class ip extends Base
 		$waitorders =	$this->db->setTableName('order')->getAll('customerid = ? and status= 50', $this->user['id']);
 		//待评价
 		$commentorders =	$this->db->setTableName('order')->getAll('customerid = ? and status= 60', $this->user['id']);
-		$result["waitcount"]=count($waitorders);
-		$result["commentcount"]=count($commentorders);
-		$order=$this->db->setTableName('order')->getOne('customerid = ? ', $this->user['id'],null,'id DESC');
-		if($order){
-			$result["lastorder"]=$order;
-		}else{
-			$result["lastorder"]=null;
+		$result["waitcount"] = count($waitorders);
+		$result["commentcount"] = count($commentorders);
+		$order = $this->db->setTableName('order')->getOne('customerid = ? ', $this->user['id'], null, 'id DESC');
+		if ($order) {
+			$result["lastorder"] = $order;
+		} else {
+			$result["lastorder"] = null;
 		}
 		$this->json($result);
 	}
