@@ -2,17 +2,17 @@
 <table width="100%" class="m-table m-table-row">
     <thead class="m-table-thead s-table-thead">
         <tr>
-            <th>提货单号</th>
-            <th>提货会员</th>
-            <th>会员电话</th>
+            <th width="90">提货单号</th>
+            <th width="100">提货会员</th>
+            <th width="120">会员电话</th>
             <th class="l">提货商品</th>
-            <th>提货数量</th>
-            <th>收货人</th>
+            <th width="50">数量</th>
+            <th width="100">收货人</th>
+            <th width="110">收货电话</th>
             <th class="l">收货地址</th>
-            <th>收货电话</th>
-            <th>提货时间</th>
-            <th>状态</th>
-            <th>操作</th>
+            <th width="140">提货时间</th>
+            <th width="60">状态</th>
+            <th width="60">操作</th>
         </tr>
     </thead>
     <tbody>
@@ -36,11 +36,11 @@
                 <td>
                     <?php echo $t['contact'] ?>
                 </td>
-                <td class="l">
-                    <?php echo $t['address'] ?>
-                </td>
                 <td>
                     <?php echo $t['mobile'] ?>
+                </td>
+                <td class="l">
+                    <?php echo $t['address'] ?>
                 </td>
                 <td>
                     <?php echo date('Y-m-d H:i', $t['createtime']) ?>
