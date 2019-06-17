@@ -34,7 +34,7 @@ class comment extends Admin
 			"orderid,name,mobile,case when isontime=1 then '是' else '否' end,case when iscontact=1 then '是' else '否' end,case when isdestination=1 then '是' else '否' end,case when isattitude=1 then '是' else '否' end,case when isclothing=1 then '是' else '否' end,from_unixtime(createtime,'%Y-%m-%d')",
 			'id desc'
 		);
-		exportToExcel(date(YmdHis) . '评价列表.csv', ['订单编号', '会员名称', '提货手机', '准时', '联系', '送达', '态度', '着装', '评价时间'], $list);
+		exportToExcel(date('YmdHis') . '评价列表.csv', ['订单编号', '会员名称', '提货手机', '准时', '联系', '送达', '态度', '着装', '评价时间'], $list);
 	}
 
 	private function condition()

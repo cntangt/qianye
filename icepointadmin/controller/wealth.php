@@ -55,7 +55,7 @@ class wealth extends Admin
 			"id,name,mobile,productname,validquantity,from_unixtime(exptime,'%Y-%m-%d')",
 			'id desc'
 		);
-		exportToExcel(date(YmdHis) . '会员财富.csv', ['编号', '会员名称', '手机号码', '商品名称', '剩余数量', '提货有效期'], $list);
+		exportToExcel(date('YmdHis') . '会员财富.csv', ['编号', '会员名称', '手机号码', '商品名称', '剩余数量', '提货有效期'], $list);
 	}
 
 	private function condition()

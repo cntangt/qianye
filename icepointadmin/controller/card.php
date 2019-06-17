@@ -121,7 +121,7 @@ class card extends Admin
 			"id,cardtypename,code,pass,customermobile,from_unixtime(createtime,'%Y-%m-%d'),createby,from_unixtime(saletime,'%Y-%m-%d'),saleby,from_unixtime(activetime,'%Y-%m-%d'),from_unixtime(exptime,'%Y-%m-%d'),case when status=10 then '未销售' when status=20 then '销售' when status=30 then '激活' when status=40 then '失效' else '其它' end",
 			'id desc'
 		);
-		exportToExcel(date(YmdHis) . '卡券列表.csv', ['ID', '卡券类型', '卡券编号', '卡券密码', '会员手机', '创建时间', '创建人', '销售时间', '销售人', '激活时间', '过期时间', '状态'], $list);
+		exportToExcel(date('YmdHis') . '卡券列表.csv', ['ID', '卡券类型', '卡券编号', '卡券密码', '会员手机', '创建时间', '创建人', '销售时间', '销售人', '激活时间', '过期时间', '状态'], $list);
 	}
 
 	private function pass($len, $type, $count)
