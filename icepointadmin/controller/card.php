@@ -176,9 +176,17 @@ class card extends Admin
 			$data = $this->post('data');
 			$count = 0;
 			if (isset($data)) {
-				$count = $this->db->setTableName('card')->update(['status' => 20], 'codepre = ? and codelen= ? and codeno >= ? and codeno <= ? and status = 10', $this->batch_data());
+				$count = $this->db->setTableName('card')->update([
+					'status' => 20,
+					'saletime' => time(),
+					'saleby' => $this->admin['realname']
+				], 'codepre = ? and codelen= ? and codeno >= ? and codeno <= ? and status = 10', $this->batch_data());
 			} else {
-				$count = $this->db->setTableName('card')->update(['status' => 20], 'id = ? and status = 10', $this->get('id'));
+				$count = $this->db->setTableName('card')->update([
+					'status' => 20,
+					'saletime' => time(),
+					'saleby' => $this->admin['realname']
+				], 'id = ? and status = 10', $this->get('id'));
 			}
 			$this->json($count, $count > 0);
 		}
