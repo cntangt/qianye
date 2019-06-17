@@ -296,7 +296,7 @@ class ip extends Base
 		$list = null;
 		//待签收
 		if ($status == 50) {
-			$list =	$this->db->setTableName('order')->getAll('customerid = ? and status= 50', $this->user['id']);
+			$list =	$this->db->setTableName('order')->getAll('customerid = ? and status != 60 and status != 70 and status!=-10', $this->user['id']);
 		} else if ($status == 60) { //待评价
 			$list =	$this->db->setTableName('order')->getAll('customerid = ? and status= 60', $this->user['id']);
 		} else if ($status == 70) { //已完成
