@@ -35,55 +35,70 @@ class hdt extends Base
 	private function update_status($ids, $dict)
 	{
 		$xml = simplexml_load_file($this->site_config['hdt_status'] . join($ids, ','));
-		$s = (string)$xml->order->order_status;
-		if ($s) {
-			// 待发货：10，待揽收：20，待配送：30，配送中：40，待签收：50，已签收：60，已完成（评价）：70
-			$status = 10;
-			switch ($s) {
-				case 'SA':
-					$status = 10;
-					return;
-				case 'TB':
-					$status = 20;
-					break;
-				case 'SB':
-					$status = 30;
-					break;
-				case 'COB':
-				case 'DS':
-					$status = 40;
-					break;
-				case 'DF':
-				case 'TC':
-				case 'SC':
-				case 'TD':
-				case 'SD':
-				case 'RF':
-					$status = 50;
-					break;
-				case 'CANCEL':
-					$status = 30;
-					break;
-				default:
-					$status = 30;
-					break;
-			}
-			if ($status == $o['status']) continue;
-			$msg = null;
-			foreach ($xml->order->logs as $log) {
-				foreach ($log as $k) {
-					$msg = (string)$k->desc;
+		foreach ($xml as $key => $value) {
+			$s = (string)$value->order_status;
+			$erporderid = (string)$value->order_id;
+			if ($s) {
+				// 待发货：10，待揽收：20，待配送：30，配送中：40，待签收：50，已签收：60，已完成（评价）：70
+				//-------------------------------------------------------------------------------------
+				// SA	提货中	配送公司未提货入库	TB SB CANCEL
+				// TB	配送中转中	货物已到配送公司分拣中心，尚未到配送站点	SB COB TC SC CANCEL
+				//30 SB	待配送	货物在配送站点，未出库	COB DS TC SC COC CANCEL
+				// COB	配送中/取货中	货物出库配送中  或者退货订单取货途中	DF DS TC SC CANCEL
+				// DF	订单已妥投	送货订单妥投	TB SB CANCEL
+				// DS	滞留	订单滞留，有待再次配送	DF TC SC CANCEL
+				// TC	退货中转中	送货单: (部份)拒收  退换货单: 退换货成功 正在中转回分拣中心	TB SB SC COC CANCEL
+				// SC	待退货	到达分拣中心	TB SB COC CANCEL
+				// TD	返签中转中	签收件送货成功 正在中转回分拣中心	TB SB SD COC CANCEL
+				// SD	待返签	签收面单到达分拣中心	TB SB COC CANCEL
+				// RF	退货完成	退货完成	最终状态
+				// CANCEL	取消	发货和数据错误
+				// 订单取消	最终状态
+				$status = 10;
+				switch ($s) {
+					case 'SA':
+						$status = 10;
+						return;
+					case 'TB':
+					case 'SB':
+						$status = 30;
+						break;
+					case 'COB':
+					case 'DS':
+						$status = 40;
+						break;
+					case 'DF':
+					case 'TC':
+					case 'SC':
+					case 'TD':
+					case 'SD':
+					case 'RF':
+						$status = 50;
+						break;
+					case 'CANCEL':
+						$status = 30;
+						break;
+					default:
+						$status = 30;
+						break;
 				}
+				if ($status == $dict[(string)$value->order_id]) continue;
+				$msg = null;
+				foreach ($xml->order->logs as $log) {
+					foreach ($log as $k) {
+						$msg = (string)$k->desc;
+					}
+				}
+				$succ = $this->db->setTableName('order')->update([
+					// 'expressname' => $res['express'],
+					// 'expresscode' => $res['express_code'],
+					// 'expressno' => $res['waybill'],
+					'status' => $status
+				], 'erporderid = ?', $erporderid);
+				$this->log($erporderid, $msg, '状态同步成功');
+			} else {
+				$this->log($erporderid, '未获取到订单配送信息', '状态同步失败');
 			}
-			$succ = $this->db->setTableName('order')->update([
-				// 'expressname' => $res['express'],
-				// 'expresscode' => $res['express_code'],
-				// 'expressno' => $res['waybill'],
-				'status' => $status
-			], 'id = ?', $o['id']);
-			$this->log($o['id'], $msg, '状态同步成功');
-		} else {
-			$this->log($o['id'], '未获取到订单配送信息', '状态同步失败');
 		}
 	}
 
@@ -151,21 +166,3 @@ class hdt extends Base
 		$this->db->setTableName('log')->insert(['type' => $type, 'target' => $target, 'content' => $content]);
 	}
 }
-
-// SA	提货中	配送公司未提货入库	TB SB CANCEL
-// TB	配送中转中	货物已到配送公司分拣中心，尚未到配送站点	SB COB TC SC CANCEL
-// SB	待配送	货物在配送站点，未出库	COB DS TC SC COC CANCEL
-// COB	配送中/取货中	货物出库配送中
-// 或者退货订单取货途中	DF DS TC SC CANCEL
-// DF	订单已妥投	送货订单妥投	TB SB CANCEL
-// DS	滞留	订单滞留，有待再次配送	DF TC SC CANCEL
-// TC	退货中转中	送货单: (部份)拒收 
-// 退换货单: 退换货成功
-// 正在中转回分拣中心	TB SB SC COC CANCEL
-// SC	待退货	到达分拣中心	TB SB COC CANCEL
-// TD	返签中转中	签收件送货成功
-// 正在中转回分拣中心	TB SB SD COC CANCEL
-// SD	待返签	签收面单到达分拣中心	TB SB COC CANCEL
-// RF	退货完成	退货完成	最终状态
-// CANCEL	取消	发货和数据错误
-// 订单取消	最终状态
