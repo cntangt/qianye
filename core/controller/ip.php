@@ -347,11 +347,11 @@ class ip extends Base
 	{
 		$addRes = $this->db->setTableName('comment')->insert([
 			'orderid' => $this->post('orderid'),
-			'isontime' => $this->post('isontime'),
-			'iscontact' => $this->post('iscontact'),
-			'isdestination' => $this->post('isdestination'),
-			'isattitude' => $this->post('isattitude'),
-			'isclothing' => $this->post('isclothing'),
+			'isontime' => $this->post('isontime')?1:0,
+			'iscontact' => $this->post('iscontact')?1:0,
+			'isdestination' => $this->post('isdestination')?1:0,
+			'isattitude' => $this->post('isattitude')?1:0,
+			'isclothing' => $this->post('isclothing')?1:0,
 			'createtime' => time()
 		]);
 		if ($addRes) {
