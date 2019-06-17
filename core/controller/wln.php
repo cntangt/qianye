@@ -1,7 +1,7 @@
 <?php
 
 // 万里牛同步业务
-class sync extends Base
+class wln extends Base
 {
 	public function __construct()
 	{
@@ -92,7 +92,7 @@ class sync extends Base
 				'shippingType' => 0,
 				'totalFee' => 0,
 				'postFee' => 0,
-				'buyer' => $o['customername'],
+				'buyer' => $o['name'],
 				'receiverName' => $o['contact'],
 				'receiverProvince' => $o['province'],
 				'receiverCity' => $o['city'],

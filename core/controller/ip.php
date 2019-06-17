@@ -188,9 +188,9 @@ class ip extends Base
 	//获取地址单个
 	public function getaddressAction()
 	{
-		$address =	$this->db->setTableName('customer_address')->getAll(null, null, 'id,customerid,province,city,area,address,isDefault,createtime,mobile,name', 'id DESC');
+		$address =	$this->db->setTableName('customer_address')->getOne('customerid = ?', $this->user['id'], null, 'isDefault DESC,id DESC');
 		if ($address != null) {
-			$this->json($address[0], true);
+			$this->json($address, true);
 		}
 		$this->json(null, true, null);
 	}
