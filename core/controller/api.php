@@ -72,7 +72,13 @@ class api extends Base
 			$data = json_decode($json, true);
 			$mobile = $data['purePhoneNumber'];
 			$isbind = $this->db->setTableName('customer')->getOne('mobile = ?', $mobile);
-			if ($isbind) $this->json(null, false, '该手机号已经绑定在其它用户，请确认后重试或者联系管理员');
+			if ($isbind) {
+				if ($isbind['openid'] == $loginInfo['openid']) {
+					$this->json(null, true, '用户已经绑定手机，无需重复绑定');
+				} else {
+					$this->json(null, false, '该手机号已经绑定在其它用户，请确认后重试或者联系管理员');
+				}
+			}
 			$customer = $this->db->setTableName('customer')->getOne('openid = ?', $loginInfo['openid']);
 			if ($customer) {
 				$this->db->setTableName('customer')->update(['mobile' => $mobile], 'id = ?', $customer['id']);
@@ -155,9 +161,10 @@ class api extends Base
 		$this->json($count, true, sprintf('%s%s - %s%s 匹配%d条', $pre, str_pad($min, $len, '0', STR_PAD_LEFT), $pre, str_pad($max, $len, '0', STR_PAD_LEFT), $count));
 	}
 
-	public function checktokenAction(){
+	public function checktokenAction()
+	{
 		$loginInfo = $this->get_lgoinInfo();
-		$this->json(null,true);
+		$this->json(null, true);
 	}
 	private function get_lgoinInfo()
 	{
