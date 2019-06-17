@@ -380,6 +380,12 @@ class ip extends Base
 		}
 		$this->json($result);
 	}
+
+	public function getsettingconfigAction()
+	{
+		$list =	$this->db->setTableName('kv')->getAll(null, null);
+		$this->json($list);
+	}
 	//重写返回json(返回对象)
 	protected function getjson($val, $succ = true, $msg = null, $code = 0)
 	{
