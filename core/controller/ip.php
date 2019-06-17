@@ -31,6 +31,9 @@ class ip extends Base
 	// 激活卡券
 	public function activecardAction()
 	{
+		if (empty($this->user['mobile'])) {
+			$this->json(null, false, '未绑定手机，请绑定后再进行激活');
+		}
 		$uts = $this->cache->get('useractivetimes:' . $this->user['id']);
 		if ($uts > 100) {
 			$this->json(null, false, '检测到风险操作，请24小时后重试');
