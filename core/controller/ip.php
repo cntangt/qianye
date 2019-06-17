@@ -370,7 +370,7 @@ class ip extends Base
 	public function selectordercountAction()
 	{
 		//待签收
-		$waitorders =	$this->db->setTableName('order')->getAll('customerid = ? and status= 50', $this->user['id']);
+		$waitorders =	$this->db->setTableName('order')->getAll('customerid = ? and status != 60 and status != 70 and status!=-10', $this->user['id']);
 		//待评价
 		$commentorders =	$this->db->setTableName('order')->getAll('customerid = ? and status= 60', $this->user['id']);
 		$result["waitcount"] = count($waitorders);
