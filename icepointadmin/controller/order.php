@@ -50,7 +50,7 @@ class order extends Admin
 			"id,name,customermobile,productname,quantity,contact,address,mobile,from_unixtime(createtime,'%Y-%m-%d'),case when status=10 then '待发货' when status=20 then '待揽收' when status=30 then '待配送' when status=40 then '配送中' when status=50 then '待签收' when status=60 then '已签收' when status=70 then '已完成' when status=-10 then '关闭' else '其它' end",
 			'id desc'
 		);
-		exportToExcel(date(YmdHis) . '提货记录.csv', ['提货单号', '提货会员', '会员电话', '提货商品', '提货数量', '收货人', '收货地址', '收货电话', '提货时间', '状态'], $list);
+		exportToExcel(date('YmdHis') . '提货记录.csv', ['提货单号', '提货会员', '会员电话', '提货商品', '提货数量', '收货人', '收货地址', '收货电话', '提货时间', '状态'], $list);
 	}
 
 	private function condition()

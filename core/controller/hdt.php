@@ -103,7 +103,9 @@ class hdt extends Base
 				'Package' => $packages
 			]];
 			$res = $this->hdt($data);
-			if ($res['Success']) {
+			if (!$res) {
+				$this->log($o['id'], '请求结果为空', '订单同步失败');
+			} else if ($res['Success']) {
 				$erporderid = $o['id']; //没有返回ID，只有写入自己ID
 				// 待发货：10，待揽收：20，待配送：30，配送中：40，待签收：50，已签收：60，已完成（评价）：70
 				$this->db->setTableName('order')->update(['erporderid' => $erporderid, 'status' => 20], 'id = ?', $o['id']); // 修改订单为待配送
@@ -121,7 +123,7 @@ class hdt extends Base
 		$jsondata = json_encode($postdata);
 		$jsondata = urlencode($jsondata);
 		$sign = md5(sprintf('jsondata=%s&key=%s', $jsondata, $this->site_config['hdt_appkey']));
-		return $this->http_post($this->site_config['hdt_domain'], sprintf('jsondata=%s&key=%s', $jsondata, $sign));
+		return $this->http_post($this->site_config['hdt_order'], sprintf('jsondata=%s&key=%s', $jsondata, $sign));
 	}
 
 	private function log($target, $content, $type)
