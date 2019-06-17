@@ -37,5 +37,5 @@ return array(
   'hdt_appkey' => 'OTkyOTMyMjY1RDYyQUI1NjZGRTY2MUM3Qzg5RTRDNEQ=', //'dAvjTtPe8yzDZdutCjpPu2Ze65LBbVH5',
   'hdt_order' => 'http://222.178.233.58:8086/api.ashx?api=ALOG',
   'hdt_comid' => 'alog',
-  'hdt_status' => 'http://222.178.233.58:8082/api.ashx?api=WebQuery&profile=XY181227&order_id='
+  'hdt_status' => 'http://222.178.233.58:8086/api.ashx?api=WebQuery&profile=XY181227&order_id='
 );

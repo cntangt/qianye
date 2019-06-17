@@ -10,60 +10,80 @@ class hdt extends Base
 	// 订单状态同步，获取ERP订单状态
 	public function statusAction()
 	{
-		$list = $this->db->setTableName('order')->getAll('status < 60 and status > 10'); // 查询待签收及之前状态订单
+		$list = $this->db->setTableName('order')->getAll('status < 60 and status > 10', null, 'status,erporderid'); // 查询待签收及之前状态订单
 		$this->log(0, '待同步状态：' . count($list), '订单状态同步');
+		$ids = array();
+		$dict = array();
 		if ($list) foreach ($list as $o) {
-			$xml = simplexml_load_file($this->site_config['hdt_status'] . $o['erporderid']);
-			$s = (string)$xml->order->order_status;
-			if ($s) {
-				// 待发货：10，待揽收：20，待配送：30，配送中：40，待签收：50，已签收：60，已完成（评价）：70
-				$status = 10;
-				switch ($s) {
-					case 'SA':
-						$status = 10;
-						return;
-					case 'TB':
-						$status = 20;
-						break;
-					case 'SB':
-						$status = 30;
-						break;
-					case 'COB':
-					case 'DS':
-						$status = 40;
-						break;
-					case 'DF':
-					case 'TC':
-					case 'SC':
-					case 'TD':
-					case 'SD':
-					case 'RF':
-						$status = 50;
-						break;
-					case 'CANCEL':
-						$status = 30;
-						break;
-					default:
-						$status = 30;
-						break;
-				}
-				if ($status == $o['status']) return;
-				$msg = null;
-				foreach ($xml->order->logs as $log) {
-					foreach ($log as $k) {
-						$msg = (string)$k->desc;
-					}
-				}
-				$succ = $this->db->setTableName('order')->update([
-					// 'expressname' => $res['express'],
-					// 'expresscode' => $res['express_code'],
-					// 'expressno' => $res['waybill'],
-					'status' => $status
-				], 'id = ?', $o['id']);
-				$this->log($o['id'], $msg, '状态同步成功');
+			$dict[$o['erporderid']] = $o['status'];
+			array_push($ids, $o['erporderid']);
+			if (count($ids) == 10) {
+				$this->update_status($ids, $dict);
+				$ids = array();
 			} else {
-				$this->log($o['id'], '未获取到订单配送信息', '状态同步失败');
+				continue;
 			}
+		}
+		if (count($ids) > 0) {
+			$this->update_status($ids, $dict);
+		}
+	}
+
+	/**
+	 * 批量更新订单状态
+	 */
+	private function update_status($ids, $dict)
+	{
+		$xml = simplexml_load_file($this->site_config['hdt_status'] . join($ids, ','));
+		$s = (string)$xml->order->order_status;
+		if ($s) {
+			// 待发货：10，待揽收：20，待配送：30，配送中：40，待签收：50，已签收：60，已完成（评价）：70
+			$status = 10;
+			switch ($s) {
+				case 'SA':
+					$status = 10;
+					return;
+				case 'TB':
+					$status = 20;
+					break;
+				case 'SB':
+					$status = 30;
+					break;
+				case 'COB':
+				case 'DS':
+					$status = 40;
+					break;
+				case 'DF':
+				case 'TC':
+				case 'SC':
+				case 'TD':
+				case 'SD':
+				case 'RF':
+					$status = 50;
+					break;
+				case 'CANCEL':
+					$status = 30;
+					break;
+				default:
+					$status = 30;
+					break;
+			}
+			if ($status == $o['status']) continue;
+			$msg = null;
+			foreach ($xml->order->logs as $log) {
+				foreach ($log as $k) {
+					$msg = (string)$k->desc;
+				}
+			}
+			$succ = $this->db->setTableName('order')->update([
+				// 'expressname' => $res['express'],
+				// 'expresscode' => $res['express_code'],
+				// 'expressno' => $res['waybill'],
+				'status' => $status
+			], 'id = ?', $o['id']);
+			$this->log($o['id'], $msg, '状态同步成功');
+		} else {
+			$this->log($o['id'], '未获取到订单配送信息', '状态同步失败');
 		}
 	}
 
@@ -106,7 +126,7 @@ class hdt extends Base
 			if (!$res) {
 				$this->log($o['id'], '请求结果为空', '订单同步失败');
 			} else if ($res['Success']) {
-				$erporderid = $o['id']; //没有返回ID，只有写入自己ID
+				$erporderid = str_pad($o['id'], 5, '0', STR_PAD_LEFT); //没有返回ID，只有写入自己ID
 				// 待发货：10，待揽收：20，待配送：30，配送中：40，待签收：50，已签收：60，已完成（评价）：70
 				$this->db->setTableName('order')->update(['erporderid' => $erporderid, 'status' => 20], 'id = ?', $o['id']); // 修改订单为待配送
 				$this->log($o['id'], $erporderid, '订单同步成功');

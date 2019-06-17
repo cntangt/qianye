@@ -1,7 +1,7 @@
 <?php
 
 // 万里牛同步业务
-class wln extends Base
+class ______wln extends Base
 {
 	public function __construct()
 	{
