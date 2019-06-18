@@ -72,11 +72,11 @@ class hdt extends Base
 					case 'SC':
 					case 'TD':
 					case 'SD':
-					case 'RF':
 						$status = 50;
 						break;
+					case 'RF':
 					case 'CANCEL':
-						$status = 30;
+						$status = -10;
 						break;
 					default:
 						$status = 30;
