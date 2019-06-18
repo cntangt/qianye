@@ -353,7 +353,7 @@ class ip extends Base
 	{
 		$id = $this->get('id');
 		if ($id > 0) {
-			$order = $this->db->setTableName('order')->getOne('id = ?', $this->post('orderid'));
+			$order = $this->db->setTableName('order')->getOne('id = ?', $id);
 			if ($order && $order['customerid'] == $this->user['id']) {
 				$res =	$this->db->setTableName('order')->update([
 					'status' => 60,
