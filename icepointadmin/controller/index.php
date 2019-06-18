@@ -48,4 +48,20 @@ class index extends Admin
         $data   = $this->db->setTableName('admin')->find($userid);
         include $this->admin_tpl('my');
     }
+
+    public function settingAction()
+    {
+        $userid = $this->admin['userid'];
+        if ($this->ispost) {
+            $data = $this->post('data');
+            foreach ($data as $t) {
+                $this->db->setTableName('kv')->update(['value' => $t['value']], '`key` = ?', $t['key']);
+            }
+            $this->json(null, true, '更新成功');
+        }
+
+        $list = $this->db->setTableName('kv')->getAll();
+
+        include $this->admin_tpl('index_setting');
+    }
 }

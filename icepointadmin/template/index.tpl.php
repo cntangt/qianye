@@ -83,6 +83,14 @@
               </a>
             </li>
           <?php } ?>
+          <?php if ($this->menu('index-setting')) { ?>
+            <li class="nav-item">
+              <a class="nav-link" href="<?php echo url('index/setting') ?>" target="rightMain">
+                <span data-feather="settings"></span>
+                配置管理
+              </a>
+            </li>
+          <?php } ?>
           <li class="nav-item">
             <a class="nav-link" href="<?php echo url('index/my') ?>" target="rightMain">
               <span data-feather="key"></span>
