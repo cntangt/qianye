@@ -330,13 +330,18 @@ class ip extends Base
 	{
 		$id = $this->get('id');
 		if ($id > 0) {
-			$res =	$this->db->setTableName('order')->update([
-				'status' => 60,
-			], 'id = ? and status = 50', $id);
-			if ($res) {
-				$this->json(null, true, "确认订单成功");
-			} else {
-				$this->json(null, false, "确认订单失败,请确认状态是否正确");
+			$order = $this->db->setTableName('order')->getOne('id = ?', $this->post('orderid'));
+			if ($order && $order . customerid == $this->user['id']) {
+				$res =	$this->db->setTableName('order')->update([
+					'status' => 60,
+				], 'id = ? and status = 50', $id);
+				if ($res) {
+					$this->json(null, true, "确认订单成功");
+				} else {
+					$this->json(null, false, "确认订单失败,请确认状态是否正确");
+				}
+			}else{
+				$this->json(null, false, "确认订单错误");
 			}
 		} else {
 			$this->json(null, false, "确认订单失败");
@@ -345,25 +350,30 @@ class ip extends Base
 	//提交评价
 	public function commitordercommentAction()
 	{
-		$addRes = $this->db->setTableName('comment')->insert([
-			'orderid' => $this->post('orderid'),
-			'isontime' => $this->post('isontime') ? 1 : 0,
-			'iscontact' => $this->post('iscontact') ? 1 : 0,
-			'isdestination' => $this->post('isdestination') ? 1 : 0,
-			'isattitude' => $this->post('isattitude') ? 1 : 0,
-			'isclothing' => $this->post('isclothing') ? 1 : 0,
-			'createtime' => time()
-		]);
-		if ($addRes) {
-			if (!$this->db->setTableName('order')->update([
-				'status' => 70,
-			], 'id = ? and status = 60', $this->post('orderid'))) {
-				$this->db->setTableName('comment')->delete('orderid = ?', $this->post('orderid'));
+		$order = $this->db->setTableName('order')->getOne('id = ?', $this->post('orderid'));
+		if ($order && $order->customerid == $this->user['id']) {
+			$addRes = $this->db->setTableName('comment')->insert([
+				'orderid' => $this->post('orderid'),
+				'isontime' => $this->post('isontime') == "true" ? true : false,
+				'iscontact' => $this->post('iscontact') == "true" ? true : false,
+				'isdestination' => $this->post('isdestination') == "true" ? true : false,
+				'isattitude' => $this->post('isattitude') == "true" ? true : false,
+				'isclothing' => $this->post('isclothing') == "true" ? true : false,
+				'createtime' => time()
+			]);
+			if ($addRes) {
+				if (!$this->db->setTableName('order')->update([
+					'status' => 70,
+				], 'id = ? and status = 60', $this->post('orderid'))) {
+					$this->db->setTableName('comment')->delete('orderid = ?', $this->post('orderid'));
+					$this->json(null, false, '评价失败');
+				}
+				$this->json(null, true, '评价成功');
+			} else {
 				$this->json(null, false, '评价失败');
 			}
-			$this->json(null, true, '评价成功');
 		} else {
-			$this->json(null, false, '评价失败');
+			$this->json(null, false, "评价订单错误");
 		}
 	}
 	//获取用户订单数量
