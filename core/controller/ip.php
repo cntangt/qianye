@@ -322,13 +322,13 @@ class ip extends Base
 		$list = null;
 		//待签收
 		if ($status == 50) {
-			$list =	$this->db->setTableName('order')->getAll('customerid = ? and status != 60 and status != 70 and status!=-10', $this->user['id']);
+			$list =	$this->db->setTableName('order')->getAll('customerid = ? and status != 60 and status != 70 and status!=-10', $this->user['id'],null,'id DESC');
 		} else if ($status == 60) { //待评价
-			$list =	$this->db->setTableName('order')->getAll('customerid = ? and status= 60', $this->user['id']);
+			$list =	$this->db->setTableName('order')->getAll('customerid = ? and status= 60', $this->user['id'],null,'id DESC');
 		} else if ($status == 70) { //已完成
-			$list =	$this->db->setTableName('order')->getAll('customerid = ? and status= 70', $this->user['id']);
+			$list =	$this->db->setTableName('order')->getAll('customerid = ? and status= 70', $this->user['id'],null,'id DESC');
 		} else {
-			$list =	$this->db->setTableName('order')->getAll('customerid = ? ', $this->user['id']);
+			$list =	$this->db->setTableName('order')->getAll('customerid = ? ', $this->user['id'],null,'id DESC');
 		}
 
 		if (!$list) {
@@ -353,7 +353,7 @@ class ip extends Base
 	{
 		$id = $this->get('id');
 		if ($id > 0) {
-			$order = $this->db->setTableName('order')->getOne('id = ?', $this->post('orderid'));
+			$order = $this->db->setTableName('order')->getOne('id = ?', $id);
 			if ($order && $order['customerid'] == $this->user['id']) {
 				$res =	$this->db->setTableName('order')->update([
 					'status' => 60,
@@ -403,9 +403,9 @@ class ip extends Base
 	public function selectordercountAction()
 	{
 		//待签收
-		$waitorders =	$this->db->setTableName('order')->getAll('customerid = ? and status != 60 and status != 70 and status!=-10', $this->user['id']);
+		$waitorders =	$this->db->setTableName('order')->getAll('customerid = ? and status != 60 and status != 70 and status!=-10', $this->user['id'],null,'id DESC');
 		//待评价
-		$commentorders =	$this->db->setTableName('order')->getAll('customerid = ? and status= 60', $this->user['id']);
+		$commentorders =	$this->db->setTableName('order')->getAll('customerid = ? and status= 60', $this->user['id'],null,'id DESC');
 		$result["waitcount"] = count($waitorders);
 		$result["commentcount"] = count($commentorders);
 		$order = $this->db->setTableName('order')->getOne('customerid = ? ', $this->user['id'], null, 'id DESC');
