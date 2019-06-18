@@ -49,7 +49,7 @@ class ip extends Base
 		// 添加激活key，防止重复调用
 		$actkey = 'activing:' . $this->user['id'];
 		if (self::$lockdict[$actkey]) {
-			$this->json(null, false, '正在激活，请稍后', -2);
+			$this->json(null, false, '正在激活，请稍后');
 		} else {
 			self::$lockdict[$actkey] = true;
 		}
@@ -88,7 +88,7 @@ class ip extends Base
 				case 10:
 					$this->activejson(null, false, '未销售的卡券不能激活');
 				case 30:
-					$this->activejson(null, false, '已经激活的卡券不能激活', -3);
+					$this->activejson(null, true, '已经激活的卡券不能激活');
 				case 40:
 					$this->activejson(null, false, '已作废的卡券不能激活');
 			}
@@ -322,13 +322,13 @@ class ip extends Base
 		$list = null;
 		//待签收
 		if ($status == 50) {
-			$list =	$this->db->setTableName('order')->getAll('customerid = ? and status != 60 and status != 70 and status!=-10', $this->user['id'],null,'id DESC');
+			$list =	$this->db->setTableName('order')->getAll('customerid = ? and status != 60 and status != 70 and status!=-10', $this->user['id'], null, 'id DESC');
 		} else if ($status == 60) { //待评价
-			$list =	$this->db->setTableName('order')->getAll('customerid = ? and status= 60', $this->user['id'],null,'id DESC');
+			$list =	$this->db->setTableName('order')->getAll('customerid = ? and status= 60', $this->user['id'], null, 'id DESC');
 		} else if ($status == 70) { //已完成
-			$list =	$this->db->setTableName('order')->getAll('customerid = ? and status= 70', $this->user['id'],null,'id DESC');
+			$list =	$this->db->setTableName('order')->getAll('customerid = ? and status= 70', $this->user['id'], null, 'id DESC');
 		} else {
-			$list =	$this->db->setTableName('order')->getAll('customerid = ? ', $this->user['id'],null,'id DESC');
+			$list =	$this->db->setTableName('order')->getAll('customerid = ? ', $this->user['id'], null, 'id DESC');
 		}
 
 		if (!$list) {
@@ -403,9 +403,9 @@ class ip extends Base
 	public function selectordercountAction()
 	{
 		//待签收
-		$waitorders =	$this->db->setTableName('order')->getAll('customerid = ? and status != 60 and status != 70 and status!=-10', $this->user['id'],null,'id DESC');
+		$waitorders =	$this->db->setTableName('order')->getAll('customerid = ? and status != 60 and status != 70 and status!=-10', $this->user['id'], null, 'id DESC');
 		//待评价
-		$commentorders =	$this->db->setTableName('order')->getAll('customerid = ? and status= 60', $this->user['id'],null,'id DESC');
+		$commentorders =	$this->db->setTableName('order')->getAll('customerid = ? and status= 60', $this->user['id'], null, 'id DESC');
 		$result["waitcount"] = count($waitorders);
 		$result["commentcount"] = count($commentorders);
 		$order = $this->db->setTableName('order')->getOne('customerid = ? ', $this->user['id'], null, 'id DESC');
