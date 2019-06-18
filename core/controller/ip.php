@@ -47,7 +47,7 @@ class ip extends Base
 	{
 		// 添加激活key，防止重复调用
 		if (self::$lockdict['activing:' . $this->user['id']]) {
-			$this->json(null, false, '正在激活，请稍后');
+			$this->json(null, false, '正在激活，请稍后', -2);
 		} else {
 			self::$lockdict['activing:' . $this->user['id']] = true;
 		}
@@ -85,7 +85,7 @@ class ip extends Base
 				case 10:
 					$this->json(null, false, '未销售的卡券不能激活');
 				case 30:
-					$this->json(null, false, '已经激活的卡券不能激活');
+					$this->json(null, false, '已经激活的卡券不能激活', -3);
 				case 40:
 					$this->json(null, false, '已作废的卡券不能激活');
 			}
