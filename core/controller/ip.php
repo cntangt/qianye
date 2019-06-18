@@ -241,7 +241,7 @@ class ip extends Base
 		if (empty($data['mobile']) || !preg_match("/^1\d{10}$/", $data['mobile'])) {
 			return	$this->getjson(null, false, '请输入收货人手机号');
 		}
-		if (empty($data['province']) || $data['province'] != '重庆') {
+		if (empty($data['province']) || $data['province'] != '重庆市') {
 			return	$this->getjson(null, false, '目前仅支持大重庆地区,请重新选择');
 		}
 		if (empty($data['city']) || $data['city'] != '重庆市') {
