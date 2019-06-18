@@ -4,6 +4,10 @@ class ip extends Base
 {
 	// 当前用户信息
 	protected $user = null;
+	/**
+	 * 静态字典，用于并发锁
+	 */
+	protected static $lockdict = array();
 
 	public function __construct()
 	{
@@ -28,9 +32,25 @@ class ip extends Base
 		$this->json(null, false, '用户登录信息过期', -1);
 	}
 
-	// 激活卡券
+	/**
+	 * 析构方法，删除并发锁
+	 */
+	function __destruct()
+	{
+		unset(self::$lockdict['activing:' . $this->user['id']]);
+	}
+
+	/**
+	 * 激活卡券
+	 */
 	public function activecardAction()
 	{
+		// 添加激活key，防止重复调用
+		if (self::$lockdict['activing:' . $this->user['id']]) {
+			$this->json(null, false, '正在激活，请稍后');
+		} else {
+			self::$lockdict['activing:' . $this->user['id']] = true;
+		}
 		if (empty($this->user['mobile'])) {
 			$this->json(null, false, '未绑定手机，请绑定后再进行激活');
 		}
