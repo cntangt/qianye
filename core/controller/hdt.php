@@ -58,7 +58,7 @@ class hdt extends Base
 				switch ($s) {
 					case 'SA':
 						$status = 10;
-						return;
+						break;
 					case 'TB':
 					case 'SB':
 						$status = 30;
@@ -82,7 +82,7 @@ class hdt extends Base
 						$status = 30;
 						break;
 				}
-				if ($status == $dict[(string)$value->order_id]) continue;
+				if ($status == $dict[(string)$value->order_id] || $status == 10) continue;
 				$msg = null;
 				foreach ($xml->order->logs as $log) {
 					foreach ($log as $k) {
