@@ -278,7 +278,7 @@ class ip extends Base
 		if ($address == null) $this->json(null, false, "请选择收货地址");
 		//添加订单
 		$orderarray = [
-			'customerid' => $this->user['id'], 'createtime' => time(), 'contact' => $address->name, 'mobile' => $address->mobile, 'address' => $address->address, 'province' => $address->province, 'city' => $address->city, 'area' => $address->area, 'status' => 10, 'remark' => '',
+			'customerid' => $this->user['id'], 'createtime' => time(), 'contact' => $address->name, 'mobile' => $address->mobile, 'address' => $address->address, 'province' => $address->province, 'city' => $address->city, 'area' => $address->area, 'status' => 10, 'remark' => $_POST['remark'],
 		];
 		$addOrderRes = $this->db->setTableName('order')->insert($orderarray, true);
 		if ($addOrderRes == null || $addOrderRes < 0) {
