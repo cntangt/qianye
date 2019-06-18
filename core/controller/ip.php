@@ -331,7 +331,7 @@ class ip extends Base
 		$id = $this->get('id');
 		if ($id > 0) {
 			$order = $this->db->setTableName('order')->getOne('id = ?', $this->post('orderid'));
-			if ($order && $order . customerid == $this->user['id']) {
+			if ($order && $order['customerid'] == $this->user['id']) {
 				$res =	$this->db->setTableName('order')->update([
 					'status' => 60,
 				], 'id = ? and status = 50', $id);
@@ -340,7 +340,7 @@ class ip extends Base
 				} else {
 					$this->json(null, false, "确认订单失败,请确认状态是否正确");
 				}
-			}else{
+			} else {
 				$this->json(null, false, "确认订单错误");
 			}
 		} else {
@@ -351,7 +351,7 @@ class ip extends Base
 	public function commitordercommentAction()
 	{
 		$order = $this->db->setTableName('order')->getOne('id = ?', $this->post('orderid'));
-		if ($order && $order->customerid == $this->user['id']) {
+		if ($order && $order['customerid'] == $this->user['id']) {
 			$addRes = $this->db->setTableName('comment')->insert([
 				'orderid' => $this->post('orderid'),
 				'isontime' => $this->post('isontime') == "true" ? true : false,
