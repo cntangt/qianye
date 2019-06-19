@@ -220,7 +220,15 @@ class ip extends Base
 		}
 		$this->json(null, true, null);
 	}
-
+	//删除地址单个
+	public function deleteaddressAction()
+	{
+		$address =	$this->db->setTableName('customer_address')->delete('id = ?', $this->get('id'));
+		if ($address) {
+			$this->json($address, true);
+		}
+		$this->json(null, true, null);
+	}
 	//检查地址数据有效性
 	public function checkaddressAction()
 	{
