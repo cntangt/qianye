@@ -49,33 +49,27 @@ function strcut($string, $length, $dot = '')
             $tn = 1;
             $n++;
             $noc++;
-        }
-        elseif (194 <= $t && $t <= 223) {
+        } elseif (194 <= $t && $t <= 223) {
             $tn = 2;
             $n += 2;
             $noc += 2;
-        }
-        elseif (224 <= $t && $t <= 239) {
+        } elseif (224 <= $t && $t <= 239) {
             $tn = 3;
             $n += 3;
             $noc += 2;
-        }
-        elseif (240 <= $t && $t <= 247) {
+        } elseif (240 <= $t && $t <= 247) {
             $tn = 4;
             $n += 4;
             $noc += 2;
-        }
-        elseif (248 <= $t && $t <= 251) {
+        } elseif (248 <= $t && $t <= 251) {
             $tn = 5;
             $n += 5;
             $noc += 2;
-        }
-        elseif ($t == 252 || $t == 253) {
+        } elseif ($t == 252 || $t == 253) {
             $tn = 6;
             $n += 6;
             $noc += 2;
-        }
-        else {
+        } else {
             $n++;
         }
         if ($noc >= $length) break;
@@ -219,17 +213,17 @@ function is_mobile()
     if (isset($is_mobile)) return $is_mobile;
     if (empty($_SERVER['HTTP_USER_AGENT'])) {
         $is_mobile = false;
-    }
-    elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Mobile') !== false // many mobile devices (all iPhone, iPad, etc.)
-    || strpos($_SERVER['HTTP_USER_AGENT'], 'Android') !== false
+    } elseif (
+        strpos($_SERVER['HTTP_USER_AGENT'], 'Mobile') !== false // many mobile devices (all iPhone, iPad, etc.)
+        || strpos($_SERVER['HTTP_USER_AGENT'], 'Android') !== false
         || strpos($_SERVER['HTTP_USER_AGENT'], 'Silk/') !== false
         || strpos($_SERVER['HTTP_USER_AGENT'], 'Kindle') !== false
         || strpos($_SERVER['HTTP_USER_AGENT'], 'BlackBerry') !== false
         || strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mini') !== false
-        || strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mobi') !== false) {
+        || strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mobi') !== false
+    ) {
         $is_mobile = true;
-    }
-    else {
+    } else {
         $is_mobile = false;
     }
     return $is_mobile;
@@ -296,8 +290,7 @@ function get_cache($cache_file)
         $file = DATA_DIR . 'cache' . DIRECTORY_SEPARATOR . $cache_file . '.cache.php';
         if (is_file($file)) {
             $cacheid[$cache_file] = unserialize(file_get_contents($file));
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -346,7 +339,7 @@ function exportToExcel($filename, $tileArray = [], $dataArray = [])
     header("Content-Type: text/csv");
     header("Content-Disposition:filename=" . $filename);
     $fp = fopen('php://output', 'w');
-    fwrite($fp, chr(0xEF) . chr(0xBB) . chr(0xBF));//转码 防止乱码(比如微信昵称(乱七八糟的))
+    fwrite($fp, chr(0xEF) . chr(0xBB) . chr(0xBF)); //转码 防止乱码(比如微信昵称(乱七八糟的))
     fputcsv($fp, $tileArray);
     $index = 0;
     foreach ($dataArray as $item) {
@@ -362,4 +355,20 @@ function exportToExcel($filename, $tileArray = [], $dataArray = [])
     ob_flush();
     flush();
     ob_end_clean();
+}
+
+/**
+ * 获取环境变量，如果失败则返回默认值
+ * @param $name 环境变量名称
+ * @param $default 获取环境变量失败时返回的默认值
+ * @return 返回环境变量或者默认值
+ */
+function env($name, $default)
+{
+    $val = getenv($name);
+    if ($val) {
+        return $val;
+    }
+
+    return $default;
 }
