@@ -387,7 +387,7 @@ class ip extends Base
 			foreach ($list as $o) {
 				array_push($ids, $o['id']);
 			}
-			$oilist = $this->db->setTableName('vi_order_item')->getAll('orderid in (' . join($ids, ',') . ')',);
+			$oilist = $this->db->setTableName('vi_order_item')->getAll('orderid in (' . join($ids, ',') . ')');
 			foreach ($list as $k => $o) {
 				$pds = array();
 				foreach ($oilist as $i) {
