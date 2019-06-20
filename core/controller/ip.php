@@ -381,7 +381,7 @@ class ip extends Base
 				break;
 		}
 
-		$list = $this->db->setTableName('order')->pageLimit($page, 10)->getAll($where, $value, 'id,createtime,contact,mobile,address,province,city,area', 'id desc');
+		$list = $this->db->setTableName('order')->pageLimit($page, 10)->getAll($where, $value, 'id,createtime,contact,mobile,address,province,city,area,status', 'id desc');
 		if ($list) {
 			$ids = array();
 			foreach ($list as $o) {
