@@ -315,7 +315,9 @@ class ip extends Base
 		$this->json($orderNo, true, "创建订单成功");
 	}
 
-	//获取订单
+	/**
+	 * 获取订单
+	 */
 	public function getorderAction()
 	{
 		$status = $this->get('status');
@@ -348,7 +350,52 @@ class ip extends Base
 		}
 		$this->json($list, true);
 	}
-	//确认收货
+
+	/**
+	 * 订单分页列表
+	 */
+	public function pageorderAction()
+	{
+		$page = $this->get('page');
+
+		$where[0] = 'customerid = ?';
+		$value[0] = $this->user['id'];
+
+		$status = $this->get('status');
+		switch ($status) {
+			case '50':
+				array_push($where, 'status > 10 and status < 60');
+				break;
+			case '60':
+			case '70':
+				array_push($where, 'status = ?');
+				array_push($value, $status);
+				break;
+		}
+
+		$list = $this->db->setTableName('order')->pageLimit($page, 10)->getAll($where, $value, 'id,createtime,contact,mobile,address,province,city,area', 'id desc');
+		if ($list) {
+			$ids = array();
+			foreach ($list as $o) {
+				array_push($ids, $o['id']);
+			}
+			$oilist = $this->db->setTableName('vi_order_item')->getAll('orderid in (' . join($ids, ',') . ')',);
+			foreach ($list as $k => $o) {
+				$pds = array();
+				foreach ($oilist as $i) {
+					if ($o['id'] == $i['orderid']) {
+						array_push($pds, $i);
+					}
+				}
+				$list[$k]['products'] = $pds;
+			}
+		}
+		$this->json($list, true);
+	}
+
+	/**
+	 * 确认收货
+	 */
 	public function comfirmorderAction()
 	{
 		$id = $this->get('id');
