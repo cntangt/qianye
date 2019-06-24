@@ -127,6 +127,7 @@ class hdt extends Base
 				'OrderValue' => 0,
 				'GetValue' => 0,
 				'PayType' => '',
+				'linkMan' => $o['contact'],
 				'HandsetNO' => $o['mobile'],
 				'Address' => $o['address'],
 				'PackWeight' => '0',
