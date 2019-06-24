@@ -381,13 +381,13 @@ class ip extends Base
 				break;
 		}
 
-		$list = $this->db->setTableName('order')->pageLimit($page, 10)->getAll($where, $value, 'id,createtime,contact,mobile,address,province,city,area', 'id desc');
+		$list = $this->db->setTableName('order')->pageLimit($page, 10)->getAll($where, $value, 'id,createtime,contact,mobile,address,province,city,area,status', 'id desc');
 		if ($list) {
 			$ids = array();
 			foreach ($list as $o) {
 				array_push($ids, $o['id']);
 			}
-			$oilist = $this->db->setTableName('vi_order_item')->getAll('orderid in (' . join($ids, ',') . ')',);
+			$oilist = $this->db->setTableName('vi_order_item')->getAll('orderid in (' . join($ids, ',') . ')');
 			foreach ($list as $k => $o) {
 				$pds = array();
 				foreach ($oilist as $i) {
