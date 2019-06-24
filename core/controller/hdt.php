@@ -108,6 +108,7 @@ class hdt extends Base
 		$list = $this->db->setTableName('order')->getAll('status = ?', 10);
 		$this->log(0, '待同步订单：' . count($list), '订单同步');
 		if ($list) foreach ($list as $o) {
+			$oid = sprintf("XD%'05d", $o['id']);
 			$items = $this->db->setTableName('order_item')->getAll('orderid = ?', $o['id']);
 			$packages = array();
 			foreach ($items as $i) {
@@ -122,7 +123,7 @@ class hdt extends Base
 				array_push($packages, $package);
 			}
 			$data = [[
-				'SendOrderID' => str_pad($o['id'], 5, '0', STR_PAD_LEFT),
+				'SendOrderID' => $oid,
 				'OrderType' => 70,
 				'OrderValue' => 0,
 				'GetValue' => 0,
@@ -142,7 +143,7 @@ class hdt extends Base
 			if (!$res) {
 				$this->log($o['id'], '请求结果为空', '订单同步失败');
 			} else if ($res['Success']) {
-				$erporderid = str_pad($o['id'], 5, '0', STR_PAD_LEFT); //没有返回ID，只有写入自己ID
+				$erporderid = $oid; //没有返回ID，只有写入自己ID
 				// 待发货：10，待揽收：20，待配送：30，配送中：40，待签收：50，已签收：60，已完成（评价）：70
 				$this->db->setTableName('order')->update(['erporderid' => $erporderid, 'status' => 20], 'id = ?', $o['id']); // 修改订单为待配送
 				$this->log($o['id'], $erporderid, '订单同步成功');
