@@ -374,7 +374,7 @@ class ip extends Base
 		$status = $this->get('status');
 		switch ($status) {
 			case '50':
-				array_push($where, 'status > 10 and status < 60');
+				array_push($where, 'status >= 10 and status < 60');
 				break;
 			case '60':
 			case '70':
