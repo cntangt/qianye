@@ -288,12 +288,14 @@ class ip extends Base
 		$orderarray = [
 			'customerid' => $this->user['id'], 'createtime' => time(), 'contact' => $address->name, 'mobile' => $address->mobile, 'address' => $address->address, 'province' => $address->province, 'city' => $address->city, 'area' => $address->area, 'status' => 10, 'remark' => $_POST['remark'],
 		];
-		$addOrderRes = $this->db->setTableName('order')->insert($orderarray, true);
-		if ($addOrderRes == null || $addOrderRes < 0) {
-			$this->json(null, false, "创建订单失败");
-		}
 		try {
 			foreach ($orderProduct as $key => $value) {
+				// 将订单创建放到订单明细迭代内，每个订单只搭配了个订单明细，方便物流同步
+				$addOrderRes = $this->db->setTableName('order')->insert($orderarray, true);
+				if ($addOrderRes == null || $addOrderRes < 0) {
+					$this->json(null, false, "创建订单失败");
+				}
+
 				$addRes = $this->db->setTableName('order_item')->insert([
 					'sku' => $value->sku,
 					'orderid' => $addOrderRes,
