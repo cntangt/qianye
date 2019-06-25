@@ -290,31 +290,32 @@ class ip extends Base
 		];
 		try {
 			foreach ($orderProduct as $key => $value) {
-				// 将订单创建放到订单明细迭代内，每个订单只搭配了个订单明细，方便物流同步
-				$addOrderRes = $this->db->setTableName('order')->insert($orderarray, true);
-				if ($addOrderRes == null || $addOrderRes < 0) {
-					$this->json(null, false, "创建订单失败");
-				}
-
-				$addRes = $this->db->setTableName('order_item')->insert([
-					'sku' => $value->sku,
-					'orderid' => $addOrderRes,
-					'cardid' => $value->cardid,
-					'cardtypeid' => $value->cardtypeid,
-					'productname' => $value->productname,
-					'quantity' => $value->pickcount,
-				]);
-				if (!$addRes) {
-					$this->db->setTableName('order')->delete('id = ?', $addOrderRes);
-					$this->json(null, false, '创建订单失败');
-				}
-				//2.修改数量
-				if (!$this->db->setTableName('card_item')->update([
-					'validquantity' => ($value->validquantity - $value->pickcount),
-				], 'id = ?', $value->carditemid)) {
-					$this->db->setTableName('order')->delete('id = ?', $addOrderRes);
-					$this->db->setTableName('order_item')->delete('orderid = ?', $addOrderRes);
-					$this->json(null, false, '创建订单失败');
+				for ($i = 0; $i < $value->pickcount; $i++) {
+					// 将订单创建放到订单明细迭代内，每个订单只搭配了个订单明细，方便物流同步
+					$addOrderRes = $this->db->setTableName('order')->insert($orderarray, true);
+					if ($addOrderRes == null || $addOrderRes < 0) {
+						$this->json(null, false, "创建订单失败");
+					}
+					$addRes = $this->db->setTableName('order_item')->insert([
+						'sku' => $value->sku,
+						'orderid' => $addOrderRes,
+						'cardid' => $value->cardid,
+						'cardtypeid' => $value->cardtypeid,
+						'productname' => $value->productname,
+						'quantity' => 1,
+					]);
+					if (!$addRes) {
+						$this->db->setTableName('order')->delete('id = ?', $addOrderRes);
+						$this->json(null, false, '创建订单失败');
+					}
+					//2.修改数量
+					if (!$this->db->setTableName('card_item')->update([
+						'validquantity' => ($value->validquantity - 1),
+					], 'id = ?', $value->carditemid)) {
+						$this->db->setTableName('order')->delete('id = ?', $addOrderRes);
+						$this->db->setTableName('order_item')->delete('orderid = ?', $addOrderRes);
+						$this->json(null, false, '创建订单失败');
+					}
 				}
 			}
 		} catch (Exception $e) {
