@@ -103,7 +103,7 @@ class api extends Base
 	{
 		$data = $this->post('data');
 
-		if (empty($data['pre'])) {
+		if (!isset($data['pre'])) {
 			$this->json(null, false, '请输入卡号前缀');
 		}
 		if (empty($data['no'])) {
@@ -133,7 +133,7 @@ class api extends Base
 	{
 		$data = $this->post('data');
 
-		if (empty($data['pre'])) {
+		if (!isset($data['pre'])) {
 			$this->json(0, false, '请输入卡号前缀');
 		}
 		if (empty($data['begin'])) {
