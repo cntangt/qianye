@@ -47,6 +47,7 @@
 						<label><input name="auth[order-index]" value="1" type="checkbox" <?php if ($auth['order-index']) echo 'checked' ?>>列表</label>
 						<label><input name="auth[order-close]" value="1" type="checkbox" <?php if ($auth['order-close']) echo 'checked' ?>>关闭</label>
 						<label><input name="auth[order-export]" value="1" type="checkbox" <?php if ($auth['order-export']) echo 'checked' ?>>导出</label>
+						<label><input name="auth[order-send]" value="1" type="checkbox" <?php if ($auth['order-send']) echo 'checked' ?>>发货</label>
 						<label class="checkall"><input type="checkbox" class="checkall">全选</label>
 					</li>
 					<li class="list-group-item">

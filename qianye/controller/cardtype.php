@@ -23,36 +23,23 @@ class cardtype extends Admin
             return;
         }
 
-        $res = $this->cache->get('yz:product_list');
-        if (!$res) {
-            // 单独框架页请求
-            $key = $this->get('key');
-            $token = $this->yz_acc_token();
-            $client = new \Youzan\Open\Client($token);
-
-            $method = 'youzan.items.onsale.get';
-            $apiVersion = '3.0.0';
-
-            $res = $client->get($method, $apiVersion, ['q' => $key]);
-            $this->cache->set('yz:product_list', $res, 600);
-        }
-        $data = $res['data']['items'];
+        $data = $this->db->setTableName('product')->getAll(null, null, null, 'id DESC');
         $list = array();
         for ($i = 0; $i < count($data); $i++) {
-            $list[$i]['id'] = $data[$i]['item_id'];
+            $list[$i]['id'] = $data[$i]['id'];
             $list[$i]['text'] = $data[$i]['title'];
-            $pd = $this->db->setTableName('product')->getOne('sku = ?', $data[$i]['item_id']);
-            if (!$pd) {
-                $succ =  $this->db->setTableName('product')->insert([
-                    'sku' => $data[$i]['item_id'],
-                    'title' => $data[$i]['title'],
-                    'subtitle' => $data[$i]['sub_title'],
-                    'thumb' => $data[$i]['image'],
-                    'img' => $data[$i]['item_imgs'][0]['url'],
-                    'createtime' => strtotime($data[$i]['created_time']),
-                    'synctime' => time()
-                ]);
-            }
+            // $pd = $this->db->setTableName('product')->getOne('sku = ?', $data[$i]['item_id']);
+            // if (!$pd) {
+            //     $succ =  $this->db->setTableName('product')->insert([
+            //         'sku' => $data[$i]['item_id'],
+            //         'title' => $data[$i]['title'],
+            //         'subtitle' => $data[$i]['sub_title'],
+            //         'thumb' => $data[$i]['image'],
+            //         'img' => $data[$i]['item_imgs'][0]['url'],
+            //         'createtime' => strtotime($data[$i]['created_time']),
+            //         'synctime' => time()
+            //     ]);
+            // }
         }
         $json = json_encode($list);
         include $this->admin_tpl('cardtype_index');

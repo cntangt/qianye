@@ -53,6 +53,22 @@ class order extends Admin
 		exportToExcel(date('YmdHis') . '提货记录.csv', ['提货单号', '提货会员', '会员电话', '提货商品', '提货数量', '收货人', '收货地址', '收货电话', '提货时间', '状态'], $list);
 	}
 
+	/**
+	 * 批量发货
+	 */
+	public function sendAction()
+	{
+		$data = $this->condition();
+
+		if (count($data['where']) == 0) {
+			$this->json(null, false, '请设置发货筛选条件');
+		}
+
+		$this->db->setTableName('order')->update(['status' => 50], $data['where'], $data['values']);
+
+		$this->json(null, true);
+	}
+
 	private function condition()
 	{
 		$status = $this->get('status');

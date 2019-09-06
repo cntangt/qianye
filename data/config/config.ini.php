@@ -1,12 +1,12 @@
 <?php
 if (!defined('IN_XIAOCMS')) exit();
 return array(
-  'site_name' => '冰点卡券提货系统',
+  'site_name' => '浅野卡券提货系统',
   'site_theme' => 'default',
   'site_mobile' => '1',
-  'site_title' => '冰点卡券提货系统',
-  'site_keywords' => '冰点 提货',
-  'site_description' => '冰点卡券提货系统',
+  'site_title' => '浅野卡券提货系统',
+  'site_keywords' => '浅野 提货',
+  'site_description' => '浅野卡券提货系统',
   'site_status' => '1|正常
 2|头条
 3|推荐

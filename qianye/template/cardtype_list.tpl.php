@@ -37,9 +37,9 @@
                 <td>
                     <?php if ($this->menu('cardtype-pdlist')) { ?>
                         <?php if ($t['canedit']) { ?>
-                            <button class="btn btn-sm btn-success dialog" data-url="<?php echo url('cardtype/pdlist', ['id' => $t['id']]) ?>">商品管理</button>
+                            <button class="btn btn-sm btn-success dialog" data-url="<?php echo url('cardtype/pdlist', ['id' => $t['id']]) ?>">绑定管理</button>
                         <?php } else { ?>
-                            <button class="btn btn-sm btn-success" disabled title="已生成卡券，不能修改">商品管理</button>
+                            <button class="btn btn-sm btn-success" disabled title="已生成卡券，不能修改">绑定管理</button>
                         <?php } ?>
                     <?php } ?>
                     <?php if ($this->menu('cardtype-edit')) { ?>

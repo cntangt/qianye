@@ -136,7 +136,9 @@ class ip extends Base
 		}
 	}
 
-	// 新增地址
+	/**
+	 * 新增地址
+	 */
 	public function addaddressAction()
 	{
 		$uts = $this->cache->get('useractivetimes:' . $this->user['id']);
@@ -170,7 +172,9 @@ class ip extends Base
 		}
 	}
 
-	// 修改地址
+	/**
+	 * 修改地址
+	 */
 	public function editaddressAction()
 	{
 		$uts = $this->cache->get('useractivetimes:' . $this->user['id']);
@@ -203,7 +207,10 @@ class ip extends Base
 			$this->json($result . data, $result . succ, $result . msg, $result . code);
 		}
 	}
-	//获取地址列表
+
+	/**
+	 * 获取地址列表
+	 */
 	public function getaddresslistAction()
 	{
 		$uid = $this->user['id'];
@@ -211,7 +218,9 @@ class ip extends Base
 		$this->json($list, true, null);
 	}
 
-	//获取地址单个
+	/**
+	 * 获取地址单个
+	 */
 	public function getaddressAction()
 	{
 		$address =	$this->db->setTableName('customer_address')->getOne('customerid = ?', $this->user['id'], null, 'isDefault DESC,id DESC');
@@ -220,7 +229,10 @@ class ip extends Base
 		}
 		$this->json(null, true, null);
 	}
-	//删除地址单个
+
+	/**
+	 * 删除地址单个
+	 */
 	public function deleteaddressAction()
 	{
 		$address =	$this->db->setTableName('customer_address')->delete('id = ?', $this->get('id'));
@@ -229,7 +241,10 @@ class ip extends Base
 		}
 		$this->json(null, true, null);
 	}
-	//检查地址数据有效性
+
+	/**
+	 * 检查地址数据有效性
+	 */
 	public function checkaddressAction()
 	{
 		$data['id'] = $this->post('id');
@@ -265,14 +280,18 @@ class ip extends Base
 		return $this->getjson($data, true);
 	}
 
-	//获取商品列表
+	/**
+	 * 获取商品列表
+	 */
 	public function getproductsAction()
 	{
 		$products =	$this->db->setTableName('vi_wealth_valid')->getAll('customerid = ?', $this->user['id']);
 		$this->json($products, true, null);
 	}
 
-	//创建订单
+	/**
+	 * 创建订单
+	 */
 	public function createorderAction()
 	{
 		// //1.创建订单
@@ -289,6 +308,7 @@ class ip extends Base
 			'customerid' => $this->user['id'], 'createtime' => time(), 'contact' => $address->name, 'mobile' => $address->mobile, 'address' => $address->address, 'province' => $address->province, 'city' => $address->city, 'area' => $address->area, 'status' => 10, 'remark' => $_POST['remark'],
 		];
 		try {
+			/* 原冰点一单一明细一数量
 			foreach ($orderProduct as $key => $value) {
 				for ($i = 0; $i < $value->pickcount; $i++) {
 					// 将订单创建放到订单明细迭代内，每个订单只搭配了个订单明细，方便物流同步
@@ -316,6 +336,33 @@ class ip extends Base
 						$this->db->setTableName('order_item')->delete('orderid = ?', $addOrderRes);
 						$this->json(null, false, '创建订单失败');
 					}
+				}
+			}
+			*/
+			$addOrderRes = $this->db->setTableName('order')->insert($orderarray, true);
+			foreach ($orderProduct as $key => $value) {
+				if ($addOrderRes == null || $addOrderRes < 0) {
+					$this->json(null, false, "创建订单失败");
+				}
+				$addRes = $this->db->setTableName('order_item')->insert([
+					'sku' => $value->sku,
+					'orderid' => $addOrderRes,
+					'cardid' => $value->cardid,
+					'cardtypeid' => $value->cardtypeid,
+					'productname' => $value->productname,
+					'quantity' => $value->pickcount,
+				]);
+				if (!$addRes) {
+					$this->db->setTableName('order')->delete('id = ?', $addOrderRes);
+					$this->json(null, false, '创建订单失败');
+				}
+				//2.修改数量
+				if (!$this->db->setTableName('card_item')->update([
+					'validquantity' => ($value->validquantity - $value->pickcount),
+				], 'id = ?', $value->carditemid)) {
+					$this->db->setTableName('order')->delete('id = ?', $addOrderRes);
+					$this->db->setTableName('order_item')->delete('orderid = ?', $addOrderRes);
+					$this->json(null, false, '创建订单失败');
 				}
 			}
 		} catch (Exception $e) {
@@ -428,7 +475,10 @@ class ip extends Base
 			$this->json(null, false, "确认订单失败");
 		}
 	}
-	//提交评价
+
+	/**
+	 * 提交评价
+	 */
 	public function commitordercommentAction()
 	{
 		$order = $this->db->setTableName('order')->getOne('id = ?', $this->post('orderid'));
@@ -457,7 +507,10 @@ class ip extends Base
 			$this->json(null, false, "评价订单错误");
 		}
 	}
-	//获取用户订单数量
+
+	/**
+	 * 获取用户订单数量
+	 */
 	public function selectordercountAction()
 	{
 		//待签收
@@ -475,12 +528,18 @@ class ip extends Base
 		$this->json($result);
 	}
 
+	/**
+	 * 获取配置数据
+	 */
 	public function getsettingconfigAction()
 	{
 		$list =	$this->db->setTableName('kv')->getAll(null, null);
 		$this->json($list);
 	}
-	//重写返回json(返回对象)
+
+	/**
+	 * 重写返回json(返回对象)
+	 */
 	protected function getjson($val, $succ = true, $msg = null, $code = 0)
 	{
 		$result['succ'] = $succ;

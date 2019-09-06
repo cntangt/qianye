@@ -6,10 +6,13 @@
             <?php if ($this->menu('order-export')) { ?>
                 <a class="btn btn-sm btn-primary" href="#" style="color:#fff" data-url="<?php echo url('order/export') ?>" id="export" target="export">导出</a>
             <?php } ?>
+            <?php if ($this->menu('order-send')) { ?>
+                <a class="btn btn-sm btn-primary" href="#" style="color:#fff" data-url="<?php echo url('order/send') ?>" id="send" target="export">发货</a>
+            <?php } ?>
         </div>
         <div class="right">
             <form autocomplete="off" class="form-inline" data-url="<?php echo url('order/index') ?>" id="searchform">
-                <div class="input-group input-group-sm mx-sm-3">
+                <!-- <div class="input-group input-group-sm mx-sm-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">区域</span>
                     </div>
@@ -55,7 +58,7 @@
                         <option value="酉阳土家族苗族自治县">酉阳土家族苗族自治县</option>
                         <option value="彭水苗族土家族自治县">彭水苗族土家族自治县</option>
                     </select>
-                </div>
+                </div> -->
                 <div class="input-daterange input-group input-group-sm" id="datepicker">
                     <div class="input-group-prepend">
                         <span class="input-group-text">提货时间</span>
@@ -122,8 +125,20 @@
         });
 
         $('#export').click(function() {
-            $(this).attr('href', $(this).data('url') + '&' + $('#searchform').serialize())
-        })
+            $(this).attr('href', $(this).data('url') + '&' + $('#searchform').serialize());
+        });
+
+        $('#send').click(function() {
+            $.get($(this).data('url'), $('#searchform').serialize(),function(res){
+                if(res.succ){
+                    loadlist();
+                }
+                else{
+                    alert(res.msg);
+                }
+            });
+            return false;
+        });
 
         $('#datepicker').datepicker({
             clearBtn: true,
