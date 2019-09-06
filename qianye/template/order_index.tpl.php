@@ -129,14 +129,15 @@
         });
 
         $('#send').click(function() {
-            $.get($(this).data('url'), $('#searchform').serialize(),function(res){
-                if(res.succ){
-                    loadlist();
-                }
-                else{
-                    alert(res.msg);
-                }
-            });
+            if (confirm('确定要执行发货操作？')) {
+                $.get($(this).data('url'), $('#searchform').serialize(), function(res) {
+                    if (res.succ) {
+                        loadlist();
+                    } else {
+                        alert(res.msg);
+                    }
+                });
+            }
             return false;
         });
 
