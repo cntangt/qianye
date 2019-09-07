@@ -22,7 +22,7 @@
                 <td class="l">
                     <?php echo $t['sku'] ?>
                 </td>
-                <td><img width="40" height="40" src="http://img.qianye.thcen.com/<?php echo $t['thumb']?>" alt="<?php echo $t['thumb']?>"></td>
+                <td><img width="40" height="40" src="<?php echo $imgdomain ?><?php echo $t['thumb']?>" alt="<?php echo $t['thumb']?>"></td>
                 <td>
                     <?php echo date('Y-m-d', $t['createtime']) ?>
                 </td>

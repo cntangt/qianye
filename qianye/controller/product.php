@@ -18,7 +18,13 @@ class product extends Admin
 			$list = $this->db->setTableName('product')->pageLimit($page, $size)->getAll($data['where'], $data['values'], null, 'id DESC');
 			$pagelist = xiaocms::load_class('pager');
 			$pagelist = $pagelist->total($total)->url(url('product/index', $data['data']) . '&page=[page]')->ext(true)->num($size)->page($page)->output();
-
+			$kvs = $this->db->setTableName('kv')->getAll(null, null, null, null);
+			$imgdomain = '';
+			foreach ($kvs as $key => $value) {
+				if ($value['key'] == 'img') {
+					$imgdomain = $value['value'];
+				}
+			}
 			include $this->admin_tpl('product_list');
 			return;
 		}
