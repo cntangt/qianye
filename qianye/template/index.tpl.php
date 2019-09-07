@@ -54,6 +54,14 @@
               </a>
             </li>
           <?php } ?>
+          <?php if ($this->menu('product-index')) { ?>
+            <li class="nav-item">
+              <a class="nav-link" href="<?php echo url('product/index') ?>" target="rightMain">
+                <span data-feather="grid"></span>
+                商品管理
+              </a>
+            </li>
+          <?php } ?>
           <?php if ($this->menu('wealth-index')) { ?>
             <li class="nav-item">
               <a class="nav-link" href="<?php echo url('wealth/index') ?>" target="rightMain">

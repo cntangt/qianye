@@ -110,7 +110,6 @@
     </div>
 </div>
 <script>
-    var html = '<div class="progress"><span>加载中...</span><div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div></div>';
     $(function() {
         $('#listcontainer,.content-menu').on('click', '.dialog', function() {
             $('#modal').modal('show');
@@ -164,24 +163,6 @@
         $('#searchform select').change(loadlist);
         loadlist();
     });
-
-    function loadlist() {
-        var form = $('#searchform');
-        load(form.data('url'), form.serialize());
-        return false;
-    }
-
-    function reload() {
-        load($('#currentpage').val());
-    }
-
-    function load(url, data) {
-        $('#modal').modal('show');
-        $('#modal .modal-content').html(html);
-        $('#listcontainer').load(url, data, function() {
-            $('#modal').modal('hide');
-        });
-    }
 </script>
 </body>
 
