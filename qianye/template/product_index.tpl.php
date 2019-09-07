@@ -9,16 +9,6 @@
         </div>
         <div class="right">
             <form autocomplete="off" class="form-inline" data-url="<?php echo url('product/index') ?>" id="searchform">
-                <div class="input-group input-group-sm">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">状态</span>
-                    </div>
-                    <select name="canedit" class="form-control">
-                        <option value="">全部</option>
-                        <option value="false">已生成</option>
-                        <option value="true">未生成</option>
-                    </select>
-                </div>
                 <input type="text" class="form-control form-control-sm mx-sm-3" name="name" />
                 <button type="submit" class="btn btn-sm btn-success">查询</button>
             </form>
@@ -37,6 +27,10 @@
         $('#listcontainer,.content-menu').on('click', '.dialog', function() {
             $('#modal').modal('show');
             $('#modal .modal-content').html(html).load($(this).data('url'));
+        }).on('click', '.confirm', function() {
+            if (confirm($(this).data('tip'))) {
+                $.post($(this).data('url'), reload);
+            }
         }).on('click', '.xiaocms-page a', function() {
             $('#listcontainer').load($(this).attr('href'));
             return false;
