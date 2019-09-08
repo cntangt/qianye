@@ -18,7 +18,13 @@ class product extends Admin
 			$list = $this->db->setTableName('product')->pageLimit($page, $size)->getAll($data['where'], $data['values'], null, 'id DESC');
 			$pagelist = xiaocms::load_class('pager');
 			$pagelist = $pagelist->total($total)->url(url('product/index', $data['data']) . '&page=[page]')->ext(true)->num($size)->page($page)->output();
-
+			$kvs = $this->db->setTableName('kv')->getAll(null, null, null, null);
+			$imgdomain = '';
+			foreach ($kvs as $key => $value) {
+				if ($value['key'] == 'img') {
+					$imgdomain = $value['value'];
+				}
+			}
 			include $this->admin_tpl('product_list');
 			return;
 		}
@@ -26,92 +32,93 @@ class product extends Admin
 		include $this->admin_tpl('product_index');
 	}
 
-	public function closeAction()
+	public function delAction()
 	{
 		$id = $this->get('id');
-		$order = $this->db->setTableName('order')->find($id);
-		if ($order) {
-			if ($order['status'] != 10) {
-				$this->json(null, false, '仅待发货订单可以关闭');
+		$data = $this->db->setTableName('product')->delete('id = ?', $id);
+		$this->json(null, true, '删除商品成功');
+	}
+
+	public function addAction()
+	{
+		if ($this->ispost) {
+			$filename = $this->savefile();
+			if ($filename == null) {
+				$filename = '';
 			}
-			$succ = $this->db->setTableName('order')->update(['status' => -10], 'id = ?', $id);
+			$succ =	$this->db->setTableName('product')->insert(['title' => $this->post('title'), 'sku' => $this->post('sku'), 'thumb' => $filename]);
 			if ($succ) {
-				$this->json(null, true, '关闭提货单成功');
+				echo '添加商品成功';
+				exit;
 			}
-			$this->json(null, false, '关闭提货单失败');
-		}
-	}
-
-	public function exportAction()
-	{
-		$data = $this->condition();
-		$list = $this->db->setTableName('vi_order')->getAll(
-			$data['where'],
-			$data['values'],
-			"id,name,customermobile,productname,quantity,contact,address,mobile,from_unixtime(createtime,'%Y-%m-%d'),case when status=10 then '待发货' when status=20 then '待揽收' when status=30 then '待配送' when status=40 then '配送中' when status=50 then '待签收' when status=60 then '已签收' when status=70 then '已完成' when status=-10 then '关闭' else '其它' end",
-			'id desc'
-		);
-		exportToExcel(date('YmdHis') . '提货记录.csv', ['提货单号', '提货会员', '会员电话', '提货商品', '提货数量', '收货人', '收货地址', '收货电话', '提货时间', '状态'], $list);
-	}
-
-	/**
-	 * 批量发货
-	 */
-	public function sendAction()
-	{
-		$data = $this->condition();
-
-		if (count($data['where']) == 0) {
-			$this->json(null, false, '请设置发货筛选条件');
+			echo '添加商品失败';
+			exit;
 		}
 
-		$this->db->setTableName('order')->update(['status' => 50], $data['where'], $data['values']);
+		$data = ['title' => '新增商品', 'id' => 0, 'sku' => date('YmdHis'), 'action' => 'add'];
+		include $this->admin_tpl('product_edit');
+	}
 
-		$this->json(null, true);
+	public function editAction()
+	{
+		if ($this->ispost) {
+			$id = $this->post('id');
+			$data = $this->db->setTableName('product')->find($id);
+			if ($data) {
+				$filename = $this->savefile();
+				if ($filename == null) {
+					$filename = $data['thumb'];
+				}
+				$succ =	$this->db->setTableName('product')->update(['title' => $this->post('title'), 'sku' => $this->post('sku'), 'thumb' => $filename], 'id = ?', $id);
+				if ($succ) {
+					echo '修改商品成功';
+					exit;
+				}
+			}
+			echo '修改商品失败';
+			exit;
+		}
+
+		$id = $this->get('id');
+		$data = $this->db->setTableName('product')->getOne('id = ?', $id);
+		$data['action'] = 'edit';
+		include $this->admin_tpl('product_edit');
+	}
+
+	private function savefile()
+	{
+		if ($_FILES['file']['size'] == 0) {
+			return null;
+		}
+		$type = $_FILES["file"]["type"];
+
+		if (stripos($type, 'image') === false) {
+			echo '请上传图片格式';
+			exit;
+		}
+
+		if ($_FILES["file"]["size"] > 1024 * 500) {
+			echo '请上传小于500K的缩略图';
+			exit;
+		}
+		$filename = sprintf('%s.%s', date('YmdHis'), pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION));
+		$savepath = sprintf('%s/%s/%s', '', 'thumbs', $filename);
+		move_uploaded_file($_FILES["file"]["tmp_name"], $savepath);
+		return $filename;
 	}
 
 	private function condition()
 	{
-		$status = $this->get('status');
-		$area = $this->get('area');
-		$mobile = $this->get('mobile');
-		$pdname = $this->get('pdname');
-		$begin = $this->get('begin');
-		$end = $this->get('end');
+		$pdname = $this->get('name');
 
 		$where = array();
 		$values = array();
 		$data = array();
 
-		if ($status) {
-			array_push($where, 'status = ?');
-			array_push($values, $status);
-			$data['status'] = $status;
-		}
-		if ($area) {
-			array_push($where, 'area = ?');
-			array_push($values, $area);
-			$data['area'] = $area;
-		}
-		if ($mobile) {
-			array_push($where, 'mobile = ?');
-			array_push($values, $mobile);
-			$data['mobile'] = $mobile;
-		}
 		if ($pdname) {
-			array_push($where, 'productname like ?');
+			array_push($where, 'title like ?');
 			array_push($values, '%' . $pdname . '%');
 			$data['pdname'] = $pdname;
-		}
-		if ($begin) {
-			array_push($where, 'createtime > ?');
-			array_push($values, strtotime($begin));
-			$data['begin'] = $begin;
-		}
-		if ($end) {
-			array_push($where, 'createtime < ?');
-			array_push($values, strtotime($end) + 3600 * 24);
-			$data['end'] = $end;
 		}
 
 		return ['where' => $where, 'values' => $values, 'data' => $data];
