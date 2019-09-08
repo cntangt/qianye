@@ -168,7 +168,7 @@ class ip extends Base
 				$this->json(null, false, '新增失败');
 			}
 		} else {
-			$this->json($result . data, $result . succ, $result . msg, $result . code);
+			$this->json($result['data'], $result['succ'], $result['msg'], $result['code']);
 		}
 	}
 
@@ -204,7 +204,7 @@ class ip extends Base
 				$this->json(null, false, '修改失败');
 			}
 		} else {
-			$this->json($result . data, $result . succ, $result . msg, $result . code);
+			$this->json($result['data'], $result['succ'], $result['msg'], $result['code']);
 		}
 	}
 
