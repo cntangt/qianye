@@ -137,6 +137,12 @@ class ip extends Base
 				$this->db->setTableName('card_item')->delete('cardid = ?', $card['id']);
 				$this->activejson(null, false, '激活卡券失败，请重试');
 			} else {
+				// 激活时判断是否有卡上级，如果同时用户没有上级则绑定卡上级
+				if (!$this->user['superior'] && $card['from']) {
+					$froms = explode(',', $card['from']);
+					$index = count($froms) - 1;
+					$this->db->setTableName('customer')->update(['superior' => $froms[$index]], 'id = ?', $this->user['id']);
+				}
 				$this->activejson(null, true, '激活卡券成功');
 			}
 		} else {
@@ -209,8 +215,7 @@ class ip extends Base
 
 			if (!$this->db->setTableName('card')->update(['from' => $card['from'] . ',' . $this->user['id']], 'id = ?', $card['id'])) {
 				$this->bindjson(null, false, '绑定卡片失败');
-			}
-			else{
+			} else {
 				$this->bindjson(null, true, '绑定卡片失败');
 			}
 		} else {
