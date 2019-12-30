@@ -42,6 +42,15 @@ class ip extends Base
 	}
 
 	/**
+	 * 绑定专用返回json，释放并发锁操作
+	 */
+	private function bindjson($val, $succ = false, $msg = null, $code = 0)
+	{
+		unset(self::$lockdict['binding:' . $this->user['id']]);
+		$this->json($val, $succ, $msg, $code);
+	}
+
+	/**
 	 * 激活卡券
 	 */
 	public function activecardAction()
@@ -53,7 +62,6 @@ class ip extends Base
 		} else {
 			self::$lockdict[$actkey] = true;
 		}
-
 		if (empty($this->user['mobile'])) {
 			$this->activejson(null, false, '未绑定手机，请绑定后再进行激活');
 		}
@@ -133,6 +141,80 @@ class ip extends Base
 			}
 		} else {
 			$this->activejson(null, false, '未找到激活卡券，请确认卡券编码和密码');
+		}
+	}
+
+	/**
+	 * 上级绑定卡，未激活，待赠送下级后由下级激活
+	 */
+	public function bindcardAction()
+	{
+		// 添加激活key，防止重复调用
+		$actkey = 'binding:' . $this->user['id'];
+		if (self::$lockdict[$actkey]) {
+			$this->json(null, false, '正在激活，请稍后');
+		} else {
+			self::$lockdict[$actkey] = true;
+		}
+		if (empty($this->user['mobile'])) {
+			$this->bindjson(null, false, '未绑定手机，请绑定后再进行激活');
+		}
+		$uts = $this->cache->get('userbindtimes:' . $this->user['id']);
+		if ($uts > 100) {
+			$this->bindjson(null, false, '检测到风险操作，请24小时后重试');
+		}
+		$uts += 1;
+		$this->cache->set('userbindtimes:' . $this->user['id'], $uts, 3600 * 24);
+
+		$card = null;
+		$code = $this->post('code');
+		$pass = $this->post('pass');
+		if (empty($code) || empty($pass)) {
+			$this->bindjson(null, false, '卡号或者密码为空');
+		}
+		$times = $this->cache->get('cardbindtimes:' . $code);
+		if ($times > 10) {
+			$this->bindjson(null, false, '卡券绑定次数超出限制，请24小时后重试');
+		}
+		$times += 1;
+		$this->cache->set('cardbindtimes:' . $code, $times, 3600 * 24);
+		$card = $this->db->setTableName('card')->getOne('code = ? and pass = ?', [$code, $pass]);
+
+		if ($card) {
+			switch ($card['status']) {
+				case 10:
+					$this->bindjson(null, false, '未销售的卡券不能绑定');
+				case 30:
+					$this->bindjson(null, true, '已经绑定的卡券不能绑定');
+				case 40:
+					$this->bindjson(null, false, '已作废的卡券不能绑定');
+			}
+			$ct = $this->db->setTableName('card_type')->getOne('id = ?', $card['cardtypeid']);
+			if (!$ct) {
+				$this->bindjson(null, false, '卡券类型不存在，不能绑定');
+			}
+			if ($ct['isvalid'] == 0) {
+				$this->bindjson(null, false, '卡券类型已经作废，不能绑定');
+			}
+			if ($ct['begintime'] > time()) {
+				$this->bindjson(null, false, '卡券绑定开始时间为：' . date('Y-m-d', $ct['begintime']) . '，不能绑定');
+			}
+			if ($ct['endtime'] < time()) {
+				$this->bindjson(null, false, '卡券绑定截止时间为：' . date('Y-m-d', $ct['endtime']) . '，不能绑定');
+			}
+			$ctis = $this->db->setTableName('card_type_item')->getAll('cardtypeid = ?', $ct['id']);
+			if (!$ctis) {
+				$this->bindjson(null, false, '未绑定卡券类型商品，不能绑定');
+			}
+
+			if (!$this->db->setTableName('card')->update(['from' => $card['from'] . ',' . $this->user['id']], 'id = ?', $card['id'])) {
+				$this->bindjson(null, false, '绑定卡片失败');
+			}
+			else{
+				$this->bindjson(null, true, '绑定卡片失败');
+			}
+		} else {
+			$this->bindjson(null, false, '未找到绑定卡券，请确认卡券编码和密码');
 		}
 	}
 
@@ -264,7 +346,7 @@ class ip extends Base
 		if (empty($data['mobile']) || !preg_match("/^1\d{10}$/", $data['mobile'])) {
 			return	$this->getjson(null, false, '请输入收货人手机号');
 		}
-		if (empty($data['province']) || $data['province'] == '请选择省'||empty($data['city']) || $data['city'] == '请选择市'||empty($data['area'])||$data['area']=='请选择区' ) {
+		if (empty($data['province']) || $data['province'] == '请选择省' || empty($data['city']) || $data['city'] == '请选择市' || empty($data['area']) || $data['area'] == '请选择区') {
 			return	$this->getjson(null, false, '请选择完整的区域');
 		}
 		if (empty($data['address'])) {
