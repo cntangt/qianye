@@ -40,40 +40,40 @@
                     <?php echo $t['mobile'] ?>
                 </td>
                 <td class="l">
-                    <?php echo $t['address'] ?>
+                    <?php echo sprintf('%s/%s/%s %s', $t['province'], $t['city'], $t['area'], $t['address']) ?>
                 </td>
                 <td>
                     <?php echo date('Y-m-d H:i', $t['createtime']) ?>
                 </td>
                 <td><?php switch ($t['status']) {
-                        case '10':
-                            echo '待发货';
-                            break;
-                        case '20':
-                            echo '待揽收';
-                            break;
-                        case '30':
-                            echo '待配送';
-                            break;
-                        case '40':
-                            echo '配送中';
-                            break;
-                        case '50':
-                            echo '待签收';
-                            break;
-                        case '60':
-                            echo '已签收';
-                            break;
-                        case '70':
-                            echo '已完成';
-                            break;
-                        case '-10':
-                            echo '关闭';
-                            break;
-                        default:
-                            echo '其它';
-                            break;
-                    } ?></td>
+                            case '10':
+                                echo '待发货';
+                                break;
+                            case '20':
+                                echo '待揽收';
+                                break;
+                            case '30':
+                                echo '待配送';
+                                break;
+                            case '40':
+                                echo '配送中';
+                                break;
+                            case '50':
+                                echo '待签收';
+                                break;
+                            case '60':
+                                echo '已签收';
+                                break;
+                            case '70':
+                                echo '已完成';
+                                break;
+                            case '-10':
+                                echo '关闭';
+                                break;
+                            default:
+                                echo '其它';
+                                break;
+                        } ?></td>
                 <td>
                     <?php if ($t['status'] != 10) { ?>
                         <button class="btn btn-sm btn-secondary" title="仅待发货订单可以关闭" disabled>关闭</button>
