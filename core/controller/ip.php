@@ -143,6 +143,9 @@ class ip extends Base
 					$index = count($froms) - 1;
 					$this->db->setTableName('customer')->update(['superior' => $froms[$index]], 'id = ?', $this->user['id']);
 				}
+				if(!$this->user['sync']){
+					$this->db->setTableName('customer')->update(['sync' => 1], 'id = ?', $this->user['id']);
+				}
 				$this->activejson(null, true, '激活卡券成功');
 			}
 		} else {
