@@ -22,5 +22,6 @@ return array (
     15 => 'codelen',
     16 => 'createtime',
     17 => 'createby',
+    18 => 'froms',
   ),
 );

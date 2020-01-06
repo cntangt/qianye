@@ -57,7 +57,7 @@ class ip extends Base
 	{
 		// 添加激活key，防止重复调用
 		$actkey = 'activing:' . $this->user['id'];
-		if (self::$lockdict[$actkey]) {
+		if (array_key_exists($actkey, self::$lockdict)) {
 			$this->json(null, false, '正在激活，请稍后');
 		} else {
 			self::$lockdict[$actkey] = true;
@@ -138,12 +138,12 @@ class ip extends Base
 				$this->activejson(null, false, '激活卡券失败，请重试');
 			} else {
 				// 激活时判断是否有卡上级，如果同时用户没有上级则绑定卡上级
-				if (!$this->user['superior'] && $card['from']) {
-					$froms = explode(',', $card['from']);
+				if (!$this->user['superior'] && $card['froms']) {
+					$froms = explode(',', $card['froms']);
 					$index = count($froms) - 1;
 					$this->db->setTableName('customer')->update(['superior' => $froms[$index]], 'id = ?', $this->user['id']);
 				}
-				if(!$this->user['sync']){
+				if (!$this->user['sync']) {
 					$this->db->setTableName('customer')->update(['sync' => 1], 'id = ?', $this->user['id']);
 				}
 				$this->activejson(null, true, '激活卡券成功');
@@ -160,7 +160,7 @@ class ip extends Base
 	{
 		// 添加激活key，防止重复调用
 		$actkey = 'binding:' . $this->user['id'];
-		if (self::$lockdict[$actkey]) {
+		if (array_key_exists($actkey, self::$lockdict)) {
 			$this->json(null, false, '正在激活，请稍后');
 		} else {
 			self::$lockdict[$actkey] = true;
@@ -198,6 +198,10 @@ class ip extends Base
 				case 40:
 					$this->bindjson(null, false, '已作废的卡券不能绑定');
 			}
+			$froms = explode(',', $card['froms']);
+			if (in_array($this->user['id'], $froms)) {
+				$this->bindjson(null, false, '当前用户已经绑定，不能再次绑定');
+			}
 			$ct = $this->db->setTableName('card_type')->getOne('id = ?', $card['cardtypeid']);
 			if (!$ct) {
 				$this->bindjson(null, false, '卡券类型不存在，不能绑定');
@@ -215,11 +219,10 @@ class ip extends Base
 			if (!$ctis) {
 				$this->bindjson(null, false, '未绑定卡券类型商品，不能绑定');
 			}
-
-			if (!$this->db->setTableName('card')->update(['from' => $card['from'] . ',' . $this->user['id']], 'id = ?', $card['id'])) {
+			if (!$this->db->setTableName('card')->update(['froms' => $card['froms'] . ',' . $this->user['id']], 'id = ?', $card['id'])) {
 				$this->bindjson(null, false, '绑定卡片失败');
 			} else {
-				$this->bindjson(null, true, '绑定卡片失败');
+				$this->bindjson(null, true, '绑定卡片成功');
 			}
 		} else {
 			$this->bindjson(null, false, '未找到绑定卡券，请确认卡券编码和密码');
