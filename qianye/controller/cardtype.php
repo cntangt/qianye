@@ -124,10 +124,10 @@ class cardtype extends Admin
         if ($this->ispost) {
             $id = $this->post('id');
             $data = $this->post('data');
-            $count = $this->db->setTableName('card')->count('cardtypeid = ?', $id);
-            if ($count > 0) {
-                $this->json(null, false, '已生成卡券，不能修改');
-            }
+            // $count = $this->db->setTableName('card_item')->count('cardtypeid = ?', $id);
+            // if ($count > 0) {
+            //     $this->json(null, false, '已激活卡券，不能修改');
+            // }
             $this->db->setTableName('card_type_item')->delete('cardtypeid = ?', $id);
             foreach ($data as $t) {
                 $t['cardtypeid'] = $id;
