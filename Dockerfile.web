@@ -1,8 +1,8 @@
 FROM d.thcen.com/php
 ENV TZ Asia/Shanghai
 WORKDIR /var/www/html
-COPY sdk .
-COPY data .
-COPY core .
-COPY qianye .
+COPY sdk sdk
+COPY data data
+COPY core core
+COPY qianye qianye
 COPY index.php .
