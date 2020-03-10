@@ -1,3 +1,8 @@
+stages:
+    - api_build
+    - api_push
+    - web_build
+    - web_push
 api_build:
     stage: api_build
     only:
