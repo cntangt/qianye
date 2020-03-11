@@ -6,3 +6,5 @@ COPY data data
 COPY core core
 COPY qianye qianye
 COPY index.php .
+COPY static.php .
+COPY favicon.ico .
