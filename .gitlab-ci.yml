@@ -1,34 +1,16 @@
 stages:
-    - api_build
-    - api_push
     - web_build
     - web_push
-api_build:
-    stage: api_build
-    only:
-        - /^api.*$/
-    script:
-        - docker build -t d.thcen.com/qianye.api -t d.thcen.com/qianye.api:$CI_COMMIT_REF_NAME -f Dockerfile.api .
-api_push:
-    stage: api_push
-    only:
-        - /^api.*$/
-    dependencies:
-        - api_build
-    script:
-        - docker push d.thcen.com/qianye.api
-
-
 web_build:
     stage: web_build
     only:
-        - /^web.*$/
+        - tag
     script:
-        - docker build -t d.thcen.com/qianye.web -t d.thcen.com/qianye.web:$CI_COMMIT_REF_NAME -f Dockerfile.web .
+        - docker build -t d.thcen.com/qianye.web -t d.thcen.com/qianye.web:$CI_COMMIT_REF_NAME .
 web_push:
     stage: web_push
     only:
-        - /^web.*$/
+        - tag
     script:
         - docker push d.thcen.com/qianye.web
     dependencies:

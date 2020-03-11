@@ -1,4 +1,10 @@
-FROM php:7.2-cli
-RUN pecl install redis-4.0.1 \
-    && pecl install xdebug-2.6.0 \
-    && docker-php-ext-enable redis xdebug
+FROM d.thcen.com/php
+ENV TZ Asia/Shanghai
+WORKDIR /var/www/html
+COPY sdk sdk
+COPY data data
+COPY core core
+COPY qianye qianye
+COPY index.php .
+COPY favicon.ico .
+RUN chmod -R 777 data
