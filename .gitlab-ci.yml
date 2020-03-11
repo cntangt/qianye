@@ -4,13 +4,13 @@ stages:
 web_build:
     stage: web_build
     only:
-        - tag
+        - tags
     script:
         - docker build -t d.thcen.com/qianye.web -t d.thcen.com/qianye.web:$CI_COMMIT_REF_NAME .
 web_push:
     stage: web_push
     only:
-        - tag
+        - tags
     script:
         - docker push d.thcen.com/qianye.web
     dependencies:
