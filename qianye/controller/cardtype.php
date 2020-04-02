@@ -26,7 +26,7 @@ class cardtype extends Admin
         $data = $this->db->setTableName('product')->getAll(null, null, null, 'id DESC');
         $list = array();
         for ($i = 0; $i < count($data); $i++) {
-            $list[$i]['id'] = $data[$i]['id'];
+            $list[$i]['id'] = $data[$i]['sku'];
             $list[$i]['text'] = $data[$i]['title'];
             // $pd = $this->db->setTableName('product')->getOne('sku = ?', $data[$i]['item_id']);
             // if (!$pd) {

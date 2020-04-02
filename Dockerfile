@@ -7,4 +7,6 @@ COPY core core
 COPY qianye qianye
 COPY index.php .
 COPY favicon.ico .
-RUN chmod -R 777 data
+RUN chmod -R 755 data
+RUN chwon -R www-data:www-data /var/www/html/data \
+    && chmod -R 755 /var/www/html/data
