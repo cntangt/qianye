@@ -102,7 +102,7 @@ class product extends Admin
 			exit;
 		}
 		$filename = sprintf('%s.%s', date('YmdHis'), pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION));
-		$savepath = sprintf('%s/%s/%s', XIAOCMS_PATH, 'thumbs', $filename);
+		$savepath = sprintf('%s%s/%s', XIAOCMS_PATH, 'thumbs', $filename);
 		move_uploaded_file($_FILES["file"]["tmp_name"], $savepath);
 		return $filename;
 	}
