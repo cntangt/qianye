@@ -659,7 +659,9 @@ class ip extends Base
 	 */
 	public function childrenAction()
 	{
-		$list = $this->db->setTableName('vi_card_customer')->getAll('find_in_set(?,froms)', $this->user['id']);
+		$page = $this->get('page');
+		
+		$list = $this->db->setTableName('vi_card_customer')->pageLimit($page, 10)->getAll('find_in_set(?,froms)', $this->user['id']);
 
 		$this->json($list);
 	}
