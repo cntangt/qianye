@@ -649,4 +649,18 @@ class ip extends Base
 
 		$this->json($list, true);
 	}
+
+	/**
+	 * 获取转赠列表
+	 *
+	 * @Author Tt tioo@foxmail.com
+	 * @DateTime 2020-04-03
+	 * @return void
+	 */
+	public function childrenAction()
+	{
+		$list = $this->db->setTableName('vi_card_customer')->getAll('find_in_set(?,froms)', $this->user['id']);
+
+		$this->json($list);
+	}
 }
