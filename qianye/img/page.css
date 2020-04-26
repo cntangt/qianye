@@ -636,3 +636,9 @@ a.btn {
     display: inline-block;
     margin: 0 10px;
 }
+
+.header {
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+}

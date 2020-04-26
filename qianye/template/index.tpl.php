@@ -62,6 +62,14 @@
               </a>
             </li>
           <?php } ?>
+          <?php if ($this->menu('customer-index')) { ?>
+            <li class="nav-item">
+              <a class="nav-link" href="<?php echo url('customer/index') ?>" target="rightMain">
+                <span data-feather="users"></span>
+                会员管理
+              </a>
+            </li>
+          <?php } ?>
           <?php if ($this->menu('wealth-index')) { ?>
             <li class="nav-item">
               <a class="nav-link" href="<?php echo url('wealth/index') ?>" target="rightMain">
