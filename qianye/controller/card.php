@@ -209,12 +209,15 @@ class card extends Admin
 
 			$this->db->setTableName('card');
 
+			$condition = $this->batch_data();
 
 			$count = $this->db->setTableName('card')->update([
 				'froms' => $cid
-			], 'codepre = ? and codelen= ? and codeno >= ? and codeno <= ? and status = 20 and froms is null', $this->batch_data());
+			], 'codepre = ? and codelen= ? and codeno >= ? and codeno <= ? and status = 20 and froms is null', $condition);
 
-			$this->json($count, $count > 0);
+			$count = $this->db->setTableName('card')->count('codepre = ? and codelen= ? and codeno >= ? and codeno <= ? and status = 20 and froms = ' . $cid, $condition);
+
+			$this->json(null, $count > 0, sprintf('绑定成功【%s】张卡', $count));
 		}
 
 		$url = url('card/bind');
