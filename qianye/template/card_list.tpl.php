@@ -2,19 +2,19 @@
 <table width="100%" class="m-table m-table-row">
     <thead class="m-table-thead s-table-thead">
         <tr>
-            <th>ID </th>
+            <th width="80">ID </th>
             <th class="l">卡券类型</th>
-            <th>卡券编号</th>
-            <th>卡券密码</th>
-            <th>手机号</th>
-            <th>创建时间</th>
-            <th>创建人</th>
-            <th>销售时间</th>
-            <th>激活时间</th>
-            <th>激活人</th>
-            <th>绑定人</th>
-            <th>状态</th>
-            <th>操作</th>
+            <th width="100">卡券编号</th>
+            <th width="80">卡券密码</th>
+            <th width="100">手机号</th>
+            <th width="130">创建时间</th>
+            <th width="90">创建人</th>
+            <th width="130">销售时间</th>
+            <th width="130">激活时间</th>
+            <th width="100">激活人</th>
+            <th width="100">绑定人</th>
+            <th width="60">状态</th>
+            <th width="60">操作</th>
         </tr>
     </thead>
     <tbody>
