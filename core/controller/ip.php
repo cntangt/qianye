@@ -219,7 +219,7 @@ class ip extends Base
 			if (!$ctis) {
 				$this->bindjson(null, false, '未绑定卡券类型商品，不能绑定');
 			}
-			if (!$this->db->setTableName('card')->update(['froms' => $card['froms'] . ',' . $this->user['id']], 'id = ?', $card['id'])) {
+			if (!$this->db->setTableName('card')->update(['froms' => $this->user['id']], 'id = ?', $card['id'])) {
 				$this->bindjson(null, false, '绑定卡片失败');
 			} else {
 				$this->bindjson(null, true, '绑定卡片成功');
@@ -661,7 +661,7 @@ class ip extends Base
 	{
 		$page = $this->get('page');
 		
-		$list = $this->db->setTableName('vi_card_customer')->pageLimit($page, 10)->getAll('find_in_set(?,froms)', $this->user['id']);
+		$list = $this->db->setTableName('vi_card_customer')->pageLimit($page, 10)->getAll('froms = ?', $this->user['id']);
 
 		$this->json($list);
 	}

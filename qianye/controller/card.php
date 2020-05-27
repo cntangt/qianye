@@ -38,7 +38,7 @@ class card extends Admin
 		$ctid = $this->get('ctid');
 		$mobile = $this->get('mobile');
 		$code = $this->get('code');
-		$this->db->setTableName('card');
+		$this->db->setTableName('vi_card2');
 		if ($status != '') {
 			$this->db->where('status = ?', $status);
 		}
@@ -195,6 +195,32 @@ class card extends Admin
 		$title = '批量销售卡券';
 
 		include $this->admin_tpl('card_batch');
+	}
+
+	public function bindAction()
+	{
+		if ($this->ispost) {
+
+			$data = $this->post('data');
+			$cid = $data['customer'];
+			if (!$cid) {
+				$this->json(null, false, '请选择会员');
+			}
+
+			$this->db->setTableName('card');
+
+
+			$count = $this->db->setTableName('card')->update([
+				'froms' => $cid
+			], 'codepre = ? and codelen= ? and codeno >= ? and codeno <= ? and status = 20 and froms is null', $this->batch_data());
+
+			$this->json($count, $count > 0);
+		}
+
+		$url = url('card/bind');
+		$title = '批量绑定卡券';
+
+		include $this->admin_tpl('card_bind');
 	}
 
 	private function batch_data()

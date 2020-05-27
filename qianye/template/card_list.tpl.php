@@ -11,6 +11,8 @@
             <th>创建人</th>
             <th>销售时间</th>
             <th>激活时间</th>
+            <th>激活人</th>
+            <th>绑定人</th>
             <th>状态</th>
             <th>操作</th>
         </tr>
@@ -41,6 +43,8 @@
                 <td>
                     <?php if ($t['activetime']) echo date('Y-m-d H:i', $t['activetime']) ?>
                 </td>
+                <td><?php echo $t['cname'] ?></td>
+                <td><?php echo $t['fname'] ?></td>
                 <td><?php switch ($t['status']) {
                         case '10':
                             echo '未销售';
@@ -67,7 +71,7 @@
             </tr>
         <?php } ?>
         <tr>
-            <td colspan="11" align="left" style="border-bottom:0px;">
+            <td colspan="13" align="left" style="border-bottom:0px;">
                 <div class="pageright">
                     <?php echo $pagelist; ?>
                 </div>

@@ -13,8 +13,11 @@
                 <button class="btn btn-sm btn-success dialog" data-url="<?php echo url('card/sale') ?>">批量销售</button>
             <?php }
         if ($this->menu('card-disable')) { ?>
-                <button class="btn btn-sm btn-danger dialog" data-url="<?php echo url('card/disable') ?>">批量作废</butto>
-                <?php } ?>
+                <button class="btn btn-sm btn-danger dialog" data-url="<?php echo url('card/disable') ?>">批量作废</button>
+            <?php }
+        if ($this->menu('card-bind')) { ?>
+                <button class="btn btn-sm btn-success dialog" data-url="<?php echo url('card/bind') ?>">批量绑定</button>
+        <?php } ?>
         </div>
         <div class="right">
             <form autocomplete="off" class="form-inline" data-url="<?php echo url('card/index') ?>" id="searchform">

@@ -166,6 +166,20 @@ class api extends Base
 		$loginInfo = $this->get_lgoinInfo();
 		$this->json(null, true);
 	}
+
+	public function customerAction()
+	{
+		$key = $this->get('key');
+
+		$this->db->setTableName('customer');
+		if ($key) {
+			$this->db->where('name like ? or mobile like ?', '%' . $key . '%', '%' . $key . '%');
+		}
+		$list = $this->db->pageLimit(0, 10)->getAll(null, null, 'id,name text', 'id DESC');
+
+		$this->json($list, true);
+	}
+
 	private function get_lgoinInfo()
 	{
 		$loginInfo = $this->cache->get('wx:' . $_SERVER['HTTP_TOKEN']);
