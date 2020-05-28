@@ -63,11 +63,11 @@ class ip extends Base
 			self::$lockdict[$actkey] = true;
 		}
 		if (empty($this->user['mobile'])) {
-			$this->activejson(null, false, '未绑定手机，请绑定后再进行激活');
+			$this->activejson(null, false, '激活失败，未绑定手机，请绑定后再进行激活');
 		}
 		$uts = $this->cache->get('useractivetimes:' . $this->user['id']);
 		if ($uts > 100) {
-			$this->activejson(null, false, '检测到风险操作，请24小时后重试');
+			$this->activejson(null, false, '激活失败，检测到风险操作，请24小时后重试');
 		}
 		$uts += 1;
 		$this->cache->set('useractivetimes:' . $this->user['id'], $uts, 3600 * 24);
@@ -80,7 +80,7 @@ class ip extends Base
 			$code = $this->post('code');
 			$pass = $this->post('pass');
 			if (empty($code) || empty($pass)) {
-				$this->activejson(null, false, '卡号或者密码为空');
+				$this->activejson(null, false, '激活失败，卡号或者密码为空');
 			}
 			$times = $this->cache->get('cardactivetimes:' . $code);
 			if ($times > 10) {
@@ -94,28 +94,28 @@ class ip extends Base
 		if ($card) {
 			switch ($card['status']) {
 				case 10:
-					$this->activejson(null, false, '未销售的卡券不能激活');
+					$this->activejson(null, false, '激活失败，未销售的卡券不能激活');
 				case 30:
-					$this->activejson(null, true, '已经激活的卡券不能激活');
+					$this->activejson(null, false, '激活失败，已经激活的卡券不能激活');
 				case 40:
-					$this->activejson(null, false, '已作废的卡券不能激活');
+					$this->activejson(null, false, '激活失败，已作废的卡券不能激活');
 			}
 			$ct = $this->db->setTableName('card_type')->getOne('id = ?', $card['cardtypeid']);
 			if (!$ct) {
-				$this->activejson(null, false, '卡券类型不存在，不能激活');
+				$this->activejson(null, false, '激活失败，卡券类型不存在，不能激活');
 			}
 			if ($ct['isvalid'] == 0) {
-				$this->activejson(null, false, '卡券类型已经作废，不能激活');
+				$this->activejson(null, false, '激活失败，卡券类型已经作废，不能激活');
 			}
 			if ($ct['begintime'] > time()) {
-				$this->activejson(null, false, '卡券激活开始时间为：' . date('Y-m-d', $ct['begintime']) . '，不能激活');
+				$this->activejson(null, false, '激活失败，卡券激活开始时间为：' . date('Y-m-d', $ct['begintime']) . '，不能激活');
 			}
 			if ($ct['endtime'] < time()) {
-				$this->activejson(null, false, '卡券激活截止时间为：' . date('Y-m-d', $ct['endtime']) . '，不能激活');
+				$this->activejson(null, false, '激活失败，卡券激活截止时间为：' . date('Y-m-d', $ct['endtime']) . '，不能激活');
 			}
 			$ctis = $this->db->setTableName('card_type_item')->getAll('cardtypeid = ?', $ct['id']);
 			if (!$ctis) {
-				$this->activejson(null, false, '未绑定卡券类型商品，不能激活');
+				$this->activejson(null, false, '激活失败，未绑定卡券类型商品，不能激活');
 			}
 			$sql = 'INSERT INTO `xiao_card_item`(`cardid`, `sku`, `cardtypeid`, `productname`, `quantity`, `validquantity`) VALUES ';
 			$vals = array();
@@ -149,7 +149,7 @@ class ip extends Base
 				$this->activejson(null, true, '激活卡券成功');
 			}
 		} else {
-			$this->activejson(null, false, '未找到激活卡券，请确认卡券编码和密码');
+			$this->activejson(null, false, '激活失败，未找到激活卡券，请确认卡券编码和密码');
 		}
 	}
 
