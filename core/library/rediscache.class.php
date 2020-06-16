@@ -24,6 +24,11 @@ class rediscache
         return json_decode($this->cache->get($key), true);
     }
 
+    public function getstring($key)
+    {
+        return $this->cache->get($key);
+    }
+
     public function set($key, $val, $exp = 3600)
     {
         $this->cache->set($key, json_encode($val), $exp);

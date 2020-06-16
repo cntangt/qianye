@@ -114,6 +114,18 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="/auth" target="_blank">
+              <span data-feather="lock"></span>
+              聚宝赞接口授权
+              <?php
+              $reauth = $this->cache->getstring('jbz:reauth');
+              if ($reauth) {
+                echo '<span style="color:red">授权</span>';
+              }
+              ?>
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="<?php echo url("login/logout"); ?>">
               <span data-feather="log-out"></span>
               退出
