@@ -30,7 +30,7 @@ class wealth extends Admin
 		if ($this->ispost) {
 			$quantity = $this->post('quantity');
 			$id = $this->post('id');
-			if ($quantity < 1) $this->json(null, false, '增加数量不能小于1');
+			// if ($quantity < 1) $this->json(null, false, '增加数量不能小于1');
 			$data = $this->db->setTableName('card_item')->find($id);
 			if ($data) {
 				$succ =	$this->db->setTableName('card_item')->update(['validquantity' => $data['validquantity'] + $quantity], 'id = ?', $id);

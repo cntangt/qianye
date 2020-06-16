@@ -12,8 +12,8 @@
             <input type="number" class="form-control" disabled value="<?php echo $data['validquantity'] ?>" />
         </div>
         <div class="form-group">
-            <label>增加可提货数量<span class="red">(注意是增加数量，不是最终数量)</span></label>
-            <input type="number" class="form-control" name="quantity" placeholder="输入增加数量" required min="1" />
+            <label>增加可提货数量<span class="red">(注意减少输入负数)</span></label>
+            <input type="number" class="form-control" name="quantity" placeholder="输入增加数量" required />
         </div>
     </div>
     <div class="modal-footer">
