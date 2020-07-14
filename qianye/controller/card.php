@@ -161,7 +161,7 @@ class card extends Admin
 			} else {
 				$count = $this->db->setTableName('card')->update(['status' => 40], 'id = ?', $this->get('id'));
 			}
-			$this->json($count, $count > 0);
+			$this->json($count, $count > 0, '作废卡完成');
 		}
 
 		$url = url('card/disable');
@@ -188,7 +188,7 @@ class card extends Admin
 					'saleby' => $this->admin['realname']
 				], 'id = ? and status = 10', $this->get('id'));
 			}
-			$this->json($count, $count > 0);
+			$this->json($count, $count > 0, '销售设置完成');
 		}
 
 		$url = url('card/sale');
@@ -224,6 +224,31 @@ class card extends Admin
 		$title = '批量绑定卡券';
 
 		include $this->admin_tpl('card_bind');
+	}
+
+	public function unbindAction()
+	{
+		if ($this->ispost) {
+
+			$this->db->setTableName('card');
+
+			$condition = $this->batch_data();
+
+			$countold = $this->db->setTableName('card')->count('codepre = ? and codelen= ? and codeno >= ? and codeno <= ? and status = 20 and froms is null ', $condition);
+
+			$count = $this->db->setTableName('card')->update([
+				'froms' => null
+			], 'codepre = ? and codelen= ? and codeno >= ? and codeno <= ? and status = 20', $condition);
+
+			$countnew = $this->db->setTableName('card')->count('codepre = ? and codelen= ? and codeno >= ? and codeno <= ? and status = 20 and froms is null ', $condition);
+
+			$this->json(null, $count > 0, sprintf('解绑绑定成功【%s】张卡', $countnew - $countold));
+		}
+
+		$url = url('card/unbind');
+		$title = '批量解绑卡券';
+
+		include $this->admin_tpl('card_batch');
 	}
 
 	private function batch_data()

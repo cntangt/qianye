@@ -41,6 +41,7 @@
         submitHandler: function() {
             $.post(form.attr('action'), form.serialize(), function(res) {
                 if (res.succ) {
+                    alert(res.msg);
                     reload();
                 } else {
                     alert(res.msg);

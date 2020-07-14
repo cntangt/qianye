@@ -6,18 +6,21 @@
             <?php if ($this->menu('card-add')) { ?>
                 <button type="button" class="btn btn-sm btn-primary dialog" data-url="<?php echo url('card/build') ?>">生成卡券</button>
             <?php }
-        if ($this->menu('card-export')) { ?>
+            if ($this->menu('card-export')) { ?>
                 <a class="btn btn-sm btn-primary" href="#" style="color:#fff" data-url="<?php echo url('card/export') ?>" id="export" target="export">导出</a>
             <?php }
-        if ($this->menu('card-sale')) { ?>
+            if ($this->menu('card-sale')) { ?>
                 <button class="btn btn-sm btn-success dialog" data-url="<?php echo url('card/sale') ?>">批量销售</button>
             <?php }
-        if ($this->menu('card-disable')) { ?>
+            if ($this->menu('card-disable')) { ?>
                 <button class="btn btn-sm btn-danger dialog" data-url="<?php echo url('card/disable') ?>">批量作废</button>
             <?php }
-        if ($this->menu('card-bind')) { ?>
+            if ($this->menu('card-bind')) { ?>
                 <button class="btn btn-sm btn-success dialog" data-url="<?php echo url('card/bind') ?>">批量绑定</button>
-        <?php } ?>
+            <?php }
+            if ($this->menu('card-unbind')) { ?>
+                <button class="btn btn-sm btn-danger dialog" data-url="<?php echo url('card/unbind') ?>">批量解绑</button>
+            <?php } ?>
         </div>
         <div class="right">
             <form autocomplete="off" class="form-inline" data-url="<?php echo url('card/index') ?>" id="searchform">
@@ -29,7 +32,7 @@
                         <?php if (is_array($types)) foreach ($types as $t) { ?>
                             <option value="<?php echo $t['id'] ?>">【<?php echo $t['name'] ?>】<?php echo $t['description'] ?></option>
                         <?php
-                    } ?>
+                        } ?>
                     </select>
                 </div>
                 <div class="input-group input-group-sm mx-sm-3">
